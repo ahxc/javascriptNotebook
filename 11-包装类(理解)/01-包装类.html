@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+    /* js中提供了三个包装类，通过这三个包装类可以将基本数据类型转换为对象 */
+
+    const num = new Number(3);
+    const str = new String("hello")
+    const bool = new Boolean(true)
+    console.log(num, str, bool);
+
+    num.name = "属性"
+    console.log(num.name)
+
+    /* 当我们调用基本数据类型的方法时，浏览器会使用包装类将其转换为对象，然后再调用方法
+    然后再转为其他基本数据类型 */
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

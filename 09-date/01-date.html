@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+
+    /* 如果直接创建实例，则为当前时间 */
+    const d1 = new Date();
+    console.log(d1)
+
+    /* 指定时间2016年12月3日 */
+    const d2 = new Date("12/03/16 11:10:30");
+    console.log(d2)
+
+    /* 获取当前日期的日，星期几 */
+    console.log(d1.getDate(), d1.getDay())
+
+    /* 获取当前日期的月，从0到11 */
+    console.log(d1.getMonth()+1)
+
+    /* 获取当前日期的年 */
+    console.log(d1.getFullYear())
+
+    /* 获取当前日期的时间戳：时间戳的数字表示的是格林威治时间1970年1月1日0时0分0秒
+    到当前的毫秒数
+    注意：js时间戳是13位的包括毫秒数，如果不需要则除以1000
+    时间戳没有时区概念，一个时间戳全球同一时间 */
+    console.log(d1.getTime())
+
+    /* 获取当前的时间 */
+    console.log(Date.now())
+
+    /* 获取分，秒，毫秒 */
+    console.log(d1.getMinutes(), d1.getSeconds(), d1.getMilliseconds())
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

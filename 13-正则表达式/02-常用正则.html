@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+    /* 正则表达式是用于定义匹配字符的一些规则 */
+
+    /* 正则表达式语法主体 */
+    const pattern = /[^a]/;
+    const reg = new RegExp(pattern);
+    const str1 = "bbqawfa";
+
+    /* 正则表达式方法
+    测试字符串是否符合正则表达式规则 */
+    console.log(reg.test(str1));/* true */
+    /* 返回一个array，包含匹配的信息：[匹配到的元素，匹配到的开始位置，输入的字符串str1，groups] */
+    console.log(reg.exec(str1));
+    /* 返回正则表达式：/主体/ */
+    console.log(reg.toString());
+
+    /* 字符串方法，把正则表达式当字符串用
+    匹配正则表达式并返回匹配开始的位置索引，没有成功匹配返回-1 */
+    console.log(str1.search(pattern));
+    /* 使用haha替换匹配到的内容 */
+    console.log(str1.replace(pattern, "haha"));
+
+    </script>
+  </head>
+  <body>
+    <a href="https://www.runoob.com/regexp/regexp-syntax.html">
+      正则表达式语法
+    </a>
+  </body>
+</html>

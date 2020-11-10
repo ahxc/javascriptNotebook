@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+    /* 数据构造器，当请求的单例数据过于庞杂，通过数据构造器整合单个组件的数据 */
+    /* 如商品信息 */
+    /* 类似python类的init */
+
+    /* 方法一，java类 */
+    class Person1 {
+      constructor(name, gender, age) {
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+      }
+    }
+    // 实例化
+    const per1 = new Person1('1', '男', '18');
+
+    /* 方法二，对象函数
+    弊端，分不清类型，用的不多 */
+    const Person2 =  function Person(name, age, gender) {
+      const obj = new Object();
+      obj.name = name;
+      obj.age = age;
+      obj.gender = gender;
+      return obj
+    }
+    const per2 = Person2('1', '男', '18')
+
+    /* 方法三，构造函数构造对象，不使用构造器和类
+    使用同一个构造函数创建的对象为一类 */
+    const Person3 = function Person3(name, age, gender){
+      this.name = name;
+      this.age = age;
+      this.gender = gender;
+    }
+    const per3 = new Person3('1', '男', '18');
+
+    /* 检查一个实例是否为某个类的实例3
+    object是大类，因此任何对象都是true */
+    per1 instanceof Object;/* true */
+    per1 instanceof Person2;/*false*/
+
+    /* 检查实例是否有属性 */
+    per1.hasOwnProperty("name");/* true */
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

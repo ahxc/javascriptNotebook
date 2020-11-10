@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+    const obj1 = {n:"zx"};
+    const obj2 = {n:"xz"};
+
+    /* 函数调用时会隐式的传送两个参数
+    上下文this和封装的实参对象arguments：类数组 */
+    function fun() {
+      console.log(arguments.length);
+      console.log(arguments.callee);/* 函数对象本身 */
+    };
+
+    /* 这样的话即使没有实参占位也可以通过arguments来获取函数得到的实参 */
+    fun(1,2,3)/* 3 */
+
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

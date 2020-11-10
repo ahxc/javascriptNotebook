@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+    const obj1 = {n:"zx"};
+    const obj2 = {n:"xz"};
+    /* call和apply函数对象调用的方法，可将对象做为参数传入函数，
+    并将this指向它，即改变上下文 */
+
+    /* fun()函数调用时会隐式的传送一个this，该this指向window */
+    function fun() {
+      console.log(this.n);
+    };
+
+    /* 现在this是对象obj1和obj2 */
+    fun();/* undefined */
+    fun.call(obj1);/* zx */
+    fun.apply(obj2);/* xz */
+    fun.bind(obj2)();/* xz */
+    /* bind会创建一个新函数，并于该函数绑定 */
+
+    /* call和apply的区别在于接收参数的方式不同 */
+    fun(this, 1, 2);
+    fun.call(obj1, 1, 2);
+    fun.apply(obj2, [1, 2]);
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

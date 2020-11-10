@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+    /* 定义全局函数有时会污染全局作用域的命名空间，因此使用原型 */
+
+    /* js分为函数对象和普通对象，
+    每个对象都有__proto__属性，但是只有函数对象才有prototype属性 */
+    
+    /* prototype好比对象的公共区域，同一类型的原型可共同使用。
+    js是基于原型对象的，原型也是一个对象，通过原型可以实现对象的属性继承 */
+
+    // 函数对象
+    const Person = function Person(name, age, gender){
+      this.name = name;
+      this.age = age;
+      this.gender = gender
+    }
+    // 普通对象
+    const per1 = new Person('zx', '18', '男')
+    const per2 = new Person('qx', '18', '男')
+
+    /* 原型调用方法
+    抽象来说原型是对象的公共区域，原型对象的调用，输出都为Object */
+    per1.__proto__, Person.prototype
+    /* zx，undefined, undefined，没定义原型的name，为空 */
+    per1.name, per1.__proto__.name, Person.prototype.name
+
+    /* 原型的属性或方法定义 */
+    per1.__proto__.pname = "zx"
+    Person.prototype.tname = "xz"
+    /* 函数对象和他的所有子实例共用原型，但不影响全局作用域 */
+    console.log(per1.pname, per2.pname, Person.prototype.pname)/* zx, zx, zx */
+    console.log(per1.tname, per2.tname, Person.prototype.tname)/* xz, xz, xz*/
+
+    /* 扩展，vue中，全局组件的定义，原型加上$符号便于区分
+    Vue自身就是一个函数对象 */
+    /* Vue.prototype.$toast
+    this.$toast */
+
+    /* 调用对象属性或方法时，会先在自身寻找，然后再去原型查找，
+    然后再去原型的原型上查找，直到object，object的原型没有原型 */
+    console.log(per1.__proto__)/* per1的原型为object */
+    console.log(per1.__proto__.__proto__)/* per1的原型的原型全局Object */
+    console.log(per1.__proto__.__proto__.__proto__)/* Object的原型没有原型，为null */
+
+    /* 原型方法的修改 */
+
+    /* 覆写toString，原toString只会返回类型名 */
+    per1.toString = function() {
+      return this.name
+    }
+    /* toString不加()直接返回toString的函数
+    只修改per这一个对象的方法，只对该实例生效 */
+    console.log(per1.toString(), per2.toString())/* zx, [object Object] */
+
+    /* 修改原型对象的方法对所有实例生效 */
+    Person.prototype.toString = function() {
+      return [this.age, this.pname, this.tname]
+    }
+    /* 先会在自身查找因此还是zx，因此要注意对象方法与原型的命名问题，
+    如果重名还想要调用原型方法，可以先调用原型
+    原型age属性没定义，因此undefined，但tname和pname存在
+    换句话说原型是一个空的对象只提供定义过的属性并作为公用 */
+    console.log(per1.toString(), per1.__proto__.toString())/* zx, undefined, zx ,xz */
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+    /* 作用域
+    作用域指一个变量作用的范围 */
+
+    /* 全局作用域
+    编写在script标签的js代码作用域都是全局 */
+
+    /* 浏览器对象window
+    在全局作用域创建的变量和函数都会作为window对象的属性和方法保存 */
+    console.log(window)
+
+    /* 函数作用域
+    函数执行完毕作用域销毁，在函数体内访问全局变量可以使用window */
+
+    /* 声明提前
+    使用var，function等声明的变量或函数会在代码执行前进行创建 */
+    var a
+    function func(){}
+    // 函数的表达式不提前
+    var a = function() {}
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

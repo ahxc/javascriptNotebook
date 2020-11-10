@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+    /* 函数也是一个对象
+    函数可以封装一些功能 */
+    const a = function name(text) {
+      /* a为形参，内部变量，传过来的参数为实参 */
+      console.log(text);
+    }
+
+    /* 立即执行函数(func)(参数)：可用于闭包，防止函数名污染命名空间
+    带参数的要用于块级作用域，否则参数不是块级作用域的话报错 */
+    for (let i=0; i<5; i++){
+      (function (i) {console.log(i)})(i);
+    }/* ES6中let很好的解决了这个问题不需要用闭包 */
+
+    /* 对象的属性可以是函数，称为方法 */
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

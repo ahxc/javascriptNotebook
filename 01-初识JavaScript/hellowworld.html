@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-<!-- js可以写入的地方 -->
 <html>
   <head>
     <meta charset="UTF-8">
     <title></title>
     <!-- 默认type=js，一旦引入脚本则不可再此script中再写代码，需要新script -->
-    <script type="text/javascript" src="js/script.js">
-      alert("Hello world!");
-      /* 可以向body输出一个内容 */
-      document.write("Hello world!")
-      console.log("Hello world!")
+    <!-- js写在标签属性中属于结构耦合行为 -->
+    <script type="text/javascript">
+      /* src="js/script.js" */
+      alert("Hello world!");7
+      document.write("Hello world!");
+      console.log("Hello world!");
     </script>
   </head>
   <body>
-    <!-- 写在标签属性中属于结构耦合行为 -->
     <!-- 同样的引号无法嵌套，除非转义字符 -->
     <button onclick="alert('Hello world!')"></button>
     <a href="javascript:alert('Hello world')">点击</a>

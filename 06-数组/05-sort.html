@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+    const l1 = [1,2,24244,53452,8,92310];
+
+    /* 排序，影响原数组，默认按unicode排序
+    所以对数字的排序可能有错 */
+    console.log(l1.sort())
+
+    /* sort自定义排序规则函数，函数返回正，0，负即可
+    返回正交换位置，返回0或负皆不换位置，*/
+    // 升序：
+    console.log(l1.sort((a, b)=>{return a-b}))
+    // 降序：
+    console.log(l1.sort((a, b)=>{return b-a}))
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

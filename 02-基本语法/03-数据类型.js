@@ -23,3 +23,11 @@ true || false
 /* undefined */
 const a = null/* 空 */
 const b = undefined/* 未定义 */
+
+/* 基本数据类型
+String，Number，Boolean，Null，undefined
+基本数据类型存储在栈内存，相互独立 */
+
+/* 引用数据类型
+Object
+对象引用数据类型存储在堆内存中，每新建一个对象会在内存中开辟一个新空间 */
