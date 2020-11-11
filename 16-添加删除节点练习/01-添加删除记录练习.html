@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="./01-css.css">
+  </head>
+  <body>
+    <table id="employeeTable">
+      <tr>
+        <th>姓名</th>
+        <th>邮箱</th>
+        <th>薪水</th>
+        <th></th>
+      </tr>
+      <tr>
+        <td>Tom</td>
+        <td>tom@tom.com</td>
+        <td>5000</td>
+        <td>
+          <input type="button" onclick="del(this)" value="删除"/>
+        </td>
+      </tr>
+      <tr>
+        <td>Jerry</td>
+        <td>jerry@sohu.com</td>
+        <td>8000</td>
+        <td>
+          <input type="button" onclick="del(this)" value="删除"/>
+        </td>
+      </tr>
+      <tr>
+        <td>Bob</td>
+        <td>bob@tom.com</td>
+        <td>10000</td>
+        <td>
+          <input type="button" onclick="del(this)" value="删除"/>
+        </td>
+      </tr>
+    </table>
+    <div id="formDiv">
+      <h4>添加新员工</h4>
+      <table>
+        <tr>
+          <td class="word">name: </td>
+          <td class="inp">
+            <input type="text" name="empName" id="empName"/>
+          </td>
+        </tr>
+        <tr>
+          <td class="word">email: </td>
+          <td class="inp">
+            <input type="text" name="email" id="email"/>
+          </td>
+        </tr>
+        <tr>
+          <td class="word">salary: </td>
+          <td class="inp">
+            <input type="text" name="salary" id="salary"/>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center">
+            <input type="button" onclick="submitC()" value="提交"/>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <script type="text/javascript">
+    function del(d) {
+      /* 一行 */
+      let p = d.parentElement.parentElement;
+      /* 删除前弹出个确认页面，返回true和false */
+      let flag = confirm("确定要删除"+p.children[0].innerHTML+"?");
+      if(flag) {p.parentElement.removeChild(p)}
+      /* 超链接默认跳转页面，函数返回个false可取消 */
+      // return false
+    }
+
+    function submitC() {
+      let name = document.getElementById("empName").value;
+      let email = document.getElementById("email").value;
+      let salary = document.getElementById("salary").value;
+      let tabble = document.getElementById("employeeTable");
+
+      let tr = document.createElement("tr");
+      let n = document.createElement("td");
+      let e = document.createElement("td");
+      let s = document.createElement("td");
+      let d = document.createElement("td");
+      let i = document.createElement("input");
+      i.type = "button";
+      i.value = "删除";
+      i.onclick = "del(this)";
+      n.innerHTML = name;
+      e.innerHTML = email;
+      s.innerHTML = salary;
+      d.appendChild(i);
+
+      tr.appendChild(n);
+      tr.appendChild(e);
+      tr.appendChild(s);
+      tr.appendChild(d);
+      tabble.appendChild(tr);
+    }
+    </script>
+  </body>
+</html>

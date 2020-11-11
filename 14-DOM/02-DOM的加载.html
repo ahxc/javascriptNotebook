@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+  </head>
+  <body>
+  <button id="btn">点击</button>
+  <!-- 确保页面加载完后再执行script -->
+  <script type="text/javascript">
+    const btn = document.getElementById("btn")
+    btn.onclick = function() {
+      console.log("q");
+    };
+
+    /* onload页面加载完后触发
+    为onload绑定一个onload事件可以确保dom对象已经加载完毕 */
+    window.onload = function() {
+      console.log("w");
+    };
+  </script>
+  </body>
+</html>

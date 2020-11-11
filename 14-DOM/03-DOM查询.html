@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+  </head>
+  <body>
+    <ul id="city">
+      <li>北京</li>
+      <li>上海</li>
+      <li>深圳</li>
+    </ul>
+  <button id="btn" class="btn" type="button" name="zx">点击</button>
+  <button id="btn" class="btn" type="button" name="zx">点击</button>
+  <button id="btn" class="btn" type="button" name="zx">点击</button>
+  <!-- 确保页面加载完后再执行script -->
+  <script type="text/javascript">
+
+  const btns = document.getElementsByClassName("btn")
+  const city = document.getElementById("city")
+  const lis = document.getElementsByTagName("li")
+
+  /* dom查询方法 */
+  document.getElementById("btn")/* id只能获取第一个元素节点 */
+  document.getElementsByName("btn")/* name一般用于单选或多选节点中，同名 */
+  document.getElementsByTagName("btn")
+  document.getElementsByClassName("btn")
+
+  /* nodelist，封装页面内多种元素的数组对象 */
+
+  /* dom节点属性方法Nodelist对象 */
+  city.children;/* 获取所有子节点但不包括text */
+  city.childNodes;/* 获取包括text节点和自身的text节点在内的所有子节点，无论text是否空白 */
+  city.firstChild;/* 节点内的第一个子节点 */
+  city.lastChild;/* 节点内的最后一个子节点 */
+  city.parentNode;/* 节点的父节点 */
+  lis[0].previousSibling;/* 上一个兄弟节点 */
+  lis[0].nextSibling;/* 下一个兄弟节点 */
+  /* childNodes获取的nodelist text节点也是兄弟节点，因此previousSibling和nextSibling查询的一个节点的上下都是text */
+  console.log(city.childNodes,);/* [text, li, text, li, text, li, text] */
+
+  /* dom节点属性方法element对象 */
+  city.childElementCount;/* 统计子节点个数 */
+  city.firstElementChild;/* 节点内的第一个子节点 */
+  city.lastElementChild;/* 节点内的最后一个子节点 */
+  city.parentElement;/* 父节点 */
+  lis[0].previousElementSibling;/* 上一个兄弟节点 */
+  lis[0].nextElementSibling;/* 下一个兄弟节点 */
+  document.body;/* 获取body */
+  document.documentElement;/* 获取根标签html */
+
+  city.innerHTML;/* 获取内部的HTML */
+  lis[0].innerText="丽江";/* 获取内部的文本，去除html，可以直接修改 */
+  console.log(btns[0].id, btns[0].name, btns[0].className);/* class保留字 */
+
+  document.all;/* 获取页面内的所有元素 */
+  document.getElementsByTagName("*");/* 等价 */
+  document.getElementsByTagName("div");/* 获取所有div */
+
+  /* 选择器css语法 */
+  document.querySelector("ul")/* 查找ul标签el */
+  console.log(document.querySelectorAll("ul"))/* nodelist对象 */
+  </script>
+  </body>
+</html>

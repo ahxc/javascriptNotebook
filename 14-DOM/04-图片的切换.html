@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #outer {
+      width: 50rem;
+      height: 25rem;
+      margin: 1rem auto;
+      text-align: center;
+      background-color: green;
+    }
+
+    .p-imgs img {
+      width: 100%;
+      height: 100%;
+    }
+    .p-imgs {
+      padding: 1% 1% 0 1%;
+      height: 80%;
+    }
+    </style>
+  </head>
+  <body>
+  <div id="outer">
+    <p class="p-imgs">
+      <img id="imgs" src="./img/1.jpg" alt="">
+    </p>
+    <p id="info"></p>
+    <button id="prev" class="btn" type="button" name="zx">上一张</button>
+    <button id="next" class="btn" type="button" name="zx">下一张</button>
+  </div>
+
+  <script type="text/javascript">
+  const imgSrc = ["./img/1.jpg", "./img/2.jpg", "./img/3.jpg"];
+  const prev = document.getElementById("prev");
+  const next = document.getElementById("next");
+  const img = document.getElementById("imgs");
+  const info = document.getElementById("info");
+  var index = 0;
+  info.innerHTML = "当前第"+(index+1)+"张图片，"+"共"+imgSrc.length+"张";
+
+  prev.onclick = function() {
+    index<=0 ? index=0 : index--;
+    img.src = imgSrc[index];
+    info.innerHTML = "当前第"+(index+1)+"张图片，"+"共"+imgSrc.length+"张";
+  };
+  next.onclick = function() {
+    index>=2 ? index=2 : index++;
+    img.src = imgSrc[index];
+    info.innerHTML = "当前第"+(index+1)+"张图片，"+"共"+imgSrc.length+"张";
+  };
+  </script>
+  </body>
+</html>

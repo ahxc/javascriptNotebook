@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+  </head>
+  <body>
+    <form action="">
+      <br>
+      <input type="checkbox"  name="items" onclick="itemC(this.checked)" value="足球"/>足球
+      <input type="checkbox" name="items" onclick="itemC(this.checked)" value="羽毛球"/>羽毛球
+      <input type="checkbox" name="items" onclick="itemC(this.checked)" value="乒乓球"/>乒乓球
+      <br>
+      <input type="checkbox" id="all-pick" value="全选"/>全选/全不选
+      <input type="button" id="rev-pick" onclick="revPickC()" value="反选"/>
+      <input type="button" id="submit" onclick="submits()" value="提交" />
+    </form>
+    <script type="text/javascript">
+    const items = document.getElementsByName("items");
+    const pickState = document.getElementById("all-pick");
+    var iL = 0;/* 定义一个已选中items个数 */
+
+    /* 反选 */
+    function revPickC() {
+      for(let i=0; i<items.length; i++) {
+        items[i].checked = !items[i].checked;
+      }
+      iL = items.length-iL
+      if(iL==0) {pickState.checked=false}
+      else if(iL==items.length) {pickState.checked=true}
+    }
+
+    /* 解决全选/全不选体验问题，单个items传入点击对象的checked */
+    function itemC(c) {
+      c ? iL++ : iL--;
+      iL<items.length ? pickState.checked=false : pickState.checked=true;
+    }
+
+    /* 提交 */
+    function submits() {
+      let l = "你的选择：";
+      for(let i=0; i<items.length; i++) {
+        if(items[i].checked) {l=l+" "+items[i].value;}
+      }
+      alert(l);
+    }
+
+    /* 全选/全不选
+    checkbox.checked默认为负，点一下则取反一次，这个特性存在一个bug：
+    只有部分items选中且checked为true，那么点击后checked为负，为全不选
+    不符合用户体验 */
+    pickState.onclick = function() {
+      for(let i=0; i<items.length; i++) {
+        items[i].checked = this.checked;/* 块级作用域，this指代pickState */
+      }
+      this.checked ? iL=items.length : iL=0;
+    }
+    </script>
+  </body>
+</html>

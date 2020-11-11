@@ -4,7 +4,7 @@
 
 /* 条件判断语句 */
 if (true) {} 
-else {}
+else if(true) {}
 
 /* 条件分支语句 */
 /* switch在于值匹配，也有局限性，如条件判断它只注重值truefalse的匹配，
