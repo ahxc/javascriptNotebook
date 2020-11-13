@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      #box1 {
+        width: 500px;
+        height: 500px;
+        background-color: green;
+      }
+
+      #box2 {
+        width: 300px;
+        height: 300px;
+        background-color: yellow;
+      }
+
+      #box3 {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="box1">
+    <div id="box2">
+      <div id="box3"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+  const box1 = document.getElementById("box1");
+  const box2 = document.getElementById("box2");
+  const box3 = document.getElementById("box3");
+
+  box1.onclick = function(e) {
+    alert(1);
+  }
+
+  /* 当一个元素需要多种监听时，可以使用事件绑定，响应顺序按照函数定义顺序 */
+
+  /* 添加事件监听的方式绑定 */
+  box1.addEventListener("click", function() {
+    alert(2);
+  }, false);
+
+  /* 封装成绑定函数 */
+  function bind(obj, e, callback) {
+    if(obj.addEventListener) {
+      obj.addEventListener(e, callback, false);/* 大部分浏览器 */
+    }
+    else {
+      obj.attacEvent("on"+e, function(){/* ie8 */
+        callback.call(obj);
+      });
+    }
+  }
+
+  bind(box1, "click", function(){});
+  </script>
+  </body>
+</html>

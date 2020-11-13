@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+  </head>
+  <body>
+    <a href="./03-test2.html">去test2</a>
+    <input id="back" type="button" value="回退">
+    <input id="forward" type="button" value="前进">
+    <input id="jump" type="button" value="跳转">
+
+    <script type="text/javascript">
+    console.log(history.length);/* 当前访问的历史数量 */
+
+    const back = document.getElementById("back");
+    const forward = document.getElementById("forward");
+
+    back.onclick = function() {
+      history.back();
+    }
+    forward.onclick = function() {
+      history.forward();
+    }
+    jump.onclick = function() {
+      history.go(2);
+    }
+    </script>
+  </body>
+</html>

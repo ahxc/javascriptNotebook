@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      #box1 {
+        width: 100px;
+        height: 100px;
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="box1"></div>
+
+  <script type="text/javascript">
+  const box1 = document.getElementById("box1");
+  
+  /* 鼠标滚轴事件 */
+  box1.onmousewheel = function(e) {
+    e = e || window.event;
+
+    /* wheelDelta往上滚正，往下滚负 */
+    console.log(e.wheelDelta)
+    if(e.wheelDelta>0) {
+      if(box1.offsetHeight<=100) return;
+      box1.style.height = `${box1.clientHeight-100}px`;
+    }
+    else {
+      box1.style.height = `${box1.clientHeight+100}px`;
+    }
+    /* 取消默认滚动body的行为，注意使用addEventListener无法使用这一招
+    需要使用 event.preventDefault(); */
+    return false;
+  }
+  </script>
+  </body>
+</html>

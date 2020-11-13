@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      #btn {
+        width: 500px;
+        height: 500px;
+        border-style: solid;
+        border-width: 1px;
+      }
+
+      #info {
+        margin-top: 20px;
+        width: 500px;
+        height: 100px;
+        border-style: solid;
+        border-width: 1px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="btn"></div>
+    <div id="info"></div>
+
+    <script type="text/javascript">
+    const btn = document.getElementById("btn");
+    const info = document.getElementById("info");
+
+    /* 光标在节点上方移动事件 */
+    btn.onmousemove = function(event) {
+      event = event || window.event/* 某些浏览其event属于window事件 */
+      let x = event.clientX;/* 鼠标在当前可见域的坐标 */
+      let y = event.clientY;
+
+      info.innerHTML = "x="+x+", y="+y;
+    }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+  </head>
+  <body>
+    <input type="button" id="btn" value="location">
+    <script type="text/javascript">
+    location;/* 该html文件的url路径 */
+
+    btn.onclick = function() {
+      /* 可以更改location，进入该页面会直接读取location并进入 */
+      // location = "http:www.baidu.com";
+      // location.assign("http:www.baidu.com");/* 作用和修改location一样，不加http会成为原url的相对路径 */
+      // location.reload();/* 重新加载，相当于刷新 */
+
+      /* 默认情况下reload和刷新都会读取缓存，比如文本框的值不会删除
+      不想读取缓存可以手动ctrl+F5 */
+      // location.reload(true);/* 等价ctrl+F5 */
+      location.replace("http:www.baidu.com");/* 和assign类似，但不能回退 */
+    }
+    </script>
+  </body>
+</html>

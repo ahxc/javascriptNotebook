@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      #btn {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="btn"></div>
+
+  <script type="text/javascript">
+  const btn = document.getElementById("btn");
+
+  document.onkeydown = function(e) {
+    e = e || window.event;
+
+    // console.log(e.keyCode);/* 查看按键编码：上38，右39，下40，左37 */
+    let speed = 10;
+    switch(e.keyCode){
+      case 37:
+        btn.style.left = `${btn.offsetLeft-speed}px`
+        break;
+      case 38:
+        btn.style.top = `${btn.offsetTop-speed}px`
+        break;
+      case 39:
+        btn.style.left = `${btn.offsetLeft+speed}px`
+        break;
+      case 40:
+        btn.style.top = `${btn.offsetTop+speed}px`
+        break;
+    }
+  }
+  </script>
+  </body>
+</html>

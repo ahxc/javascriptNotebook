@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      #btn {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="btn"></div>
+
+  <script type="text/javascript">
+  const btn = document.getElementById("btn");
+
+  /* 函数3秒后执行且执行一次 */
+  setTimeout(() => {
+    alert("hello world");
+  }, 3000);
+  </script>
+  </body>
+</html>

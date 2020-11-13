@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      #btn {
+        width: 20px;
+        height: 20px;
+        background-color: yellow;
+        border-style: solid;
+        border-width: 1px;
+        position: absolute;/* 开启定位适应style定位设置 */
+      }
+
+      #backgro {
+        width: 500px;
+        height: 500px;
+        background-color: green;
+      }
+
+      body {
+        height: 2000px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="btn"></div>
+    <div id="backgro"></div>
+
+    <script type="text/javascript">
+    const btn = document.getElementById("btn");
+
+    /* 绑定整个文档的光标移动事件 */
+    document.onmousemove = function(event) {
+      /* clientXY以当前可见域左上角为基准，
+      而onmousemove以绑定的元素左上角为基准，
+      因此如果元素大于可见域，经过一定滚动后，该基准不会重合 */
+      // let x = event.clientX;
+      // let y = event.clientY;
+      /* 以pageXY解决这个问题 */
+      let x = event.pageX;
+      let y = event.pageY;
+      console.log(document.documentElement.scrollTop)
+
+      /* 如果非要用clientXY，可以把基准的平移量加在clientXY上 */
+      // 获取垂直滚动条的距离，不同浏览器垂直滚动条的归属对象不同，后者是chrome
+      let l = document.body.scrollTop || document.documentElement.scrollTop;
+      let w = document.body.scrollLeft || document.documentElement.scrollLeft;
+      
+      btn.style.left = `${x}px`;
+      btn.style.top = `${y}px`;
+    }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      #btn {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="btn"></div>
+
+  <script type="text/javascript">
+  const btn = document.getElementById("btn");
+
+  let speed = 10;
+  var code = 0;
+  setInterval(() => {
+    switch(code){
+      case 37:
+        btn.style.left = `${btn.offsetLeft-speed}px`
+        break;
+      case 38:
+        btn.style.top = `${btn.offsetTop-speed}px`
+        break;
+      case 39:
+        btn.style.left = `${btn.offsetLeft+speed}px`
+        break;
+      case 40:
+        btn.style.top = `${btn.offsetTop+speed}px`
+        break;
+      default:
+        break;
+    }
+  }, 30);
+
+  document.onkeydown = function(e) {
+    e = e || window.event;
+    code = e.keyCode;
+  }
+
+  document.onkeyup = function(e) {
+    e = e || window.event;
+    code = 0;
+  }
+  </script>
+  </body>
+</html>

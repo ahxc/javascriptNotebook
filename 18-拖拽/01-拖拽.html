@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      #box1 {
+        width: 100px;
+        height: 100px;
+        background-color: green;
+        position: absolute;
+        z-index: 2;
+      }
+
+      #box2 {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+        z-index: 1;
+        position: absolute;
+        margin: 20px auto;
+      }
+
+      body {
+        height: 3000px;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="box1"></div>
+  <div id="box2"></div>
+
+  <script type="text/javascript">
+  const box1 = document.getElementById("box1");
+  
+  /* 鼠标按下 */
+  box1.onmousedown = function(ed) {
+    ed = ed || window.event;
+    let x = ed.pageX-box1.offsetLeft;
+    let y = ed.pageY-box1.offsetTop;
+
+    /* 鼠标移动 */
+    document.onmousemove = function(eu) {
+      eu = eu || window.event;
+      let left = event.pageX;
+      let top = event.pageY;
+
+      /* 设置元素的偏移量，防止元素左上角总是跟随光标 */
+      box1.style.left = `${left-x}px`;
+      box1.style.top = `${top-y}px`;
+    }
+    return false/* 拖拽元素会进行搜索，false取消 */
+  }
+
+  /* 鼠标松开 */
+  box1.onmouseup = function() {
+    document.onmousemove = null;
+  }
+  </script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      #box1 {
+        width: 500px;
+        height: 500px;
+        background-color: green;
+      }
+
+      #box2 {
+        width: 300px;
+        height: 300px;
+        background-color: yellow;
+      }
+
+      #box3 {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="box1">
+    <div id="box2">
+      <div id="box3"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+  const box1 = document.getElementById("box1");
+  const box2 = document.getElementById("box2");
+  const box3 = document.getElementById("box3");
+
+  /* 事件的委派即当很多元素绑定一个事件时，可将事件绑定到元素的共有父元素
+  触发子元素即可触发父元素事件，事件委派利用了冒泡 */
+  /* 如onclick，绑定祖先元素，点子元素亦可触发 */
+  box1.onclick = function(e) {
+
+  /* 如果某些子元素不想被委派但又位于祖先元素中，可以进行判断分流
+  先获取触发事件的元素对象 */
+  if(e.target.id=="box3") {/* 临时用法，如果子元素过多这个不太好，可以用正则 */
+    alert("我没有被委派")
+  }
+  else {
+    e = event || window.event;
+    e.cancelBubble = true;
+    alert("我是box1");}
+  }
+  </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      #box1 {
+        width: 50px !important;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="box1">
+    <input type="button" onclick="changeMylife()" value="改变人生">
+  </div>
+  <script type="text/javascript">
+  const box1 = document.getElementById("box1")
+
+  /* 内联样式
+  通过js中style属性修改和读取的样式为内联样式，具有较高的优先级
+  但如果样式中还有!important，则内联失效 */
+  function changeMylife() {
+    box1.style.width = `${100}px`
+    box1.style.height = "100px"
+    box1.style.display = `flex`
+    box1.style.alignItems = `center`
+    box1.style.justifyContent = `center`
+    box1.style.backgroundColor = `blue`
+  }
+
+  /* 当前样式
+  既不是限定内联也不限定样式表，只是表示当前样式 */
+  box1.currentStyle/* 只ie支持 */
+  box1.getComputedStyle/* chrome不支持 */
+
+  /* 元素样式属性 */
+  box1.clientHeight/* 可见域高 */
+  box1.offsetHeight/* 真实高度 */
+  box1.offsetParent/* 获取开启定位的父元素，即position开启后的基准元素 */
+  box1.offsetLeft/* 相对基准元素的水平偏移量，距离左边 */
+  box1.offsetTop/* 相对基准元素的垂直偏移量，距离顶部 */
+  box1.scrollHeight/* 整个滚动区域高度 */
+  box1.scrollWidth/* 整个滚动区域高度 */
+  box1.scrollLeft/* 水平滚动距离 */
+  box1.scrollTop/* 垂直滚动距离，随着可见域往下而增加，最大为文档长度减可见域高度(到底)：offsetHeight-clientHeight=offsetTop */
+  /* 可以用于一些位置判断，比如阅读用户协议，到底了才能下一步操作 */
+  </script>
+  </body>
+</html>

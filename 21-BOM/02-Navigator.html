@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+    /* navigator大部分属性已经被抛弃，一般会通过userAgent来判断浏览器信息，
+    其值是一个字符串 */
+    navigator.appName, navigator.userAgent
+
+    ua = navigator.userAgent
+    /* 浏览器的甄别 */
+    if(/Chrome/.test(ua)){
+      console.log("你是谷歌浏览器")
+    }
+    else if(/Firefox/.test(ua)) {
+      console.log("你是火狐浏览器")
+    }
+    </script>
+  </body>
+</html>

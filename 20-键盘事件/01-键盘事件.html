@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    </style>
+  </head>
+  <body>
+  <input id="box1" type="text">
+
+  <script type="text/javascript">
+  const box1 = document.getElementById("box1");
+  
+  /* 键盘事件一般绑定在可获取焦点的对象 */
+
+  /* 按下键盘大多数的按键不松开会持续响应该事件，部分如ctrl键不会持续响应 */
+  box1.onkeydown = function(e) {
+    e = e || window.event;
+    /* 按键的ASCII编码 */
+    // console.log(e.keycode);
+
+    /* ctrl+Z */
+    if(e.keyCode==90 && e.ctrlKey) {
+      console.log("ok");
+      /* altKey，ctrlKey，shiftKey表示是否按下了 */
+    }
+
+    /* 限定数字无法输入，默认是true，取消默认行为 */
+    if(e.keyCode>=48 && e.keyCode<=57) {
+      return false;
+    }
+  }
+
+  /* 按键松开事件 */
+  box1.onkeyup = function(e) {
+    // console.log(2);
+  }
+
+  
+  </script>
+  </body>
+</html>

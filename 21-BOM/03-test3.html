@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+  </head>
+  <body>
+    <a href="./03-History.html">回到history</a>
+    <input id="back" type="button" value="回退">
+    <input id="forward" type="button" value="前进">
+    <input id="jump" type="button" value="跳转">
+
+    <script type="text/javascript">
+    console.log(history.length);
+    
+    const back = document.getElementById("back");
+    const forward = document.getElementById("forward");
+
+    back.onclick = function() {
+      history.back();
+    }
+    forward.onclick = function() {
+      history.forward();
+    }
+    jump.onclick = function() {
+      history.go(2);/* 往前跳转指定数，可以为负 */
+    }
+    </script>
+  </body>
+</html>

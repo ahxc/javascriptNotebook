@@ -41,29 +41,31 @@
     <div id="formDiv">
       <h4>添加新员工</h4>
       <table>
-        <tr>
-          <td class="word">name: </td>
-          <td class="inp">
-            <input type="text" name="empName" id="empName"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="word">email: </td>
-          <td class="inp">
-            <input type="text" name="email" id="email"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="word">salary: </td>
-          <td class="inp">
-            <input type="text" name="salary" id="salary"/>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" align="center">
-            <input type="button" onclick="submitC()" value="提交"/>
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <td class="word">name: </td>
+            <td class="inp">
+              <input type="text" name="empName" id="empName"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="word">email: </td>
+            <td class="inp">
+              <input type="text" name="email" id="email"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="word">salary: </td>
+            <td class="inp">
+              <input type="text" name="salary" id="salary"/>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" align="center">
+              <input type="button" onclick="submitC()" value="提交"/>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
@@ -83,6 +85,7 @@
       let email = document.getElementById("email").value;
       let salary = document.getElementById("salary").value;
       let tabble = document.getElementById("employeeTable");
+      let tbody = tabble.getElementsByTagName("tbody")[0];
 
       let tr = document.createElement("tr");
       let n = document.createElement("td");
@@ -98,11 +101,11 @@
       s.innerHTML = salary;
       d.appendChild(i);
 
-      tr.appendChild(n);
-      tr.appendChild(e);
-      tr.appendChild(s);
-      tr.appendChild(d);
-      tabble.appendChild(tr);
+      tr.innerHTML = "<td>"+name+"</d>"+
+                    "<td>"+email+"</d>"+
+                    "<td>"+salary+"</d>"+
+                    "<td><input type='button' onclick='del(this)' value='删除'/></d>"
+      tbody.appendChild(tr);
     }
     </script>
   </body>
