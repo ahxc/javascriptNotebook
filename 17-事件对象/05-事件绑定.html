@@ -46,7 +46,7 @@
     alert(2);
   }, false);
 
-  /* 封装成绑定函数 */
+  /* 封装成绑定函数，视情况封装 */
   function bind(obj, e, callback) {
     if(obj.addEventListener) {
       obj.addEventListener(e, callback, false);/* 大部分浏览器 */

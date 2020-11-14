@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+      .box_class1 {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+      }
+      /* 类名不支持驼峰和- */
+      .box_class2 {
+        background-color: green;
+        width: 200px;
+        height: 200px;
+      }
+    </style>
+    <script type="text/javascript">
+    window.onload = function() {
+      const box = document.getElementById('box');
+      const btn1 = document.getElementById('btn1');
+      const btn2 = document.getElementById('btn2');
+
+      /* 通过style修改的元素样式，每次修改都要重新渲染页面，性能差
+      而且这种形式要修改多种样式时也不方便 */
+      btn1.onclick = function() {
+        //box.style.width = `${200}px`;
+
+        /* 新方法：修改类名，类似vue动态绑定class，但需要注意id的优先级比class高，
+        因此同名的样式如background-color，仍会执行id的样式。
+        缺点：会覆盖原有的除高优先级意外的样式 */
+        // box.className = "box_class";
+
+        /* class特性，多种class可以一同赋予对象，类名空格隔开，
+        同名的样式会被新样式覆盖 */
+        // box.className = "box_class box_class1"
+        addClass(box, "box_class2");
+      }
+
+      /* 封装为函数 */
+      function addClass(obj, cn) {
+        /* 两边都加上单词边界\b，防止一些类名的重名和局部重名的重复添加和漏添加 */
+        let pattern = new RegExp("\\b"+cn+"\\b");
+        if(pattern.test(obj.className)) return;/* 如果类名中匹配到了cn单词名则不用再添加 */
+        obj.className += " "+cn;
+      }
+
+      /* 利用以上特性和方法删除类名中已添加的类名 */
+      function removeClass(obj, cn) {
+        let pattern = new RegExp("\\b"+cn+"\\b");
+        obj.className = obj.className.replace(pattern, '');
+        obj.className = obj.className.trim()/* 去除空格 */
+      }
+      btn2.onclick = function() {
+        removeClass(box, "box_class2");
+      }
+    }
+    </script>
+  </head>
+  <body>
+  <input id="btn1" type="button" value="改变样式">
+  <input id="btn2" type="button" value="删除样式">
+  <div class="box_class1" id="box"></div>
+  </body>
+</html>

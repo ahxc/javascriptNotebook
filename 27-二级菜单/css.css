@@ -1,0 +1,37 @@
+@charset "utf-8";
+
+.menu {
+  
+}
+
+.menu div span {
+	display: block;
+	background-color: #ddd;
+	color: black;
+	width: 150px;
+	text-align: center;
+	font-size: 20px;
+	height: 30px;
+	border: 1px solid #bfbfbf;
+	cursor: pointer;
+}
+
+.menu div a{
+	display: block;
+	background-color: cornsilk;
+	font-size: 15px;
+	color: black;
+	height: 25px;
+	width: 150px;
+	border: 1px soli #bfbfbf;
+	text-decoration: none;
+}
+
+.menu div a:hover {
+	background-color: rgb(92, 255, 92);
+}
+
+.collapsed {
+	height: 30px;
+	overflow: hidden;
+}
