@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    </style>
+    <script type="text/javascript">
+    /* 数据：存储在存储介质中的信息
+    数据的特点：可传递 */
+
+    /* 内存：
+    栈：全局变量和局部变量，对象名
+    堆：对象
+    内存中所有操作目标：数据，操作：算术运算，逻辑运算，赋值，运行函数 */
+
+    /* 内存数据变量三者之间的关系
+    内存是数据的存储空间，变量是内存的标识 */
+
+    /* 关于赋值和内存的问题 */
+    /* 引用传递 */
+    var obj1 = {"name": "zx"}
+    var obj2 = obj1;/* 引用变量的共享数据，可互相修改属性 */
+    obj1.name = "xz";
+    console.log(obj1, obj2);
+
+    /* 值传递 */
+    var obj3 = {"name": "zx"}
+    var obj4 = obj3;
+    obj3 = {"name:": "xz"}/* 赋值运算覆盖原对象，对象成为垃圾对象，造成引用变量的断裂 */
+    obj4.name = "y"
+    console.log(obj3, obj4)
+    </script>
+  </head>
+  <body></body>
+</html>

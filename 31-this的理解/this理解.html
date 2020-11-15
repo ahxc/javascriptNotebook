@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    </style>
+    <script type="text/javascript">
+    function Person(name, age, gender){
+      this.name = name;
+      this.age = age;
+      this.gender = gender;
+    }
+    const per = new Person("zx", 16, "男");/* per */
+    console.log(this);/* window */
+
+    /* 函数本身都是通过对象来调用，最终对象window，实例化后this就指向实例 */
+
+    const obj = {
+      "func": function() {
+        console.log(this.func);/* window */
+      }
+    }
+
+    obj.func();/* obj */
+    </script>
+  </head>
+  <body></body>
+</html>

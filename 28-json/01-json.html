@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+
+    /* javascript object notation js对象表示法 */
+
+    /* JSON分类：对象，数组
+    json中允许的值，字符串，数值，布尔值，null，普通对象，数组 */
+    const obj1 = '{"name": "zx", "age": 19, "boolean": true, "null": null, "array":[1,2,3]}';
+
+    /* 将json字符串转换为js对象 */
+    const obj2 = JSON.parse(obj1);
+
+    /* 将js普通对象转换为json字符串 */
+    JSON.stringify(obj2);
+
+    /* 使用eval执行js字符串代码，开发中一般不适用，性能差 */
+    const obj3 = "alert('hello world');"
+    eval(obj3);
+    </script>
+  </head>
+  <body></body>
+</html>
