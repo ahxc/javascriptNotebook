@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    </style>
+    <script type="text/javascript">
+    /* Map是一组键值对的结构，具有极快的查找速度。初始化Map需要一个二维数组，
+    或者直接初始化一个空Map。一个键只对应一个值 */
+    const m = new Map([["1", 1], ["2", 2], ["3", 3]]);
+    
+    /* map有关方法 */
+    m.set("4", 4);/* 插入新值 */
+    m.has('1');/* ture，是否有1这个键 */
+    m.get("1");/* 获取1对应的值 */
+    m.delete("1");/* 删除1 */
+    m.set("4", 4)/* 键不重复，新值覆盖旧的值 */
+
+    /* set和map类似，但不存储值，由于键不重复，因此set无重复值，重复值会自动过滤 */
+    const s = new Set([1, 2, 3, 4, '5'])
+    s.add(4);
+    s.delete(4);
+    s.has("5");
+
+    /* map和set是ES6标准新增的数据类型，map的回调函数参数依次是：
+    值，键，和它本身 */
+    m.forEach((v, k, map) => {
+      console.log(v, k, map)
+    })
+    </script>
+  </head>
+  <body></body>
+</html>

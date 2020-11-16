@@ -23,6 +23,8 @@ true || false
 /* undefined */
 const a = null/* 空 */
 const b = undefined/* 未定义 */
+/* undefined与null的区别
+    undefined表示已定义未赋值，null表示赋值空 */
 
 /* 基本数据类型
 String，Number，Boolean，Null，undefined

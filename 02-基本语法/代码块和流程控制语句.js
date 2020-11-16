@@ -22,6 +22,11 @@ while(true && false) {}
 
 /* for循环 */
 for (const a=0; a<10; a++) {}
+/* es6新语法 */
+const a = [1,2,3,4,5];
+for(let i of a) {
+  console.log(i);
+}
 
 /* break和continue */
 /* break和continue只存在循环和switch语句中 */
