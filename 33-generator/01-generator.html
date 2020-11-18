@@ -7,6 +7,34 @@
     /* generator（生成器）是ES6标准引入的新的数据类型。
     一个generator看上去像一个函数，但可以返回多次。借鉴了python的generator */
     
+    /* 函数在执行过程中，如果没有遇到return语句，就是隐含的return undefined，
+    控制权无法交回被调用的代码。 */
+
+    /* generator定义过程，斐波那契数列 */
+    function* fib(max) {
+      var
+          t,
+          a = 0,
+          b = 1,
+          n = 0;/* 步骤计数器 */
+      while (n < max) {
+          yield a;/* 关键步骤，和python的yield一样，相当于return，记录了当前的位置返回一个连续的对象 */
+          [a, b] = [b, a + b];
+          n++;
+      }
+      return;
+    }
+
+    /* 调用方法一 */
+    const f = fib(5);
+    /* {value:,done:}每一步骤的done：false表示这个生成器还没执行完 */
+    console.log(f.next(), f.next(), f.next(), f.next(), f.next());/* 0,1,1,2,3，done:false */
+
+    /* 调用方法二for循环
+    该方法直接返回生成结果值，不需要判断done */
+    for(let i of fib(10)) {
+      console.log(i)
+    }
     </script>
   </head>
   <body>

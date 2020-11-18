@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+    /* 数组的解构赋值
+    数组解构相对而言索引更合理 */
+    const arr = [1,2,3,4];
+    let [a,b,c,d] = arr;
+
+    const arr1 = [1,2,3];
+    const arr2 = ['a', 'b'];
+    const arr3 = ['zz', 1];
+    const arr4 = [arr1, arr2, arr3];
+    const arr4 = [...arr1, ...arr2, ...arr3];
+
+    /* 对象的解构赋值 */
+    const { a, b } = {a:1, b:2}
+
+    const obj = {
+      name: 'da',
+      age: '12'
+      };
+    const { name, age } = obj;
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
