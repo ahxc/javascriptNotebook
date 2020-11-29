@@ -24,10 +24,11 @@
     s.has("5");
 
     /* map和set是ES6标准新增的数据类型，map的回调函数参数依次是：
-    值，键，和它本身 */
-    m.forEach((v, k, map) => {
-      console.log(v, k, map)
+    值，键，和它本身，map方法参数必须是函数 */
+    m.forEach((v, k, each) => {
+      console.log(v, k, forEach)
     })
+    m.map((v,k,m)=>{console.log(v,k,m)})/* 返回一个处理过后的新数组 */
     </script>
   </head>
   <body></body>

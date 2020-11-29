@@ -23,7 +23,8 @@
     const per2 = new Person('qx', '18', '男')
 
     /* 原型的属性或方法定义 */
-    per1.__proto__.pname = "zx"/* 隐式原型，实例化时自动添加，默认值为构造函数的protype属性值 */
+    per1.__proto__.pname = "zx"
+    /* 隐式原型，实例化时自动添加，默认值为构造函数的protype属性值 */
     Person.prototype.tname = "xz"/* 显示原型，在定义函数时自动添加，默认为空object */
     /* 函数对象和他的所有子实例共用原型，但不影响全局作用域 */
     console.log(per1.pname, per2.pname, Person.prototype.pname)/* zx, zx, zx */

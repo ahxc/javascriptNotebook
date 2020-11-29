@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+    /* async是异步解决方法，用于解决函数回调地狱
+    其中await能等待promise对象执行完成变为请求的数据
+    使用方式：
+    位置：需要请求数据的页面中，
+    */
+
+    /* 注意：不是所有请求都需要使用async */
+
+    /* 1.定义 */
+    async function func() {
+      this.res=await request();
+    }
+    /* 2.调用 */
+    this.func()
+
+    /* vue中的使用，参考max-find.vue页面 */
+
+    /* 小程序中的使用，参考UGo category的js页面
+    1. 在⼩程序的开发⼯具中，勾选es6转es5语法
+    2. 下载 facebook的regenerator库中的 regenerator/packages/regenerator-runtime/runtime.js
+    3. 在⼩程序⽬录下新建⽂件夹 lib/runtime/runtime.js ，将代码拷⻉进去
+    4. 在每⼀个需要使⽤async语法的⻚⾯js⽂件中，都引⼊（不能全局引⼊）
+    import regeneratorRuntime from '../../lib/runtime/runtime';*/
+    </script>
+  </head>
+  <body>
+    <a href="https://github.com/facebook/regenerator/blob/5703a79746fffc152600fdcef46ba9230671025a/packages/regenerator-runtime/runtime.js">
+    下载地址
+    </a>
+  </body>
+</html>

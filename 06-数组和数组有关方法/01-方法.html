@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+    const l = [1,2,3,4,5,6,7,8,9,10];
+
+    /* forEach
+    需要对象的回调函数做参数，array的回调函数参数一次是：
+    元素，索引，array本身，大多对象通常都是这个论调 */
+    l.forEach((i, j, m)=>{
+      console.log(i, j, m);
+    });
+
+
+    /* slice和splice */
+    /* slice切片，不包括2，从3开始包括3 */
+    console.log(l.slice(0, 2), l.slice(3))
+    /* splice删除，包括3，直接影响数组，参数：索引开始位置，个数 */
+    console.log(l.splice(1,3))
+
+    /* concat */
+    const l1 = [1,2,3,4,5,6,7,8,9,10];
+    const l2 = [123,324,25,346,234];
+    /* 连接两个数组，只返回结果不影响原数组 */
+    console.log(l1.concat(l2), l1)
+
+    /* reverse
+    反转数组，影响原数组 */
+    console.log(l1.reverse())
+
+    /* sort
+    排序，影响原数组，默认按unicode排序，所以对数字的排序可能有错 */
+    console.log(l1.sort())
+    /* sort自定义排序规则函数，函数返回正，0，负即可
+    返回正交换位置，返回0或负皆不换位置，*/
+    // 升序：
+    console.log(l1.sort((a, b)=>{return a-b}))
+    // 降序：
+    console.log(l1.sort((a, b)=>{return b-a}))
+
+    /* findIndex 
+    传入一个测试条件（函数）接收第一个返回true的位置后续不再执行，然后返回该位置的索引
+    没有符合的则返回-1 */
+    l1.findIndex(i=>{i>5})
+
+    /* every 
+    接收一个回调函数，遍历每个元素如果为true，则every为true，有一个为false则返回false*/
+    /* 注意：空数组直接放回true */
+    l1.every(i=>i>5)/* false */
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

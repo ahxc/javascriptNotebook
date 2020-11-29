@@ -10,6 +10,14 @@
       alert("Hello world!");7
       document.write("Hello world!");
       console.log("Hello world!");
+
+      function Person(){}
+      Person.prototype.friend = [];
+      Person.prototype.name = '';
+      var a = new Person();
+      a.friend[0] = '王琦';
+      var b = new Person();
+      console.log(b.friend[0]);//Array [ "王琦" ]
     </script>
   </head>
   <body>
