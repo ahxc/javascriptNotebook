@@ -44,7 +44,7 @@
   /* 添加事件监听的方式绑定 */
   box1.addEventListener("click", function() {
     alert(2);
-  }, false);
+  }, false);/* 是否关闭冒泡，默认false */
 
   /* 封装成绑定函数，视情况封装 */
   function bind(obj, e, callback) {

@@ -7,9 +7,9 @@
     /* 定义全局函数有时会污染全局作用域的命名空间，因此使用原型 */
 
     /* js分为函数对象和普通对象，
-    每个对象都有__proto__属性，但是只有函数对象才有prototype属性 */
+    每个对象都有__proto__属性，但是只有函数对象才有prototype属性，函数有两个原型 */
     
-    /* prototype好比对象的公共区域，可以定义一些公共属性，无定义为undefined
+    /* 原型好比对象的公共区域，可以定义一些公共属性，无定义为undefined
     js是基于原型对象的，原型也是一个对象，通过原型可以实现对象的属性继承 */
 
     // 函数对象
@@ -23,9 +23,10 @@
     const per2 = new Person('qx', '18', '男')
 
     /* 原型的属性或方法定义 */
-    per1.__proto__.pname = "zx"
     /* 隐式原型，实例化时自动添加，默认值为构造函数的protype属性值 */
-    Person.prototype.tname = "xz"/* 显示原型，在定义函数时自动添加，默认为空object */
+    per1.__proto__.pname = "zx"
+    /* 显示原型，在定义函数时自动添加，默认为空object */
+    Person.prototype.tname = "xz"
     /* 函数对象和他的所有子实例共用原型，但不影响全局作用域 */
     console.log(per1.pname, per2.pname, Person.prototype.pname)/* zx, zx, zx */
     console.log(per1.tname, per2.tname, Person.prototype.tname)/* xz, xz, xz*/

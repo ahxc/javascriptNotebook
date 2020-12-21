@@ -39,22 +39,24 @@
   当点击最上层的元素时，事件响应会由上往底层传递，称为冒泡 */
 
   /* 取消冒泡*/
-  box1.onclick = function(e) {
+  box1.onclick = function() {//event已弃用
     e = event || window.event;
     e.cancelBubble = true;
     alert("我是box1");
   }
 
-  box2.onclick = function(e) {
+  box2.onclick = function() {
     e = event || window.event;
     e.cancelBubble = true;
     alert("我是box2");
   }
 
-  box3.onclick = function(e) {
+  box3.onclick = function() {
     e = event || window.event;
     e.cancelBubble = true;
     alert("我是box3");
+
+    e.preventDefault();//阻止默认行为
   }
 
   /* 在开发中，事件冒泡有一些意义，比如02小节在一些元素中移动鼠标
