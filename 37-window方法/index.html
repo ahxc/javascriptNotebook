@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <a href="javascript:void(0)" onclick="window.open(url)" />
+        <script>
+            window.getComputedStyle(element, pseudoElement);
+            // 和el.style一致，但getComputedStyle是其超集，style只管内联样式，可修改。而get是最终样式
+            // 包括内联，外部，内部样式。但只读不改。pseudoElement表示element的伪元素如:after，:before等
+
+            window.open(URL, name);
+            // url，是资源链接，同行open都是用于下载链接，name可以是target属性或窗口（iframe）名称：
+            // _blank：加载URL使用一个新窗口
+            // _parent：使用父窗口
+            // _self：替换当前页面
+            // _top：替换任何可加载的框架集
+            // name：窗口名称如 id="zx"，则为zx
+
+            // 解决open弹窗被阻止
+            // 原因：用户所发起的弹窗是不会被阻止的，比如onclick事件，但如果延迟过高，仍会被阻止。ie不管延迟与否都会被阻止，除非手动解除限制。
+            /* 解决办法1 */
+            var form = document.createElement("form");
+            form.action = "www.baidu.com";
+            form.target = "_blank";
+            form.method = "POST";
+            document.body.appendChild(form);
+            form.submit();
+            // 如果要传递参数，则需要用post方法。ajax下载文件就是form表单模拟的。
+
+            /* 解决办法2，直接将打开窗口操作放在按钮中，如上面的a标签，href是将a标签变为单纯的按钮功能但保存a标签的样式 */
+
+            /* 解决办法3，延迟打开操作，延迟太短也会被阻止。 */
+            setTimeout(() => {
+                window.open(url);
+            }, 500);
+
+            /* 解决办法4，先打开空白页面，然后填入地址 */
+            var t = window.open("_blank");
+            t.location = "http://www.baidu.com";
+
+            // 本身不想要弹窗的情况（下载资源闪烁一个弹窗）
+            /* 解决方法1，新建一个内联框架作为新窗口 */
+            var f = document.createElement("iframe");
+            iframe.innerhtml = "";
+            f.style.display = "none";
+            body.appendChild(f);
+            window.open(url, "zx");
+        </script>
+    </body>
+</html>

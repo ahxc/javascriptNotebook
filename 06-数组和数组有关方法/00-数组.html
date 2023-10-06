@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title></title>
-    <script type="text/javascript">
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript">
     /* 数组属于内建对象 */
 
     /* 于普通对象不同，普通对象使用字符串作为属性名索引，
     数组使用数字来作为元素名，索引从0开始
     数组存储性能比普通对象要好，经常作为数据存储 */
-    const l = [1,2,3,4];
+    const l = [1, 2, 3, 4];
 
     /* 连续数组长度等于元素个数 */
     console.log(l.length);/* 4 */
 
     /* 非连续数组长度为最大索引加1，非连续位置无任何元素 */
-    l[8] = 8
+    l[8] = 8;
     console.log(l.length);/* 9 */
 
     /* 修改length，大于长度空出位置，小于长度修剪位置 */
     l.length = 20;
 
+    // 都影响原数组。
     /* 末尾添加一个或多个元素 */
     l[l.length] = 0;
     l.push(1);
@@ -30,8 +32,10 @@
     l.unshift(1);
     /* 删除并返回开头一个元素 */
     l.shift();
-    </script>
-  </head>
-  <body>
-  </body>
+  </script>
+</head>
+
+<body>
+</body>
+
 </html>

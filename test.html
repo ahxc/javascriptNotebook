@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    >
+    <title>Document</title>
+</head>
+<style>
+    .a {
+        list-style-type: none;
+    }
+</style>
+
+<body>
+    <script>
+        const Person = function name(params) {
+            console.log(this.constructor);
+            this[0].Prototype.friend = [];
+        };
+        var a = new Person();
+        a.friend[0] = '王琦';
+        var b = new Person();
+        console.log(b.friend);// Array ["王琦"]
+
+        var b = new B();
+        b.__proto__ = B.prototype;//是判断条件也是实例化方式
+        B.call(b);// new的核心。将属性添加给person中的this对象
+    </script>
+</body>
+
+</html>

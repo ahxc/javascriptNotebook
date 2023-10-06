@@ -22,9 +22,25 @@
     forward.onclick = function() {
       history.forward();
     }
+    // 跳转记录
     jump.onclick = function() {
       history.go(2);
     }
+    // 跳转指定路由
+    let path ='/test'
+    history.push(path)
+    // 路由替换
+    history.replace(path)
+
+    // 监听loaction的变化
+    history.listen(location=>{console.log('地址栏发生了变化')})
+
+    /* 路由基石即基于不同history种类： */
+    // h5自带history
+    let history = History.createBrowserHistory()
+
+    // hash history
+    let history = History.createHashHistory()
     </script>
   </body>
 </html>

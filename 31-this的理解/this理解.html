@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title></title>
-    <style>
-    </style>
-    <script type="text/javascript">
-    function Person(name, age, gender){
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+  </style>
+  <script type="text/javascript">
+    function Person(name, age, gender) {
       this.name = name;
       this.age = age;
       this.gender = gender;
@@ -14,16 +15,64 @@
     const per = new Person("zx", 16, "男");/* per */
     console.log(this);/* window */
 
-    /* 函数本身都是通过对象来调用，最终对象window，实例化后this就指向实例 */
+    /* 
+    函数本身都是通过对象来调用，最终对象window，函数严格模式下是undefined，反之window。
+    实例化后this指向实例，因为内部的call。
+    settimeout因为是全局函数，同时又是window方法，因此指向window */
 
+    /* 第一法则：谁调用就指向谁。 */
+    /* 箭头函数没有this，this指向父级定义域，不是调用对象，如果父级无this，再往上查找 */
     const obj = {
-      "func": function() {
+      "func": function () {
         console.log(this.func);/* window */
       }
-    }
-
+    };
     obj.func();/* obj */
-    </script>
-  </head>
-  <body></body>
+
+    const obj = {// 注意：定义在对象里的this无法指向对象，因为对象内部没有作用域概念。
+      // 总结一句，this的指向追根溯源遇到匿名函数 function 就是 window
+      aaa() {
+        setTimeout(function () {
+          setTimeout(function () {
+            console.log(1, this); // window，函数最终都是被window调用
+          });
+          console.log(2, this); // window
+          setTimeout(() => {
+            console.log(3, this); // window
+          });
+        });
+        console.log(4, this);// aaa // aaa调用
+        setTimeout(() => {
+          // 第四个指向了这一层，这一层指向aaa，aaa的作用域在obj
+          setTimeout(function () {
+            console.log(5, this); // window 被命名函数调用指向window
+          });
+          console.log(6, this); // aaa，箭头函数被aaa调用，指向调用层aaa
+          setTimeout(() => {
+            console.log(7, this); // aaa，箭头函数被箭头函数调用，指向调用层aaa
+          });
+        });
+      }
+    };
+    obj.aaa()
+  </script>
+  <script>
+    "use strict";//无论是否匿名，严格模式下函数this都为undefined
+    function thisCheck(params) {
+      console.log('this is:', this);
+    }
+    thisCheck();
+
+    class ThisClassCheck {
+      thisCheck() {
+        console.log('class this is:', this);
+      }
+    }
+    const a = new ThisClassCheck();
+    a.thisCheck();//通过实例调用，因此指向ThisClassCheck
+  </script>
+</head>
+
+<body></body>
+
 </html>

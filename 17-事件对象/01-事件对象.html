@@ -24,19 +24,27 @@
   <body>
     <div id="btn"></div>
     <div id="info"></div>
+    <!-- this指向DOM element对象 -->
+    <div onclick="handleClick(this)">你好</div>
 
     <script type="text/javascript">
-    const btn = document.getElementById("btn");
-    const info = document.getElementById("info");
+      const btn = document.getElementById("btn");
+      const info = document.getElementById("info");
 
-    /* 光标在节点上方移动事件 */
-    btn.onmousemove = function(event) {
-      event = event || window.event/* 某些浏览其event属于window事件 */
-      let x = event.clientX;/* 鼠标在当前可见域的坐标 */
-      let y = event.clientY;
+      /* 光标在节点上方移动事件 */
+      btn.onmousemove = function(event) {
+        event = event || window.event/* 某些浏览器event属于window事件 */
+        let x = event.clientX;/* 鼠标在当前可见域的坐标 */
+        let y = event.clientY;
 
-      info.innerHTML = "x="+x+", y="+y;
-    }
+        info.innerHTML = "x="+x+", y="+y;
+      }
+
+      /* 内联事件 */
+      function handleClick(t) {
+        e = event || window.event
+        console.log(e, t)      
+      }
     </script>
   </body>
 </html>

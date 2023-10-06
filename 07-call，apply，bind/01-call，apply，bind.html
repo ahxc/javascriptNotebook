@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title></title>
-    <script type="text/javascript">
-    const obj1 = {n:"zx"};
-    const obj2 = {n:"xz"};
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript">
+    const obj1 = { n: "zx" };
+    const obj2 = { n: "xz" };
     /* call和apply函数对象调用的方法，可将对象做为参数传入函数，
-    并将this指向参数对象，即改变上下文 */
+    !并将this指向参数对象，即改变上下文 */
 
     /* fun()函数调用时会隐式的传送一个this，该this指向window
     前提是不用new创建实例，如果用new，则指向新实例。 */
@@ -20,14 +21,19 @@
     fun.call(obj1);/* zx */
     fun.apply(obj2);/* xz */
     fun.bind(obj2)();/* xz */
-    /* bind会创建一个新函数，并于该函数绑定 */
+    /* bind会创建一个新函数，并与该函数绑定，绑定多次只this第一个bind，但new
+    生成的实例能改变指向。 */
+    let i = new fn();/* 重新指向了新实例fun本身，先前指向obj2
+    即new的优先级大于bind */
 
     /* call和apply的区别在于接收参数的方式不同 */
     fun(this, 1, 2);
     fun.call(obj1, 1, 2);
     fun.apply(obj2, [1, 2]);
-    </script>
-  </head>
-  <body>
-  </body>
+  </script>
+</head>
+
+<body>
+</body>
+
 </html>

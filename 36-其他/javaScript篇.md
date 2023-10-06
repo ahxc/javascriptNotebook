@@ -1,6 +1,6 @@
 ### typeof运算符和instanceof运算符以及isPrototypeOf方法的区别
 
-typeof表示`number`, `string`, `object`, `boolean`, `function`, `undefined`, `symbol` 这七种类型的查找，但是对于正则表达式、日期、数组这些**引用数据类型**，它会全部识别为object，不会识别到是哪个object。判别原理：根据存储的二进制前三位：
+typeof表示 `number`, `string`, `object`, `boolean`, `function`, `undefined`, `symbol` 这七种类型的查找，但是对于正则表达式、日期、数组这些**引用数据类型**，它会全部识别为object，不会识别到是哪个object。判别原理：根据存储的二进制前三位：
 
 000对象，1整数，010浮点数，100字符串，110布尔，特殊情况：undefined用(-2^30)表示，null全是零。
 
@@ -76,20 +76,14 @@ eval()只有一个参数，接受一个**js代码的字符串形式**。
 **null **表示"没有对象"，即该处不应该有值，转为数值时为0。
 
 1. 作为函数的参数，表示该函数的参数不是对象。
-
 2. 作为对象原型链的终点。
-
 
 **undefined** 表示应该有一个值但还没有定义，转为数值时为 NaN。抽象的说就是缺少字面量。
 
 1. 变量被声明了，但没有赋值时，就等于 undefined。
-
 2. 调用函数时，应该提供的参数没有提供，该参数等于 undefined。
-
 3. 对象没有赋值的属性，该属性的值为 undefined。
-
 4. 函数没有返回值时，默认返回 undefined。
-
 
 **undeclared** 表示js语法错误，变量没有申明也没有变量提升直接使用，js无法找到对应的上下文。
 
@@ -114,9 +108,7 @@ eval()只有一个参数，接受一个**js代码的字符串形式**。
 事件按照从最特定的事件目标到最不特定的事件目标的顺序触发。
 
 1. 只有祖先元素绑定事件，从底往上传递
-
 2. 每个元素都绑定，从上（触发事件的最初元素）往底传递
-
 
 ### 事件捕获
 
@@ -153,6 +145,8 @@ function (e){
 }
 ```
 
+**注意**：阻止默认行为不会阻止事件传递。
+
 ### 简述javascript中this的指向
 
 **第一准则是**：this永远指向函数运行时所在的对象，而不是函数被创建时所在的对象。
@@ -170,9 +164,9 @@ function (e){
 
 ### 基本数据类型和引用数据类型
 
-**基本数据类型**指的是简单的数据段，有5种，包括`null、undefined、string、boolean、number`；
+**基本数据类型**指的是简单的数据段，有5种，包括 `null、undefined、string、boolean、number`；
 
-**引用数据类型**指的是有多个值构成的对象，包括`object、array、date、regexp、function`等。
+**引用数据类型**指的是有多个值构成的对象，包括 `object、array、date、regexp、function`等。
 
 **主要区别：**
 
@@ -304,32 +298,11 @@ arguments虽然有一些数组的性质，但其并非真正的数组，只是�
 
 ### JavaScript的同源策略
 
-**协议**（protocol），**端口**（如果指定），**主机**（域名）相同的两个页面是属于同一个源。 IE中没有将**端口**加入同源的条件中。 `<script> <img> <iframe>`中的`src，href`都可以任意链接网络资源，**不遵循通源策略**。
+**协议**（protocol），**端口**（如果指定），**主机**（域名）相同的两个页面是属于同一个源。 IE中没有将**端口**加入同源的条件中。 `<script> <img> <iframe>`中的 `src，href`都可以任意链接网络资源，**不遵循通源策略**。
 
 ### JSONP的工作原理以及它为什么不是真正的AJAX
 
 JSONP（JSON with Padding）是一个简单高效的跨域方式，HTML中的 script 标签可以加载并执行其他域的 javascript，于是我们可以通过script标记来动态加载其他域的资源。例如我要从域A的页面pageA加载域B的数据，那么在域B的页面pageB中我以JavaScript的形式声明pageA需要的数据，然后在 pageA中用script标签把pageB加载进来，那么pageB中的脚本就会得以执行。JSONP在此基础上加入了回调函数，pageB加载完之后会执行pageA中定义的函数，所需要的数据会以参数的形式传递给该函数。JSONP易于实现，但是也会存在一些安全隐患，如果第三方的脚本随意地执行，那么它就可以篡改页面内容，截获敏感数据。但是在受信任的双方传递数据，JSONP是非常合适的选择。
-
-### 通过new创建一个对象的时候，构造函数内部有哪些改变
-
-查看typeof章节new实例化的构建过程。
-
-```javascript
-var a = new Person();
-a.friend[0] = '王琦';
-var b = new Person();
-console.log(b.friend);// Array ["王琦"]
-
-var b= new B();
-b.__proto__ = B.prototype;//是判断条件也是实例化方式
-B.call(b);// new的核心。将属性添加给person中的this对象
-```
-
-1. 创建一个新对象，如：var person = {};
-2. 新对象的_proto_属性指向构造函数的原型对象。
-3. 将构造函数的作用域赋值给新对象。（call回调b将this指向b）
-4. 执行构造函数内部的代码，将属性添加给person中的this对象。
-5. 返回新对象person。
 
 ### 闭包及其使用场景
 
@@ -337,9 +310,9 @@ B.call(b);// new的核心。将属性添加给person中的this对象
 
 **使用场景**
 
-​	立即执行函数(func)(参数)：可用于闭包，防止函数名污染命名空间
+    立即执行函数(func)(参数)：可用于闭包，防止函数名污染命名空间
 
-​	原生JS的模块化，与以往导入js不同，这里引用的js都封装在了moduleA中
+    原生JS的模块化，与以往导入js不同，这里引用的js都封装在了moduleA中
 
 ```javascript
 var moduleA = moduleA();
@@ -356,13 +329,13 @@ var moduleA = moduleA();
 解决原理：把请求封装成函数加入一个延时器，如果再次来了请求，清除前一个延时器，再创建一个新延时器。
 
 ```javascript
-// 简单用法
+// 简单用法，立即执行
 clearTimeout(this.timer);
 this.timer = setTimeout(() => {
 	this.getSearch({query: value})
 }, 1000);
 
-// 高级封装
+// 高级封装，返回函数
 function debounce(fn, interval = 300) {
     let timeout = null;
     return function () {
@@ -377,20 +350,20 @@ function debounce(fn, interval = 300) {
 ### 有关this的经典题目
 
 ```javascript
-function Timer() {
-  this.s1 = 0;
-  this.s2 = 0;
-  setInterval(() => this.s1++, 1000);
-  setInterval(function () {
-    this.s2++;
-  }, 1000);
-}
+// 如果你只想执行一次 setInterval 可以使用 setTimeout() 方法
+        function Timer() {
+            this.s1 = 0;
+            this.s2 = 0;
+            setInterval(() => this.s1++, 1000); // +1
+            setInterval(function () {
+                this.s2++; // window对象，无s2属性
+            }, 1000);
+        }
 
-var timer = new Timer();
-setTimeout(() => console.log('s1: ', timer.s1), 3100);
-setTimeout(() => console.log('s2: ', timer.s2), 3100);
+        var timer = new Timer(); // +1
+        setTimeout(() => console.log('s1: ', timer.s1), 3100); // +1
+        setTimeout(() => console.log('s2: ', timer.s2), 3100); // +1
 
-// s1: 3
-// s2: 0
+        // s1: 3
+        // s2: 0
 ```
-
