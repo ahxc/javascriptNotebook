@@ -354,7 +354,7 @@ function debounce(fn, interval = 300) {
         function Timer() {
             this.s1 = 0;
             this.s2 = 0;
-            setInterval(() => this.s1++, 1000); // +1
+            setInterval(() => this.s1++, 1000);
             setInterval(function () {
                 this.s2++; // window对象，无s2属性
             }, 1000);

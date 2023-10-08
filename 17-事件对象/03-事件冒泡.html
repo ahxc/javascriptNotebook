@@ -26,9 +26,15 @@
 </head>
 
 <body>
-  <div id="box1">
-    <div id="box2">
-      <div id="box3"></div>
+  <div
+    id="box1"
+    onmouseover="mouseover()"
+  >1
+    <div
+      id="box2"
+      onmouseover="mouseover2()"
+    >2
+      <div id="box3">3</div>
     </div>
   </div>
 
@@ -37,19 +43,34 @@
     const box2 = document.getElementById("box2");
     const box3 = document.getElementById("box3");
 
-    /* 事件的冒泡，即当若干元素重叠，且每个元素都绑定了onclick事件，
+    function mouseover(params) {
+      e = event || window.event;
+      e.cancelBubble = true;
+      e.preventDefault();
+      console.log('冒泡的用处，hover事件');
+    }
+
+    function mouseover2(params) {
+      e = event || window.event;
+      e.cancelBubble = true;
+      e.preventDefault();
+      console.log('组织了冒泡');
+    }
+
+    /* 事件的冒泡，即当若干元素重叠，
     当点击最上层的元素时，事件响应会由上往底层传递，称为冒泡 */
 
-    /* 取消冒泡*/
+    /* 取消冒泡，作用域在当前方法内，如取消box2的冒泡需要去box2的onclick内定义 */
     box1.onclick = function () {//event已弃用
       e = event || window.event;
-      //e.cancelBubble = true;
+      e.cancelBubble = true;
+      e.preventDefault();
       alert("我是box1");
     };
 
     box2.onclick = function () {
       e = event || window.event;
-      //e.cancelBubble = true;
+      e.cancelBubble = true;
       alert("我是box2");
     };
 
