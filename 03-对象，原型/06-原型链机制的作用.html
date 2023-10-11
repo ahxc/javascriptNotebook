@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // instanceof 作用，a instanceof b，a 是否为 b 的子实例
+    // 原理：对象 R 的显示原型是否存在于 实例 L 的原型链上
+    function instance_of(L, R) {
+      // 验证如果为其他基本数据类型，就直接返回 false
+      const baseType = ['string', 'number', 'boolean', 'undefined', 'symbol']; // 后续加了个 bigInt
+      if (baseType.includes(typeof (L))) {
+        return false;
+      }
+
+      let RP = R.prototype;  // 取 R 的显示原型
+      L = L.__proto__; // 取 L 的隐式原型
+      while (true) {
+        if (L === null) { // 找到最顶层
+          return false;
+        }
+        if (L === RP) { // 严格相等
+          return true;
+        }
+        L = L.__proto__;  // 没找到继续向上一层原型链查找
+      }
+    }
+
+    // isPrototypeOf 作用，a.isPrototypeOf(b)，a 是否为 b 的原型对象。
+    // 原理：判断原型对象 Person.prototype 是否在 per1 的原型链上。
+    const Person = function Person(name, age, gender) {
+      this.name = name;
+      this.age = age;
+      this.gender = gender;
+      this.text = 'zx';
+    };
+
+    const per1 = new Person('zx', '18', '男');
+    console.log(Person.prototype.isPrototypeOf(per1)); // true
+
+    function isPrototypeOf(P, O) {
+      // 排除基本数据类型
+      const baseType = ['string', 'number', 'boolean', 'undefined', 'symbol'];
+      if (baseType.includes(typeof (P))) {
+        return false;
+      }
+      while (true) {
+        O = O.__proto__;
+        if (P === O) {
+          return true;
+        }
+
+        if (O === null) {
+          return false;
+        }
+      }
+    }
+    console.log(isPrototypeOf(Person.prototype, per1)); // true
+  </script>
+</body>
+
+</html>

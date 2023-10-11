@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    >
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // hash
+        // 通过修改hash值来触发 hashchange事件，然后配置路由渲染对应的组件。
+
+        // history
+        history.back(); // 后退1级
+        history.forward(); 前进1级;
+        history.go(n); // 前进n级或-n级。n为0刷新当前页面。
+        history.pushState(data, [title], [url]); // 追加历史记录
+        history.replaceState(data, [title], [url]); // 替换历史记录
+        window.onpopstate(); // back，forward，go会触发该回调函数。
+        // history 页面可能会404，这是因为前端路由地址刷新后可能和后端接口地址不匹配。处理办法是重定向，或则配置地址。
+
+        location.reload(); // 刷新
+        location.replace('url'); // 跳转，不能使用前进后退。
+        location.href = 'url'; // 跳转
+
+        // location: {
+        //     ancestorOrigins;
+        //     assign;
+        //     hash;
+        //     host;
+        //     hostname;
+        //     href;
+        //     origin;
+        //     pathname;
+        //     port;
+        //     protocol;
+        //     reload;
+        //     replace;
+        //     search;
+        //     toString;
+        //     valueOf;
+        // }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script>
+    // 什么是原型：
+    // 原型就是一个对象。
+    // 原型作用：
+    // 1.定义全局函数有时会污染全局作用域的命名空间，因此使用原型
+    // 2.原型好比对象的公共区域，可以定义一些公共属性和方法。
+
+    // js是面相对象的编程语言，分为函数对象和普通对象，
+    // 每个对象都有__proto__隐式原型，只有函数对象有 prototype 显示原型。函数有两个原型，隐式原型通常指向 native code，内置函数。
+    // 只要是实例化，实例的隐式原型就会指向构造函数的显示原型————一个普通对象，包含一个指向构造函数自身的方法constructor。
+    const Person = function Person(name, age, gender) {
+      this.name = name;
+      this.age = age;
+      this.gender = gender;
+      this.text = 'zx';
+    };
+
+    const per1 = new Person('zx', '18', '男');
+    const per2 = new Person('zxx', '28', '男');
+
+    // per1.pname = 'z';
+    // per1.__proto__.pname = "p";
+    // per1.__proto__.__proto__.pname = "pp";
+    // Person.prototype.pname = "zxx";
+    // Person.prototype.tname = "xz";
+    // console.log('指向:', per1.pname, per1.__proto__.pname, per1.__proto__.__proto__.pname, per2.pname, Person.prototype.pname);
+    /* z, zxx, pp, zxx, zxx */
+
+    // 普通对象;
+    console.log('per1:', per1);
+
+    // 普通对象，指向构造函数person的prototype，per1.__proto__ === Person.prototype，这个等式说明Person实例化了per1
+    console.log('per1.__proto__:', per1.__proto__);
+
+    // 全局对象，指向数据类型构造函数Object.prototype，per1.__proto__.__proto__ === Object.prototype，这个等式说明Object实例化了Person.prototype
+    console.log('per1.__proto__.__proto__:', per1.__proto__.__proto__);
+
+    // 全局普通对象隐式原型为Null。
+    console.log('per1.__proto__.__proto__.__proto__:', per1.__proto__.__proto__.__proto__);
+
+    // 普通对象没有显式原型，undefined
+    console.log('per1.__proto__.__proto__.prototype:', per1.__proto__.__proto__.prototype);
+
+    // 函数对象，代码定义的构造函数function Person
+    console.log('Person:', Person);
+
+    // 内置函数对象，[native code]
+    console.log('Person.__proto__:', Person.__proto__);
+
+    // 普通对象，包含：包含一个指向构造函数自身的方法constructor，和自定义属性。
+    // ! 注意，自定义方法和属性值非构造函数定义时构造的，而是对象自身定义的属性。通过修改定义 Person.prototype 对象添加。
+    console.log('Person.prototype:', Person.prototype);
+
+    // 函数对象，指向构造函数自身。Person.prototype.constructor === Person，
+    console.log('Person.prototype.constructor:', Person.prototype.constructor);
+
+    // 函数对象，先从自身属性上查找，然后原型 Person.prototype 上查找，然后 Object.prototype 上查找，找到属性方法返回。
+    // 所以如果想要调用原型原生方法，需要注意自定义属性重名的问题，如果重名，可以加上原型。per1.__proto__.hasOwnProperty
+    console.log('per1.hasOwnProperty:', per1.hasOwnProperty);
+
+    // undefined，keys是 Object 构造函数定义语句。非对象自身属性。
+    console.log('per1.keys:', per1.keys);
+
+    // 实例添加自定义属性 toString，实例自身有效
+    per1.toString = function () {
+      return this.name;
+    };
+    // 函数对象，定义代码
+    console.log('per1.toString:', per1.toString);
+
+    // 覆写 toStirng 返回实例属性 
+    // 这里有另外一个知识点：此处定义属性 toString 在之前的打印中，出现在了 per1.__proto__ 和 Person.prototype 上。
+    // 这是因为 console 打印的也是 引用类型，是数据的地址，打印后显示发生了改变。
+    Person.prototype.toString = function () {
+      return 'Person' + this.name;
+    };
+    console.log('覆写:', per1.toString(), per1.__proto__.toString(),);/* zx, Personundefined */
+  </script>
+</head>
+
+<body>
+</body>
+
+</html>

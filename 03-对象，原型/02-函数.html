@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script type="text/javascript">
+    /* 函数也是一个对象
+    函数可以封装一些功能 */
+    const a = function name(text) {
+      /* a为形参，内部变量，传过来的参数为实参 */
+      console.log(text);
+    };
+
+    /* 立即执行函数(func)(参数)：可用于闭包，防止函数名污染命名空间 */
+    for (let i = 0; i < 5; i++) {
+      (function (i) { console.log(i); })(i);
+    }/* ES6中let很好的解决了这个问题不需要用闭包 */
+
+    /* 函数的参数无法向python定义赋值，需要解构赋值 */
+
+    /* 闭包：
+    简单理解为定义在函数内部的函数，防止函数名污染命名空间，
+    内部函数引用了外部函数的数据 */
+    const i = 0;
+    (function (z) { console.log(z); })(i);
+
+    /* 闭包情况 */
+    /* 1，将函数作为外部函数的返回值 */
+    function fn1() {
+      const j = "块级作用域";
+      function fn2() {
+        return "你好";
+      }
+
+      return fn2();
+    }
+
+    /* 2，将函数作为另一个函数的参数 */
+    setTimeout(() => { alert("闭包"); }, 1000);
+
+    /* 闭包的生命周期，内部函数执行时即开始生命周期，内部函数成为垃圾对象时生命周期结束，
+    可指定内部函数为null */
+
+    /* 闭包的作用：
+    原生JS的模块化，与以往导入js不同，这里引用的js都封装在了moduleA中 */
+    var moduleA = moduleA();
+
+    /* 模块化更完整更好的思路vue教程14章节es7的模块化方法 */
+
+    /* 闭包缺点：使用完后，变量没有及时的释放
+    es6已有很多语法取代闭包，如块级作用域const， let的使用 */
+  </script>
+</head>
+
+<body>
+</body>
+
+</html>

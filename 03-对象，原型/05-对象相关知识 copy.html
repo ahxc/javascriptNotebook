@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 对象展开合并规则：后者的重复项覆盖前者，其余合并。
+    const a = { name: "zx" };
+    const b = {};
+    const c = { ...a, ...b };
+
+    // 增强写法，动态属性名（自己定义的）：{[属性名]: 值}
+    const d = { ...c, [a[name]]: "zhangxin" }
+  </script>
+</body>
+
+</html>
