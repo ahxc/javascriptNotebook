@@ -40,13 +40,9 @@ function func1() {
 // 2.微任务加入 任务队列。
 //    开发中主要promise的三个方法，then，catch，finally。mutationObserver。
 // 3.宏任务加入 消息队列。开发中主要一些定时函数.
-//    settimeout，setinterval，requestAnimationFrame，异步I/O。setImmediate 非 js 内置函数，为 nodejs 的微任务。
+//    settimeout，setinterval，requestAnimationFrame，异步I/O，代码块。setImmediate 非 js 内置函数，为 nodejs 的微任务。
 
 // 总结，遇到执行语句调入调出，立即执行，遇到微任务加入任务队列等候执行，
 // 遇到宏任务加入消息队列等候执行，然后清空当前代码块的剩余执行语句，
 // 然后清空任务队列加入调用栈，清空消息队列加入任务队列，然后加入调用栈，形成一个循环。
 // 这个期间再次遇到微任务宏任务，都按照这个规则再次加入队列。
-
-export default function _setIntervl(fn, time) {
-
-}

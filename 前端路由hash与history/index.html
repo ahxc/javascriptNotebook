@@ -13,16 +13,30 @@
 <body>
     <script>
         // hash
-        // 通过修改hash值来触发 hashchange事件，然后配置路由渲染对应的组件。
+        // 通过修改 location 的 hash 值来触发 hashchange 事件，然后配置路由渲染对应的组件。
+        // hash刷新会丢失 react，vue路由中的state参数，history 不会 因为它是存在于history 对象中。
+        // 通过设置 Location 对象 的 location.hash 或 location.href 属性修改锚部分。
+        location.hash = "part5";
+        // js 
+        window.onhashchange = () => { console.log('回调'); };
+        // 或者监听
+        window.addEventListener("hashchange", () => { });
+        // html
+        // <body onhashchange="myFunction()">
 
         // history
-        history.back(); // 后退1级
-        history.forward(); 前进1级;
-        history.go(n); // 前进n级或-n级。n为0刷新当前页面。
-        history.pushState(data, [title], [url]); // 追加历史记录
-        history.replaceState(data, [title], [url]); // 替换历史记录
-        window.onpopstate(); // back，forward，go会触发该回调函数。
+        // 通过pushState, replaceState 修改 url 触发 popstate 事件，然后配置路由渲染对应的组件
         // history 页面可能会404，这是因为前端路由地址刷新后可能和后端接口地址不匹配。处理办法是重定向，或则配置地址。
+        history.pushState(stateObj, [title], [url]); // 追加历史记录
+        history.replaceState(stateObj, [title], [url]); // 替换历史记录
+        // js
+        window.onpopstate = () => { console.log('回调'); };
+        // 或者监听
+        window.addEventListener('popstate', () => { });
+
+        history.back(); // 后退1级
+        history.forward(); // 前进1级;
+        history.go(n); // 前进n级或-n级。n为0刷新当前页面。
 
         location.reload(); // 刷新
         location.replace('url'); // 跳转，不能使用前进后退。

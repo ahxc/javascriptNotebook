@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title></title>
   <script>
+
     // 什么是原型：
     // 原型就是一个对象。
     // 原型作用：
@@ -24,6 +25,10 @@
     const per1 = new Person('zx', '18', '男');
     const per2 = new Person('zxx', '28', '男');
 
+    const proto = Person.prototype;
+    const p = Object.create(proto); // 创建一个对象，并将他的原型设置为proto;
+    console.log(p, p.__proto__ === Person.prototype, p.__proto__ === proto);
+
     // per1.pname = 'z';
     // per1.__proto__.pname = "p";
     // per1.__proto__.__proto__.pname = "pp";
@@ -38,7 +43,7 @@
     // 普通对象，指向构造函数person的prototype，per1.__proto__ === Person.prototype，这个等式说明Person实例化了per1
     console.log('per1.__proto__:', per1.__proto__);
 
-    // 全局对象，指向数据类型构造函数Object.prototype，per1.__proto__.__proto__ === Object.prototype，这个等式说明Object实例化了Person.prototype
+    // 全局对象，所有应用类型基础构造对象。指向数据类型构造函数Object.prototype，per1.__proto__.__proto__ === Object.prototype，这个等式说明Object实例化了Person.prototype
     console.log('per1.__proto__.__proto__:', per1.__proto__.__proto__);
 
     // 全局普通对象隐式原型为Null。
