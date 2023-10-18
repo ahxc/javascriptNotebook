@@ -45,39 +45,49 @@
 
     function mouseover(params) {
       e = event || window.event;
-      e.cancelBubble = true;
-      e.preventDefault();
+      // e.cancelBubble = true;
+      // e.preventDefault();
       console.log('冒泡的用处，hover事件');
     }
 
     function mouseover2(params) {
       e = event || window.event;
-      e.cancelBubble = true;
-      e.preventDefault();
+      // e.cancelBubble = true;
+      // e.preventDefault();
+      // e.stopPropagation()
       console.log('组织了冒泡');
     }
 
-    /* 事件的冒泡，即当若干元素重叠，
-    当点击最上层的元素时，事件响应会由上往底层传递，称为冒泡 */
+    /* 事件的冒泡，即当若干元素重叠，事件由内向外，由子组件向父组件传递称为冒泡 */
 
     /* 取消冒泡，作用域在当前方法内，如取消box2的冒泡需要去box2的onclick内定义 */
+    // 事件的发起需要经过两个阶段，事件捕获和事件冒泡。由外向内捕获至目标出发点，这个过程不会响应事件，然后由内向外响应事件，这个过程即是冒泡。
+    // 在捕获阶段，事件尚未到达目标元素，因此无法对其进行处理。只有当事件传递到目标元素后，才会开始冒泡阶段
     box1.onclick = function () {//event已弃用
       e = event || window.event;
-      e.cancelBubble = true;
-      e.preventDefault();
+      // e.cancelBubble = true;
+      // e.preventDefault();
       alert("我是box1");
     };
 
     box2.onclick = function () {
-      e = event || window.event;
-      e.cancelBubble = true;
+      // e = event || window.event;
+      // e.cancelBubble = true;
       alert("我是box2");
     };
 
-    // box3.onclick = function (e) {
+    box3.onclick = function (e) {
+      // e.cancelBubble = true;
+      alert("我是box3");
+    };
+
+    // 如果将capture属性设置为true，在捕获阶段，事件就会执行。但不会影响标签上的onclick事件
+    // box1.addEventListener("click", function () {//event已弃用
+    //   e = event || window.event;
     //   // e.cancelBubble = true;
-    //   alert("我是box3");
-    // }
+    //   // e.preventDefault();
+    //   alert("我是box1");
+    // }, true);
 
     /* 在开发中，事件冒泡有一些意义，比如02小节在一些元素中移动鼠标
     而不是body，如果没有冒泡那么在某些小部件则没有光标跟随事件 */

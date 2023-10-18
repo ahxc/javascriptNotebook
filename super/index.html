@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    >
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class Parent {
+            constructor(name) {
+                this.name = name;
+            }
+
+            greet() {
+                console.log(`Hello, my name is ${this.name}.`);
+            }
+        }
+
+        class Child extends Parent {
+            constructor(name, age) {
+                // console.log(this); // ! 子类任何一处地方，super之前的语句无法访问this属性，包括introduce。react中，仅构造函数内部。
+                super(name);  // 调用父类的构造函数，同时相应的参数也必须传过去，react中不传props，则空有父类的构造函数，但没有参数传过去。
+                this.age = age;
+            }
+
+            introduce() {
+                console.log(this);
+            }
+        }
+
+        const child = new Child('John', 10);
+        // child.introduce()
+    </script>
+</body>
+
+</html>
