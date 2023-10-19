@@ -18,7 +18,7 @@
             }
 
             greet() {
-                console.log(`Hello, my name is ${this.name}.`);
+                console.log(this.name);
             }
         }
 
@@ -26,11 +26,12 @@
             constructor(name, age) {
                 // console.log(this); // ! 子类任何一处地方，super之前的语句无法访问this属性，包括introduce。react中，仅构造函数内部。
                 super(name);  // 调用父类的构造函数，同时相应的参数也必须传过去，react中不传props，则空有父类的构造函数，但没有参数传过去。
+                // 如果使用父类的一些构造方法，则可能无法获取参数。
                 this.age = age;
             }
 
             introduce() {
-                console.log(this);
+                console.log(this.name, this.age);
             }
         }
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    >
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 类装饰器，实例化时调用，添加属性方法newMethod
+        function decorator(target) {
+            // 在这里可以添加对类的一些操作  
+            // 比如添加新的方法或属性  
+            target.newMethod = function () {
+                console.log('This is a new method.');
+            };
+        }
+
+        @decorator
+        class MyClass {
+            constructor(name) {
+                this.name = name;
+            }
+
+            sayHello() {
+                console.log(`Hello, I'm ${this.name}.`);
+            }
+        }
+
+        const myInstance = new MyClass('John');
+        myInstance.sayHello(); // Output: Hello, I'm John.  
+        myInstance.newMethod(); // Output: This is a new method.
+
+        // 方法装饰器
+        function log(target, name, descriptor) {
+            const originalMethod = descriptor.value;
+
+            descriptor.value = function () {
+                console.log(`Before execution of ${name}.`);
+                const result = originalMethod.apply(this, arguments);
+                console.log(`After execution of ${name}.`);
+                return result; // 返回一个新方法。
+            };
+
+            return descriptor;
+        }
+
+        class MyClass {
+            @log
+            myMethod() {
+                console.log('This is my method.');
+            }
+        }
+
+        const instance = new MyClass();
+        instance.myMethod();
+        // Before execution of myMethod.  
+        // This is my method.
+        // After execution of myMethod.
+    </script>
+</body>
+
+</html>
