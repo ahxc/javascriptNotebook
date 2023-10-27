@@ -26,8 +26,10 @@
         class Child extends Parent {
             constructor(name, age) {
                 // ! 如果子类中存在构造函数，则需要在使用“this”之前首先调用 super()。
-                // console.log(this); // ! 子类任何一处地方，super之前的语句无法访问this属性，包括introduce。react中，仅构造函数内部。
-                super(name);  // 调用父类的构造函数，同时相应的参数也必须传过去，react中不传props，则空有父类的构造函数，但没有参数传过去。
+                // ! 子类任何一处地方，super之前的语句无法访问this属性，包括introduce。react中，仅构造函数内部。
+                // ! 父类的构造函数必须调用，同时相应的参数也应必须传过去，react中不传props，则空有父类的构造函数，但没有参数传过去。
+                // 如果父类构造函数没有参数，编译器会自动插入super。
+                super(name);
                 // 如果使用父类的一些构造方法，则可能无法获取参数。
                 this.age = age;
             }
@@ -41,14 +43,16 @@
         child.introduce();
         child.greet();
 
-        // 继承的本质就是原型链的延伸。
-        // ! 该方法构造函数还是parent，而child还是自身构造函数child，而且比child要多一层，即实例。
+        console.log("Child.prototype:", Child.prototype,); // 1.子类内部方法的集合对象加上一个隐式原型，并指向父类方法的集合。{constructor,introduce,__proto__}
+        console.log("Child.__proto__:", Child.__proto__,); // 2.父类本身 （继承本质就是隐式原型指向父类本身（函数））
+        console.log("child:", child); // 3.实例化本质child.__proto__===Child.prototype，即隐式原型指向构造函数的显示原型。而自身属性则是所有原型链上构造函数construcotr内部的定义集合。
+
+        // 原型链继承。则利用了上述第一点
         function Son(params) {
 
         }
         // 继承一个parent的实例，沿用Parent的构造函数，
         Son.prototype = new Parent();
-        console.log(Child.prototype, child.__proto__)
     </script>
 </body>
 

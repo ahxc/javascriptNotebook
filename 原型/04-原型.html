@@ -40,7 +40,7 @@
     // 普通对象;
     console.log('per1:', per1);
 
-    // 普通对象，指向构造函数person的prototype，per1.__proto__ === Person.prototype，这个等式说明Person实例化了per1
+    // 普通对象，内部方法的集合，per1.__proto__ === Person.prototype，这个等式说明Person实例化了per1
     console.log('per1.__proto__:', per1.__proto__);
 
     // 全局对象，所有应用类型基础构造对象。指向数据类型构造函数Object.prototype，per1.__proto__.__proto__ === Object.prototype，这个等式说明Object实例化了Person.prototype
@@ -58,7 +58,7 @@
     // 内置函数对象，[native code]
     console.log('Person.__proto__:', Person.__proto__);
 
-    // 普通对象，包含一个指向构造函数自身的方法constructor，和自定义属性。
+    // 普通对象，Person内部方法的集合。
     // ! 注意，自定义方法和属性值非构造函数定义时构造的，而是对象自身定义的属性。通过修改定义 Person.prototype 对象添加。
     console.log('Person.prototype:', Person.prototype);
 

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    >
+    <title>MutationObserver</title>
+</head>
+
+<body>
+    <script>
+        // 创建回调函数  
+        var callback = function (mutationsList, observer) {
+            // 遍历所有DOM变动  
+            for (var mutation of mutationsList) {
+                // 处理DOM变动  
+                console.log('DOM变动了：', mutation);
+            }
+        };
+
+        // 创建MutationObserver实例  
+        var observer = new MutationObserver(callback);
+
+        // 开始监视DOM变化  
+        observer.observe(document.body, { attributes: true, childList: true, subtree: true });
+    </script>
+</body>
+
+</html>
