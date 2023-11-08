@@ -63,12 +63,15 @@
     /* 取消冒泡，作用域在当前方法内，如取消box2的冒泡需要去box2的onclick内定义 */
     // 事件的发起需要经过两个阶段，事件捕获和事件冒泡。由外向内捕获至目标出发点，这个过程不会响应事件，然后由内向外响应事件，这个过程即是冒泡。
     // 在捕获阶段，事件尚未到达目标元素，因此无法对其进行处理。只有当事件传递到目标元素后，才会开始冒泡阶段
-    box1.onclick = function () {//event已弃用
+    function onclick1() {//event已弃用
       e = event || window.event;
       // e.cancelBubble = true;
       // e.preventDefault();
       alert("我是box1");
     };
+
+
+    box1.onclick = onclick1;
 
     box2.onclick = function () {
       // e = event || window.event;

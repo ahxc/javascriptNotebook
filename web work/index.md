@@ -21,7 +21,7 @@ function fibonacci(n) {
 }
 ```
 
-在主线程中，可以通过以下方式向 Worker 发送消息并接收结果：
+在主线程和worker线程之间用postMessage传递消息，通过onmessage接收消息，支持传递一个参数。
 
 ```javascript
 worker.postMessage({ n: 20 });

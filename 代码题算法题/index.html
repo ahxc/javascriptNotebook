@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    >
+    <title>代码题算法题</title>
+</head>
+
+<style>
+</style>
+
+<body>
+    <div class="box1">
+        <div class="box2"></div>
+    </div>
+
+    <script>
+        // 判断一个字符串是否为对称数，例：'123321'
+        function symmetry(str = '') {
+            return str === str.split('').reverse().join('');
+        }
+
+        // 使用promise每隔一秒输出123
+        function print() {
+            let i = 0;
+            Promise.resolve()
+                .then(async () => {
+                    setTimeout(() => {
+                        i += 1;
+                        console.log(i);
+                    }, 1000);
+                    return i;
+                })
+                .then((res) => {
+                    setTimeout(() => {
+                        res += 1;
+                        console.log(res);
+                        return res;
+                    }, 1000);
+                })
+                .then((res) => {
+                    setTimeout(() => {
+                        res += 1;
+                        console.log(res);
+                        return res;
+                    }, 1000);
+                });
+        }
+
+        print()
+    </script>
+</body>
+
+</html>
