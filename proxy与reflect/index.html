@@ -25,8 +25,8 @@
 
         const handler = {
             get(target, key, receiver) {
-                console.log(this === handler); // log: true
-                console.log(receiver === obj); // log: true
+                console.log(this === handler); // true
+                console.log(receiver === obj); // true
                 return target[key];
             },
         };
@@ -40,9 +40,25 @@
         // 设置obj继承与parent的代理对象proxy
         Object.setPrototypeOf(obj, proxy);
 
-        // log: 19Qingfeng，仍旧调用的parent的get方法
-        console.log(obj.value)
+        // 19Qingfeng，仍旧调用的parent的get方法，因为obj无value属性，
+        console.log(obj.value);
 
+        // 按原型链会调用parent上的方法，而这会触发parent 劫持方法 get。打印了true true 19Qingfeng
+        // 所以reflect的作用就出现了。
+
+        // const handler = {
+        //     get(target, key, receiver) {
+        //         return Reflect.get(target, key, receiver);
+        //     },
+        // };
+
+        // wang.haoyu
+        console.log(obj.value);
+
+        // 总结
+        // 对于继承proxy对象，调用子类没有的属性，其上下文会发生变化，为父类属性，此时则会调用父类属性并触发get方法劫持。
+        // 而Reflect.get(target, key, receiver);避免了这个问题，用receiver上下文确定了上下文为obj，方法为父类的方法。
+        // Reflect.get(target, key) === target[key] // true 必须补齐上下文receiver，否则上下文还是父类。
     </script>
 </body>
 
