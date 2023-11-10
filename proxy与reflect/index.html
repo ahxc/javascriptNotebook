@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    >
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // target：表示目标对象，即被代理的对象。在 get 方法中，target 存储了代理对象的原始值，可以通过它来访问或修改代理对象的属性。
+        // key：表示要获取的属性的名称或 Symbol。
+        // receiver：上下文对象。
+        // 这个参数可以用来改变返回值的上下文，或者在获取属性时执行额外的操作。具体要看是哪个对象调用，可以是继承，或父对象。
+
+        const parent = {
+            get value() {
+                return '19Qingfeng';
+            },
+        };
+
+        const handler = {
+            get(target, key, receiver) {
+                console.log(this === handler); // log: true
+                console.log(receiver === obj); // log: true
+                return target[key];
+            },
+        };
+
+        const proxy = new Proxy(parent, handler);
+
+        const obj = {
+            name: 'wang.haoyu',
+        };
+
+        // 设置obj继承与parent的代理对象proxy
+        Object.setPrototypeOf(obj, proxy);
+
+        // log: 19Qingfeng，仍旧调用的parent的get方法
+        console.log(obj.value)
+
+    </script>
+</body>
+
+</html>
