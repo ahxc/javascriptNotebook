@@ -12,22 +12,31 @@
 
 <body>
     <script>
+        // proxy劫持整个vue实例的data属性实现响应式，但他只能代理对象，对于基本数据类型中的number等仍需用Obj.defineProperty
         // target：表示目标对象，即被代理的对象。在 get 方法中，target 存储了代理对象的原始值，可以通过它来访问或修改代理对象的属性。
         // key：表示要获取的属性的名称或 Symbol。
         // receiver：上下文对象。
         // 这个参数可以用来改变返回值的上下文，或者在获取属性时执行额外的操作。具体要看是哪个对象调用，可以是继承，或父对象。
 
         const parent = {
+            name: '19Qingfeng',
             get value() {
-                return '19Qingfeng';
+                return this.name;
             },
         };
 
+        // 19Qingfeng
+        // const handler = {
+        //     get(target, key, receiver) {
+        //         console.log(this === handler); // true
+        //         console.log(receiver === obj); // true
+        //         return target[key];
+        //     },
+        // };
+
         const handler = {
             get(target, key, receiver) {
-                console.log(this === handler); // true
-                console.log(receiver === obj); // true
-                return target[key];
+                return Reflect.get(target, key, receiver);
             },
         };
 
@@ -46,12 +55,6 @@
         // 按原型链会调用parent上的方法，而这会触发parent 劫持方法 get。打印了true true 19Qingfeng
         // 所以reflect的作用就出现了。
 
-        // const handler = {
-        //     get(target, key, receiver) {
-        //         return Reflect.get(target, key, receiver);
-        //     },
-        // };
-
         // wang.haoyu
         console.log(obj.value);
 
@@ -59,6 +62,7 @@
         // 对于继承proxy对象，调用子类没有的属性，其上下文会发生变化，为父类属性，此时则会调用父类属性并触发get方法劫持。
         // 而Reflect.get(target, key, receiver);避免了这个问题，用receiver上下文确定了上下文为obj，方法为父类的方法。
         // Reflect.get(target, key) === target[key] // true 必须补齐上下文receiver，否则上下文还是父类。
+        // 因此vue响应式原理需要proxy和reflect配合使用，避免反复劫持。
     </script>
 </body>
 
