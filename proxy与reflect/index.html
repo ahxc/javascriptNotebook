@@ -60,8 +60,8 @@
 
         // 总结
         // 对于继承proxy对象，调用子类没有的属性，其上下文会发生变化，为父类属性，此时则会调用父类属性并触发get方法劫持。
-        // 而Reflect.get(target, key, receiver);避免了这个问题，用receiver上下文确定了上下文为obj，方法为父类的方法。
-        // Reflect.get(target, key) === target[key] // true 必须补齐上下文receiver，否则上下文还是父类。
+        // 而Reflect.get(target, key, receiver);避免了这个问题，用receiver上下文确定了上下文为子类，方法为父类的方法。
+        // Reflect.get(target, key) === target[key] // ! true 必须补齐上下文receiver，否则上下文还是父类。
         // 因此vue响应式原理需要proxy和reflect配合使用，避免反复劫持。
     </script>
 </body>

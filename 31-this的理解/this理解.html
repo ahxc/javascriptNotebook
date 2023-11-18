@@ -34,7 +34,7 @@
       aaa() {
         setTimeout(function () {
           setTimeout(function () {
-            console.log(1, this); // window，函数最终都是被window调用
+            console.log(1, this); // window，setImeout是window调用
           });
           console.log(2, this); // window
           setTimeout(() => {

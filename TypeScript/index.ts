@@ -330,7 +330,6 @@ console.log(setName.getName4()); // "我是成员方法:你好"
 // 类的私有字段 #
 // 私有字段唯一，不能添加访问修饰符 public，private，只能类内部访问，甚至不能被检测到。
 
-
 class InfoPrivate {
     #name: string; //私有字段
     getName: string;
@@ -500,3 +499,50 @@ let res1 = new Childab("小杜杜"); // 继承后子类实现了抽象方法便�
 
 res1.setAge(7); // "我的名字是小杜杜,年龄是7"
 
+// 重写重载
+// 重写：子类继承后重写父类的方法。
+// 重载，即函数重载在类内部的运用。参数个数和类型不同，其调用方法不同。
+
+// 重写
+class PersonRe {
+    setName(name: string) {
+        return `我的名字叫${name}`;
+    }
+}
+
+class ChildRe extends PersonRe {
+    setName(name: string) {
+        return `你的名字叫${name}`;
+    }
+}
+
+const yourName = new ChildRe();
+console.log(yourName.setName('小杜杜')); // "你的名字叫小杜杜" 
+
+// 重载，根据参数的数量和类型调用不同的方法。可以用switch匹配 argments 长度。
+class Person1 {
+    setNameAge(name: string): void;
+    setNameAge(name: number): void;
+    setNameAge(name: string | number) {
+        if (typeof name === 'string') {
+            console.log(`我的名字是${name}`);
+        } else {
+            console.log(`我的年龄是${name}`);
+        }
+    };
+}
+
+const resss = new Person1();
+resss.setNameAge('小杜杜'); // "我的名字是小杜杜" 
+resss.setNameAge(7); // "我的年龄是7"
+
+// 类型断言，给变量指定类型申明。
+//尖括号
+let numAccount: any = '小杜杜';
+let resAccount: number = (<string>numAccount).length; // React中会 error，因为尖括号与jsx语法冲突。所以只能用as
+
+// as 语法
+let strAccount: any = 'Domesy';
+let resAccountAccount: number = (str as string).length;
+
+// 非空断言

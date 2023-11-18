@@ -25,33 +25,76 @@
         }
 
         // 使用promise每隔一秒输出123
-        function print() {
-            let i = 0;
-            Promise.resolve()
-                .then(async () => {
+        async function print() {
+            // 基础原理
+            // for (let i = 1; i < 4; i++) {
+            //     setTimeout(() => {
+            //         console.log(i);
+            //     }, i * 1000);
+            // }
+
+            // promise 改造
+            for (let i = 1; i < 4; i++) {
+                pro(i);
+            }
+
+            function pro(interval) {
+                return new Promise((resolve,) => {
                     setTimeout(() => {
-                        i += 1;
-                        console.log(i);
-                    }, 1000);
-                    return i;
-                })
-                .then((res) => {
-                    setTimeout(() => {
-                        res += 1;
-                        console.log(res);
-                        return res;
-                    }, 1000);
-                })
-                .then((res) => {
-                    setTimeout(() => {
-                        res += 1;
-                        console.log(res);
-                        return res;
+                        console.log(interval);
+                        // resolve(interval); // 无此句失效，只会打印1，因为await 等不到返回结果，for循环会立即执行，
                     }, 1000);
                 });
+            }
         }
 
-        print()
+        // print();
+
+        // 使用 setTimeout 实现 setInterval，
+        // 注意：setTimeout执行完毕不使用变量保存会自动清空不需手动清空。setInterval也没有立即执行属性。
+        function setInterval(fn, time) {
+            function recursion(params) {
+                setTimeout(() => {
+                    recursion();
+                    fn.apply(this, arguments);
+                }, time);
+            }
+            recursion();
+        }
+
+        // setInterval(() => {
+        //     let i = 0;
+        //     i += 1;
+        //     console.log(i);
+        // }, 1000);
+
+        // 查找第K个最大元素
+        function findKLargest(array, k) {
+            const list = Array.from(new Set(array)).sort((a, b) => a - b);
+            return list[k - 1];
+        }
+
+        // 抚平嵌套数组
+        function flatArray(array) {
+            // return array.flat();
+            const l = [];
+            function flat(arrayflat) {
+                arrayflat.forEach((i) => {
+                    if (Array.isArray(i)) {
+                        flat(i);
+                    }
+                    else {
+                        l.push(i);
+                    }
+                });
+            }
+
+            flat(array);
+
+            return l;
+        }
+
+        console.log(flatArray([1, 2, [23], 3, 4, [2, 3, [2, [3, [4]]], [24, 4]]]))
     </script>
 </body>
 
