@@ -94,7 +94,24 @@
             return l;
         }
 
-        console.log(flatArray([1, 2, [23], 3, 4, [2, 3, [2, [3, [4]]], [24, 4]]]))
+        // console.log(flatArray([1, 2, [23], 3, 4, [2, 3, [2, [3, [4]]], [24, 4]]]))
+
+        // 数组排序，先排数字，再排字母，["B3", "D2", "F1", "A9", "D12", "A2", "C1", "Z0", "B1"]
+        function sortData(data) {
+            return data.sort((a, b) => {
+                const [codeA, typeA, numA] = a.match(/([A-Z])(\d+)/);
+                const [codeB, typeB, numB] = b.match(/([A-Z])(\d+)/);
+
+                const numComparison = parseInt(numA) - parseInt(numB);
+                if (numComparison !== 0) {
+                    return numComparison;
+                } else {
+                    return typeA.localeCompare(typeB);
+                }
+            });
+        }
+
+        const data = ["B3", "D2", "F1", "A9", "D12", "A2", "C1", "Z0", "B1"];
     </script>
 </body>
 

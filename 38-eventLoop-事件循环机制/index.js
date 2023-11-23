@@ -36,7 +36,6 @@ function func1() {
     func2();
 }
 
-
 // 1.主进程调用栈立即执行语句。先进后出。
 // 2.微任务加入 任务队列。
 //    开发中主要promise的三个方法，then，catch，finally。mutationObserver。
