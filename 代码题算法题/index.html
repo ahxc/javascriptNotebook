@@ -42,7 +42,7 @@
                 return new Promise((resolve,) => {
                     setTimeout(() => {
                         console.log(interval);
-                        // resolve(interval); // 无此句失效，只会打印1，因为await 等不到返回结果，for循环会立即执行，
+                        resolve(interval); // 无此句失效，只会打印1，因为await 等不到返回结果，for循环会立即执行，
                     }, 1000);
                 });
             }
