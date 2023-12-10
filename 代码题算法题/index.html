@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
     >
     <title>代码题算法题</title>
 </head>
@@ -23,9 +23,68 @@
         function symmetry(str = '') {
             return str === str.split('').reverse().join('');
         }
+        // print();
+
+        // 使用 setTimeout 实现 setInterval，
+        // 注意：setTimeout执行完毕不使用变量保存会自动清空不需手动清空。setInterval也没有立即执行属性。
+        function setInterval(fn, time) {
+            function loop(params) {
+                fn()
+                setTimeout(loop, time);
+            }
+            loop()
+        }
+        // setInterval(() => {
+        //     let i = 0;
+        //     i += 1;
+        //     console.log(i);
+        // }, 1000);
+
+        // 查找第K个最大元素，注意去重版和非去重，通常不用去重。去掉new set即可
+        function findKLargest(array, k) {
+            const list = Array.from(new Set(array)).sort((a, b) => a - b);
+            return list[k - 1];
+        }
+
+        // 抚平嵌套数组
+        var flat = function (arr, n) {
+            const l = [];
+            function loop(arr, level) {
+                arr.forEach((i) => {
+                    if (Array.isArray(i) && level > 0) {
+                        loop(i, level - 1);
+                    }
+                    else {
+                        l.push(i);
+                    }
+                });
+            }
+            loop(arr, n)
+            return l;
+        };
+        // console.log(flat([1, 2, 3, [4, 5, 6], [7, 8, [9, 10, 11], 12], [13, 14, 15]]))
+
+        // 数组排序，先排数字，再排字母，["B3", "D2", "F1", "A9", "D12", "A2", "C1", "Z0", "B1"]
+        function sortData(data) {
+            return data.sort((a, b) => {
+                const [codeA, typeA, numA] = a.match(/([A-Z])(\d+)/);
+                const [codeB, typeB, numB] = b.match(/([A-Z])(\d+)/);
+
+                const numComparison = parseInt(numA) - parseInt(numB);
+                if (numComparison !== 0) {
+                    return numComparison;
+                } else {
+                    // 比较字母顺序，升序-1，降序1，相同字母aa0。
+                    return typeA.localeCompare(typeB);
+                }
+            });
+        }
+
+        const data = ["B3", "D2", "F1", "A9", "D12", "A2", "C1", "Z0", "B1"];
+
 
         // 使用promise每隔一秒输出123
-        async function print() {
+        async function print(time) {
             // 基础原理
             // for (let i = 1; i < 4; i++) {
             //     setTimeout(() => {
@@ -39,7 +98,7 @@
             }
 
             function pro(interval) {
-                return new Promise((resolve,) => {
+                return new Promise((resolve, reject) => {
                     setTimeout(() => {
                         console.log(interval);
                         resolve(interval); // 无此句失效，只会打印1，因为await 等不到返回结果，for循环会立即执行，
@@ -47,71 +106,6 @@
                 });
             }
         }
-
-        // print();
-
-        // 使用 setTimeout 实现 setInterval，
-        // 注意：setTimeout执行完毕不使用变量保存会自动清空不需手动清空。setInterval也没有立即执行属性。
-        function setInterval(fn, time) {
-            function recursion(params) {
-                setTimeout(() => {
-                    recursion();
-                    fn.apply(this, arguments);
-                }, time);
-            }
-            recursion();
-        }
-
-        // setInterval(() => {
-        //     let i = 0;
-        //     i += 1;
-        //     console.log(i);
-        // }, 1000);
-
-        // 查找第K个最大元素
-        function findKLargest(array, k) {
-            const list = Array.from(new Set(array)).sort((a, b) => a - b);
-            return list[k - 1];
-        }
-
-        // 抚平嵌套数组
-        function flatArray(array) {
-            // return array.flat();
-            const l = [];
-            function flat(arrayflat) {
-                arrayflat.forEach((i) => {
-                    if (Array.isArray(i)) {
-                        flat(i);
-                    }
-                    else {
-                        l.push(i);
-                    }
-                });
-            }
-
-            flat(array);
-
-            return l;
-        }
-
-        // console.log(flatArray([1, 2, [23], 3, 4, [2, 3, [2, [3, [4]]], [24, 4]]]))
-
-        // 数组排序，先排数字，再排字母，["B3", "D2", "F1", "A9", "D12", "A2", "C1", "Z0", "B1"]
-        function sortData(data) {
-            return data.sort((a, b) => {
-                const [codeA, typeA, numA] = a.match(/([A-Z])(\d+)/);
-                const [codeB, typeB, numB] = b.match(/([A-Z])(\d+)/);
-
-                const numComparison = parseInt(numA) - parseInt(numB);
-                if (numComparison !== 0) {
-                    return numComparison;
-                } else {
-                    return typeA.localeCompare(typeB);
-                }
-            });
-        }
-
-        const data = ["B3", "D2", "F1", "A9", "D12", "A2", "C1", "Z0", "B1"];
     </script>
 </body>
 
