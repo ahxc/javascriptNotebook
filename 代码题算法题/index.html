@@ -106,6 +106,13 @@
                 });
             }
         }
+
+        /* 盒子内部点击打印false，外部点击打印true */
+        var myDiv = document.getElementById('myDiv');
+        myDiv.addEventListener('click', function (event) {
+            var isInside = event.target === myDiv; // 检查点击的是否是div元素本身  
+            console.log(isInside ? '内部点击' : '外部点击');
+        });  
     </script>
 </body>
 
