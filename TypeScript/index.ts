@@ -38,7 +38,7 @@ let undef: undefined = undefined;
 let arr1: number[] = [1, 2, 3];
 let arr2: Array<number> = [1, 2, 3]; // 两个都被限定为number类型，其他类型会报错
 
-// 除非
+// 除非加上泛型<>
 let arr3: Array<number | string> = [1, 2, '3'];
 
 // tuple 元组 新增
@@ -55,6 +55,9 @@ t.push(2);
 let obj1: object = { a: 1, b: 2 };
 // obj1.a = 3; 报错
 let obj2: { a: number, b: number; } = { a: 1, b: 2 };
+let obj_3: object = {}
+obj_3 = { a: 'test' }
+// obj_3.a = '3'
 
 // 或者使用Object，大写，他可以进行任意赋值。
 let obj: Object;
@@ -260,7 +263,8 @@ type allProps2 = DProps & EProps;
 // c:  'Domesy', // error (property) c: never // ! 怎么赋值都会报错
 // };
 
-// 非表层属性合并，同理
+// 非表层属性合并
+// interface 自定义接口
 interface A { a: number; }
 interface B { b: string; }
 
@@ -270,7 +274,8 @@ interface C {
 interface D {
     x: B;
 }
-type allProps3 = C & D; // x合成了 a和b
+// 类型别名 allProps3
+type allProps3 = C & D; // 接口合并，x同时拥有A接口和B接口。
 
 const Info: allProps3 = {
     x: {
@@ -537,7 +542,11 @@ resss.setNameAge('小杜杜'); // "我的名字是小杜杜"
 resss.setNameAge(7); // "我的年龄是7"
 
 // 类型断言，给变量指定类型申明。
-//尖括号
+/* 
+类型断言只是一种类型注解的方式，它不会改变变量的实际类型。如果变量的实际类型与断言的类型不匹配，TypeScript 编译器会报错。
+ */
+
+// 尖括号
 let numAccount: any = '小杜杜';
 let resAccount: number = (<string>numAccount).length; // React中会 error，因为尖括号与jsx语法冲突。所以只能用as
 
@@ -546,3 +555,82 @@ let strAccount: any = 'Domesy';
 let resAccountAccount: number = (str as string).length;
 
 // 非空断言
+function feikong(name: string | null | undefined) {
+    const str: string = name! // name不能直接赋值给字符类型str，加上非空断言!则可略过此报警。
+    console.log(str) // 不会改变类型和其值。
+}
+
+// 确定赋值断言
+function quedingfuzhi() {
+    let num1: number
+    let num2!: number; // 非空断言，略过初始值的错误。
+
+    const setNumber1 = () => num1 = 7
+    const setNumber2 = () => num2 = 7
+
+    setNumber1()
+    setNumber2()
+
+    // console.log(num1) // error，因为没有给予初始值。赋值后解决。
+    console.log(num2)// 7，略过去了所以不报错。
+}
+
+// 双重断言
+// 断言失效时使用，一般不会使用
+function shuangchongduanyan() {
+    interface info {
+        name: string;
+        age: number
+    }
+
+    // const name = 'str' as info // 此处报错，因为类型断言只能为基础类型不能为接口。
+    const name = 'str' as any as info // 双重断言
+}
+
+// 类型守卫 关键字：in，typeof instanceof 类型为此：is
+// 类型断言声明变量的类型让编辑器略过检查，而类型守卫则是确定变量是否属于哪个类型。
+function leixingshouwei() {
+    interface info1 {
+        name: string;
+        age: number;
+    }
+
+    interface Info2 {
+        name: string
+        flage: true
+    }
+
+    const setInfo1 = (data: info1 | Info2) => {
+        // in，变量data是否有age属性声明
+        "age" in data
+    }
+
+    // typeof 变量data是佛属于指定类型
+    const setInfo2 = (data: number | string | undefined) => {
+        typeof data === "string"
+
+        typeof data === "number"
+
+        typeof data === "undefined"
+    }
+
+    // instanceof 
+    class Name {
+        name: string = '小杜杜'
+    }
+
+    class Age extends Name {
+        age: number = 7
+    }
+
+    new Name() instanceof Age
+    new Age() instanceof Age
+}
+
+const calcArray = (data: any): any[] => {
+    let list = []
+    for (let i = 0; i < 3; i++) {
+        list.push(data)
+    }
+    return list
+}
