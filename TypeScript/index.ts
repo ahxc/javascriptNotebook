@@ -55,8 +55,8 @@ t.push(2);
 let obj1: object = { a: 1, b: 2 };
 // obj1.a = 3; 报错
 let obj2: { a: number, b: number; } = { a: 1, b: 2 };
-let obj_3: object = {}
-obj_3 = { a: 'test' }
+let obj_3: object = {};
+obj_3 = { a: 'test' };
 // obj_3.a = '3'
 
 // 或者使用Object，大写，他可以进行任意赋值。
@@ -556,23 +556,23 @@ let resAccountAccount: number = (str as string).length;
 
 // 非空断言
 function feikong(name: string | null | undefined) {
-    const str: string = name! // name不能直接赋值给字符类型str，加上非空断言!则可略过此报警。
-    console.log(str) // 不会改变类型和其值。
+    const str: string = name!; // name不能直接赋值给字符类型str，加上非空断言!则可略过此报警。
+    console.log(str); // 不会改变类型和其值。
 }
 
 // 确定赋值断言
 function quedingfuzhi() {
-    let num1: number
+    let num1: number;
     let num2!: number; // 非空断言，略过初始值的错误。
 
-    const setNumber1 = () => num1 = 7
-    const setNumber2 = () => num2 = 7
+    const setNumber1 = () => num1 = 7;
+    const setNumber2 = () => num2 = 7;
 
-    setNumber1()
-    setNumber2()
+    setNumber1();
+    setNumber2();
 
     // console.log(num1) // error，因为没有给予初始值。赋值后解决。
-    console.log(num2)// 7，略过去了所以不报错。
+    console.log(num2);// 7，略过去了所以不报错。
 }
 
 // 双重断言
@@ -580,11 +580,11 @@ function quedingfuzhi() {
 function shuangchongduanyan() {
     interface info {
         name: string;
-        age: number
+        age: number;
     }
 
     // const name = 'str' as info // 此处报错，因为类型断言只能为基础类型不能为接口。
-    const name = 'str' as any as info // 双重断言
+    const name = 'str' as any as info; // 双重断言
 }
 
 // 类型守卫 关键字：in，typeof instanceof 类型为此：is
@@ -596,41 +596,133 @@ function leixingshouwei() {
     }
 
     interface Info2 {
-        name: string
-        flage: true
+        name: string;
+        flage: true;
     }
 
     const setInfo1 = (data: info1 | Info2) => {
         // in，变量data是否有age属性声明
-        "age" in data
-    }
+        "age" in data;
+    };
 
     // typeof 变量data是佛属于指定类型
     const setInfo2 = (data: number | string | undefined) => {
-        typeof data === "string"
+        typeof data === "string";
 
-        typeof data === "number"
+        typeof data === "number";
 
-        typeof data === "undefined"
-    }
+        typeof data === "undefined";
+    };
 
     // instanceof 
     class Name {
-        name: string = '小杜杜'
+        name: string = '小杜杜';
     }
 
     class Age extends Name {
-        age: number = 7
+        age: number = 7;
     }
 
-    new Name() instanceof Age
-    new Age() instanceof Age
+    new Name() instanceof Age;
+    new Age() instanceof Age;
 }
 
-const calcArray = (data: any): any[] => {
-    let list = []
+// ! 泛型，TS中的重点内容
+// 有时函数返回不能限死类型，而是根据参数的类型来确定，这就是泛型的作用
+// TU没有具体含义，类型参数占位符，注意使用了泛型，声明了几个占位符，调用函数时必须声明相同个数的类型，如下面props
+// function fanxing<T, U>(data: T, num: U): T[] { 
+// 泛型也可以指定默认类型
+function fanxing<T, U = string>(data: T,): T[] {
+    let list: T[] = [];
     for (let i = 0; i < 3; i++) {
-        list.push(data)
+        list.push(data);
     }
-    return list
+
+    // 接口也可以使用泛型
+    interface A<T, U> {
+        name: T,
+        age: U,
+    }
+
+    const obj: A<string, number> = { name: 'ahxc', age: 6 };
+
+    // 可选泛型类型，name和age都是可选地可有可无
+    type info<T> = {
+        name?: T;
+        age?: T;
+    };
+    const res1: info<string> = { name: 'ahxc' };
+    const res2: info<number> = { age: 7 };
+
+    return list;
 }
+
+type Props = {
+    name: string;
+    age: number;
+};
+
+// const fanxingdata:Array<Props>=fanxing // 另一种写法
+const fanxingdata: Props[] = fanxing<Props>({ name: 'asdf', age: 7 });
+
+// 泛型也可以定义类
+class FanxingClass<T> {
+    constructor(parameters) {
+
+    }
+
+    private arr: T[] = [];
+    add(value: T) {
+        this.arr.push(value);
+    }
+    getValue(): T {
+        let res = this.arr[0];
+        console.log(this.arr);
+        return res;
+    }
+}
+
+// 泛型中的一些常用语义字母
+
+// T：type，类型
+// K：key，键的类型
+// V：value，值的类型
+// E：element，元素类型
+
+// 常用技巧
+// 在 TS 中有许多关键字和工具类型，在使用上，需要注意泛型上的应用，有的时候结合起来可能就有一定的问题
+// 在此特别需要注意 extends、typeof、Partial、Record、Exclude、Omit这几个工具类型
+
+// extends
+interface _extends_Props {
+    length: number;
+}
+
+function _extends<T extends _extends_Props>(data: T): number {
+    return data.length; // 报错，因为不知道data有没有length这个属性。
+    // 用extends继承接口，扩展对象类型
+    // ! 注意，如果传入了没有.length属性的data，还是会报错。这个只是扩展的类型限制。
+}
+
+// typeof
+// typeof 可以推出变量的类型也可以用于再次赋值
+const typeofInfo = {
+    name: 'ahxc',
+    age: 7,
+};
+
+type typeofProps = typeof typeofInfo; // {name:string,age:number,sex:boolean}
+
+// keyof
+// 获取接口的所有key值，也可以检查对象是否存在指定键值
+interface keyofProps {
+    name: string,
+    age: number,
+}
+
+type keyofPropsKey = keyof keyofProps; // 此处用法和typeof不同，推导类型键值。name,age
+
+const keyofCom1: keyofPropsKey = 'name'; // 键值名
+// const keyofCom2: keyofPropsKey = 'ahxc';// 报错，keyofPropsKey无此键名
+
+// 泛型中的keyof应用。
