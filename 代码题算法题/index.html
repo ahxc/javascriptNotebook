@@ -112,7 +112,50 @@
         myDiv.addEventListener('click', function (event) {
             var isInside = event.target === myDiv; // 检查点击的是否是div元素本身  
             console.log(isInside ? '内部点击' : '外部点击');
-        });  
+        });
+
+        // 深拷贝
+        function deepClone(data) {
+            return JSON.parse(JSON.stringify(data));
+        }
+
+        const i = [
+            { id: '1', value: '1' },
+            { id: '2', value: '2' },
+            { id: '3', value: '3' },
+            { id: '1-1', value: '1-1', pid: '1' },
+            { id: '2-1', value: '2-1', pid: '2' },
+            { id: '3-1', value: '3-1', pid: '3' },
+            { id: '3-1-1', value: '3-1-1', pid: '3-1' },
+        ];
+
+        // 把含树结构的array数据转换为children层级形式的array返回
+        function list2tree(list = [], id = 'id', pid = 'pid') {
+            // 深拷贝
+            const d_list = deepClone(list);
+
+            // key，value字典
+            const dic = {};
+            for (const i of d_list) {
+                dic[i[id]] = i;
+            }
+
+            // 树
+            const tree = [];
+            let index = 0;
+            for (const i of d_list) {
+                const p = dic[i[pid]];
+                if (p) {
+                    p.children = p.children ? [...p.children, i] : [i];
+                    i.level = (p.level || 0) + 1;
+                }
+                else {
+                    i.level = 0;
+                    tree.push(i);
+                }
+            }
+            return deepClone(tree);
+        }
     </script>
 </body>
 
