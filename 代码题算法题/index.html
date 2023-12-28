@@ -156,6 +156,18 @@
             }
             return deepClone(tree);
         }
+
+        // 组件
+        const com = {}
+        // 根据上述list2tree生成的数据返回树组件
+        function loopComponent(list) {
+            for (const i of list) {
+                if (Array.isArray(i.children)) {
+                    loopComponent(i.children)
+                }
+                return com
+            }
+        }
     </script>
 </body>
 
