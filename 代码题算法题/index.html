@@ -107,7 +107,7 @@
             }
         }
 
-        /* 盒子内部点击打印false，外部点击打印true */
+        /* 盒子内部点击打印false，外部点击打印true，如果是vue的话使用.self修饰符，只有点击事件本身才会触发 */
         var myDiv = document.getElementById('myDiv');
         myDiv.addEventListener('click', function (event) {
             var isInside = event.target === myDiv; // 检查点击的是否是div元素本身  
