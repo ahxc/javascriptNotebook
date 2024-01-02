@@ -28,19 +28,22 @@
         // print();
 
         // 使用 setTimeout 实现 setInterval，
-        // 注意：setTimeout执行完毕不使用变量保存会自动清空不需手动清空。setInterval也没有立即执行属性不会立即执行。
+        // 注意：setTimeout执行完毕不使用变量保存会自动清空不需手动清空。setInterval也没有立即执行属性但会立即执行一次。。
         function setInterval(fn, time) {
-            function loop(params) {
-                fn()
-                setTimeout(loop, time);
-            }
-            loop()
+            fn()
+            setTimeout(() => { setInterval(fn, time) }, time)
+            // function loop(params) {
+            //     fn()
+            //     setTimeout(loop, time);
+            // }
+            // loop()
         }
-        // setInterval(() => {
-        //     let i = 0;
-        //     i += 1;
-        //     console.log(i);
-        // }, 1000);
+        // 原生都将开辟新空间，所以i始终打印1
+        setInterval(() => {
+            let i = 0;
+            i += 1;
+            console.log(i);
+        }, 1000);
 
         // 查找第K个最大元素，注意去重版和非去重，通常不用去重。去掉new set即可
         function findKLargest(array, k) {
@@ -61,7 +64,7 @@
             })
             return list
         }
-        console.log(flat([1, 2, 3, [4, 5, 6], [7, 8, [9, 10, 11], 12], [13, 14, 15]], 2))
+        // console.log(flat([1, 2, 3, [4, 5, 6], [7, 8, [9, 10, 11], 12], [13, 14, 15]], 2))
 
         // 数组排序，先排数字，再排字母，["B3", "D2", "F1", "A9", "D12", "A2", "C1", "Z0", "B1"]
         function sortData(data) {
