@@ -49,22 +49,19 @@
         }
 
         // 抚平嵌套数组
-        var flat = function (arr, n) {
-            const l = [];
-            function loop(arr, level) {
-                arr.forEach((i) => {
-                    if (Array.isArray(i) && level > 0) {
-                        loop(i, level - 1);
-                    }
-                    else {
-                        l.push(i);
-                    }
-                });
-            }
-            loop(arr, n)
-            return l;
-        };
-        // console.log(flat([1, 2, 3, [4, 5, 6], [7, 8, [9, 10, 11], 12], [13, 14, 15]]))
+        function flat(arr, n = 0) {
+            let list = []
+            arr.forEach((el) => {
+                if (Array.isArray(el) && n > 0) {
+                    list = list.concat(flat(el, n - 1))
+                }
+                else {
+                    list.push(el)
+                }
+            })
+            return list
+        }
+        console.log(flat([1, 2, 3, [4, 5, 6], [7, 8, [9, 10, 11], 12], [13, 14, 15]], 2))
 
         // 数组排序，先排数字，再排字母，["B3", "D2", "F1", "A9", "D12", "A2", "C1", "Z0", "B1"]
         function sortData(data) {
@@ -193,7 +190,6 @@
             },
             hobbies: ['reading', 'traveling', 'music', ['test', 'test2', ['test3']]]
         };
-
         function flattenJSON2(obj = {}, prefix = '') {
             let result = {}
             for (const key of Object.keys(obj)) {
@@ -207,6 +203,7 @@
             }
             return result
         }
+        // console.log(flattenJSON(json))
     </script>
 </body>
 
