@@ -18,6 +18,8 @@
         <div class="box2"></div>
     </div>
 
+    <div id="myDiv"></div>
+
     <script>
         // 判断一个字符串是否为对称数，例：'123321'
         function symmetry(str = '') {
@@ -26,7 +28,7 @@
         // print();
 
         // 使用 setTimeout 实现 setInterval，
-        // 注意：setTimeout执行完毕不使用变量保存会自动清空不需手动清空。setInterval也没有立即执行属性。
+        // 注意：setTimeout执行完毕不使用变量保存会自动清空不需手动清空。setInterval也没有立即执行属性不会立即执行。
         function setInterval(fn, time) {
             function loop(params) {
                 fn()
@@ -167,6 +169,43 @@
                 }
                 return com
             }
+        }
+
+        // 给数字字符串添加千分位，注意小数点。
+        // 原生实现 number.toLocaleString() // '123,456.789'
+        function addThousandSeparator(num) {
+            var numParts = num.toString().split(".");
+            numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return numParts.join(".");
+        }
+
+        // json扁平化
+        let json = {
+            name: 'John',
+            age: 30,
+            address: {
+                city: 'New York',
+                state: 'NY',
+                zip: '10001',
+                addressPlus: {
+                    city: 'new london'
+                }
+            },
+            hobbies: ['reading', 'traveling', 'music', ['test', 'test2', ['test3']]]
+        };
+
+        function flattenJSON2(obj = {}, prefix = '') {
+            let result = {}
+            for (const key of Object.keys(obj)) {
+                const newPrefix = prefix ? prefix + '_' + key : key
+                if (typeof obj[key] === 'object' && obj !== null) {
+                    result = Object.assign(result, flattenJSON2(obj[key], newPrefix))
+                }
+                else {
+                    result[newPrefix] = obj[key]
+                }
+            }
+            return result
         }
     </script>
 </body>
