@@ -11,6 +11,17 @@
 </head>
 
 <style>
+    .box1 {
+        background-color: red;
+        width: 100px;
+        height: 100px;
+    }
+
+    .box2 {
+        background-color: lightblue;
+        width: 50px;
+        height: 50px;
+    }
 </style>
 
 <body>
@@ -18,20 +29,25 @@
         <div class="box2"></div>
     </div>
 
-    <div id="myDiv"></div>
-
     <script>
-        // 判断一个字符串是否为对称数，例：'123321'
+        /* 
+        判断一个字符串是否为对称数
+        例：'123321'
+         */
         function symmetry(str = '') {
             return str === str.split('').reverse().join('');
         }
         // print();
 
-        // 使用 setTimeout 实现 setInterval，
-        // 注意：setTimeout执行完毕不使用变量保存会自动清空不需手动清空。setInterval也没有立即执行属性但会立即执行一次。。
-        function setInterval(fn, time) {
+        /* 
+        使用 setTimeout 实现 setInterval，
+        注意：setTimeout执行完毕不使用变量保存会自动清空不需手动清空。setInterval也没有立即执行属性但会立即执行一次。。
+        */
+        function mySetInterval(fn, time) {
             fn()
-            setTimeout(() => { setInterval(fn, time) }, time)
+            setTimeout(() => {
+                mySetInterval(fn, time)
+            }, time)
             // function loop(params) {
             //     fn()
             //     setTimeout(loop, time);
@@ -39,19 +55,24 @@
             // loop()
         }
         // 原生都将开辟新空间，所以i始终打印1
-        // setInterval(() => {
+        // mySetInterval(() => {
         //     let i = 0;
         //     i += 1;
         //     console.log(i);
         // }, 1000);
 
-        // 查找第K个最大元素，注意去重版和非去重，通常不用去重。去掉new set即可
+        /* 
+        查找第K个最大元素
+        注意去重版和非去重要求，通常不用去重。去掉new set即可
+         */
         function findKLargest(array, k) {
             const list = Array.from(new Set(array)).sort((a, b) => a - b);
             return list[k - 1];
         }
 
-        // 抚平嵌套数组
+        /* 
+        抚平嵌套数组
+         */
         function flat(arr, n = 0) {
             let list = []
             arr.forEach((el) => {
@@ -66,23 +87,28 @@
         }
         // console.log(flat([1, 2, 3, [4, 5, 6], [7, 8, [9, 10, 11], 12], [13, 14, 15]], 2))
 
-        // 数组排序，先排数字，再排字母，["B3", "D2", "F1", "A9", "D12", "A2", "C1", "Z0", "B1"]
+        /* 
+        数组排序，先排数字，再排字母
+        例子：["B3", "D2", "F1", "A9", "D12", "A2", "C1", "Z0", "B1"] 
+        */
         function sortData(data) {
             return data.sort((a, b) => {
-                const [codeA, typeA, numA] = a.match(/([A-Z])(\d+)/);
-                const [codeB, typeB, numB] = b.match(/([A-Z])(\d+)/);
+                const [matchA, codeA, numA] = a.match(/([A-Z])(\d+)/);
+                const [matchB, codeB, numB] = b.match(/([A-Z])(\d+)/);
 
                 const numComparison = parseInt(numA) - parseInt(numB);
                 if (numComparison !== 0) {
                     return numComparison;
-                } else {
-                    // 比较字母顺序，升序-1，降序1，相同字母aa0。
-                    return typeA.localeCompare(typeB);
                 }
+                else {
+                    // 比较字母顺序，升序返回-1，降序返回1，相同字母返回0。
+                    return codeA.localeCompare(codeB);
+                }
+
             });
         }
-
         const data = ["B3", "D2", "F1", "A9", "D12", "A2", "C1", "Z0", "B1"];
+        // console.log(sortData(data))
 
 
         // 使用promise每隔一秒输出123
@@ -103,20 +129,25 @@
                 return new Promise((resolve, reject) => {
                     setTimeout(() => {
                         console.log(interval);
-                        resolve(interval); // 无此句失效，只会打印1，因为await 等不到返回结果，for循环会立即执行，
+                        resolve(interval); // 无此句失效，只会打印1，因为await 等不到返回结果，for循环会立即执行。
                     }, 1000);
                 });
             }
         }
 
-        /* 盒子内部点击打印false，外部点击打印true，如果是vue的话使用.self修饰符，只有点击事件本身才会触发 */
-        var myDiv = document.getElementById('myDiv');
-        myDiv.addEventListener('click', function (event) {
-            var isInside = event.target === myDiv; // 检查点击的是否是div元素本身  
+        /* 
+        盒子内部点击打印false，外部点击打印true，
+        如果是vue的话使用.self修饰符，只有点击事件本身才会触发
+         */
+        var box1 = document.getElementsByClassName('box1')[0];
+        box1.addEventListener('click', function (event) {
+            var isInside = event.target === box1; // 冒泡的时候触发事件检查点击的是否是div元素本身
             console.log(isInside ? '内部点击' : '外部点击');
         });
 
-        // 深拷贝
+        /* 
+        深拷贝
+         */
         function deepClone(data) {
             return JSON.parse(JSON.stringify(data));
         }
@@ -130,7 +161,6 @@
             { id: '3-1', value: '3-1', pid: '3' },
             { id: '3-1-1', value: '3-1-1', pid: '3-1' },
         ];
-
         // 把含树结构的array数据转换为children层级形式的array返回
         function list2tree(list = [], id = 'id', pid = 'pid') {
             // 深拷贝
@@ -174,10 +204,11 @@
         // 给数字字符串添加千分位，注意小数点。
         // 原生实现 number.toLocaleString() // '123,456.789'
         function addThousandSeparator(num) {
-            var numParts = num.toString().split(".");
-            numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            var numParts = String(num).split(".");
+            numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 找到千分位
             return numParts.join(".");
         }
+        // console.log(addThousandSeparator('6666666.6666666666'))
 
         // json扁平化
         let json = {
@@ -219,7 +250,7 @@
         }
         // console.log(rgb2hex(255, 255, 255))
 
-        // 平方根 sqrt，返回整数
+        // 平方根 sqrt，返回向下取整的整数
         function mySqrt(x) {
             // 整数x的平方根一定是在1到x的范围内，采用二分法
             let left = 1,
@@ -243,7 +274,7 @@
             // 如果输入参数是0，left等于1而right等于0，就直接返回0
             return 0;
         };
-        console.log(mySqrt(6))
+        // console.log(mySqrt(6))
     </script>
 </body>
 
