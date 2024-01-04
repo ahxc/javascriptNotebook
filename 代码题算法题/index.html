@@ -239,7 +239,19 @@
         }
         // console.log(flattenJSON(json))
 
-        // 函数柯里化 实现
+        /* 
+        函数柯里化 实现
+        (a,b,c)=>a+b+c
+         */
+        function curry(a) {
+            return function (b) {
+                return function (c) {
+                    return a + b + c
+                }
+            }
+        }
+        // console.log(curry(1)(2)(3))
+
 
         // rgb转hex，三原色转十六进制颜色代码，如 255,255,255 => #ffffff
         function num2hex(n) {
