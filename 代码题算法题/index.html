@@ -287,6 +287,32 @@
             return 0;
         };
         // console.log(mySqrt(6))
+
+        // for循环与var，let
+        for (var index = 0; index < 3; index++) {
+            setTimeout(() => {
+                // console.log(index)
+            }, 0);
+        }
+        // 3 3 3，因为var已经加完，按事件循环机制再执行console。
+
+        for (let index = 0; index < 3; index++) {
+            setTimeout(() => {
+                // console.log(index)
+            }, 0);
+        }
+        // 0 1 2，块级作用域for循环参数index有闭包保护。
+
+        // this 指向问题
+        const fun = {
+            count: 'ahxc',
+            show: function () {
+                console.log(this.count)
+            }
+        }
+        const exc = fun.show
+        exc() // undefined ，对象是window
+        fun.show() // ahxc ，对象是fun
     </script>
 </body>
 
