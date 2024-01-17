@@ -122,18 +122,19 @@
 
             // promise 改造
             for (let i = 1; i < 4; i++) {
-                pro(i);
+                await pro(i); // await也要加上。
             }
 
             function pro(interval) {
                 return new Promise((resolve, reject) => {
                     setTimeout(() => {
                         console.log(interval);
-                        resolve(interval); // 无此句失效，只会打印1，因为await 等不到返回结果，for循环会立即执行。
+                        resolve(interval); // 无此句会一秒后同时打印出123，因为await 等不到返回结果，for循环会立即执行。
                     }, 1000);
                 });
             }
         }
+        // print()
 
         /* 
         盒子内部点击打印false，外部点击打印true，
@@ -307,12 +308,76 @@
         const fun = {
             count: 'ahxc',
             show: function () {
-                console.log(this.count)
+                console.log('show', this.count)
             }
         }
-        const exc = fun.show
-        exc() // undefined ，对象是window
-        fun.show() // ahxc ，对象是fun
+        // const exc = fun.show
+        // exc() // undefined ，对象是window
+        // fun.show() // ahxc ，对象是fun
+
+        var value = 100
+        function fn() {
+            this.value++;
+            return this.value;
+        }
+        var obj = {
+            value: 1,
+            fn
+        }
+        function delay(fn, delay) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(fn());
+                }
+                    , delay);
+            })
+        }
+        async function run() {
+            var value = 10;
+            try {
+                console.log(1)
+                const pms1 = delay(fn, 100);
+                const pms2 = delay(obj.fn, 200);
+                const value1 = await pms1;
+                const value2 = await pms2;
+                const value3 = await delay(fn.bind(obj), 300);
+                console.log(value1, value2, value3)
+            }
+            catch (err) {
+                console.error(err);
+            }
+        }
+        // 耗时 500，pms1 pms2 是同步调用。
+
+        // 空瓶换汽水，3个空瓶换一瓶汽水，喝完可以加入剩余空瓶继续换，剩到两个空瓶可以和老板借一个空瓶换汽水
+        // 到时喝完还给老板。换句话说，剩两个空瓶可换一瓶汽水。
+        function bottle(n) {
+            s = 0
+            while (n >= 3) {
+                n -= 2
+                s += 1
+            }
+            if (n === 2) {
+                s += 1
+            }
+            return s
+        }
+        // console.log(bottle(2))
+
+        // n阶台阶问题，注意每次只能爬1和2阶台阶，n阶只能从n-1或n-2跳过来
+        // 思路，所以n阶的跳法只能是n-1和n-2跳法的和
+        function climbStairs(n) {
+            if (n <= 2) return n
+            let p = 1
+            let q = 2
+            for (let i = 3; i <= n; i++) {
+                let temp = q
+                p = q
+                q = q + temp
+            }
+            return q
+        }
+        // console.log(climbStairs(2))
     </script>
 </body>
 
