@@ -478,6 +478,26 @@
             const list = s.split(' ')
             return list.filter((item) => item).reverse().join(' ')
         };
+
+        /* 
+        重复子串
+        重复子串A多少次能有B，注意A本身包含B算一次。没有B返回-1
+        */
+        function repeatedStringMatch(a, b) {
+            // 核心：如果A连续子串能得出B，必有AAAABAAA，那么其重复子串A的长度不会超过ABA的长度。
+            // 以此界限，暴力叠加A看包不包含B即可。
+            const len = a.length * 2 + b.length
+            let count = 1
+            let temp = a
+            while (temp.length <= len) {
+                if (temp.includes(b)) {
+                    return count
+                }
+                count += 1
+                temp += a
+            }
+            return -1
+        }; 
     </script>
 </body>
 
