@@ -48,11 +48,6 @@
             setTimeout(() => {
                 mySetInterval(fn, time)
             }, time)
-            // function loop(params) {
-            //     fn()
-            //     setTimeout(loop, time);
-            // }
-            // loop()
         }
         // 原生都将开辟新空间，所以i始终打印1
         // mySetInterval(() => {
@@ -110,7 +105,9 @@
         const data = ["B3", "D2", "F1", "A9", "D12", "A2", "C1", "Z0", "B1"];
         // console.log(sortData(data))
 
-        // 使用promise每隔一秒输出123
+        /* 
+        使用promise每隔一秒输出123
+        */
         async function print(time) {
             // 基础原理
             // for (let i = 1; i < 4; i++) {
@@ -288,7 +285,9 @@
         };
         // console.log(mySqrt(6))
 
-        // for循环与var，let
+        /* 
+        for循环与var，let
+        */
         for (var index = 0; index < 3; index++) {
             setTimeout(() => {
                 // console.log(index)
@@ -301,16 +300,18 @@
                 // console.log(index)
             }, 0);
         }
-        // 0 1 2，块级作用域for循环参数index有闭包保护。
+        // 0 1 2，块级作用域for循环参数index有闭包保护。他们都是经过延时后一同调用，因为时间循环机制。
 
-        // this 指向问题
+        /* 
+        this 指向问题
+        */
         const fun = {
             count: 'ahxc',
             show: function () {
                 console.log('show', this.count)
             }
         }
-        // const exc = fun.show
+        const exc = fun.show
         // exc() // undefined ，对象是window
         // fun.show() // ahxc ，对象是fun
 
@@ -348,8 +349,10 @@
         }
         // 耗时 500，pms1 pms2 是同步调用。
 
-        // 空瓶换汽水，3个空瓶换一瓶汽水，喝完可以加入剩余空瓶继续换，剩到两个空瓶可以和老板借一个空瓶换汽水
-        // 到时喝完还给老板。换句话说，剩两个空瓶可换一瓶汽水。
+        /* 
+        空瓶换汽水，3个空瓶换一瓶汽水，喝完可以加入剩余空瓶继续换，
+        剩到两个空瓶可以和老板借一个空瓶换汽水到时喝完还给老板。换句话说，剩两个空瓶后可换一瓶汽水。
+        */
         function bottle(n) {
             s = 0
             while (n >= 3) {
@@ -363,8 +366,10 @@
         }
         // console.log(bottle(2))
 
-        // n阶台阶问题，注意每次只能爬1和2阶台阶，n阶只能从n-1或n-2跳过来
-        // 思路，所以n阶的跳法只能是n-1和n-2跳法的和
+        /* 
+        n阶台阶问题，注意每次只能爬1和2阶台阶，n阶只能从n-1或n-2跳过来
+        思路，所以n阶的跳法只能是n-1和n-2跳法的和，斐波那契数列去掉了0和1,0 1 1 2 3 5 8
+        */
         function climbStairs(n) {
             if (n <= 2) return n
             let p = 1
@@ -378,7 +383,9 @@
         }
         // console.log(climbStairs(2))
 
-        // n阶台阶升级版，p，q是可以手动输入控制的，又有多少种解法，如3 1 2 输出3，p<=q=<n=<=100
+        /* 
+        n阶台阶升级版，p，q是可以手动输入控制的，又有多少种解法，如3 1 2 输出3，p<=q=<n=<=100
+        */
         function climbStairs(n, p, q) {
 
         }
@@ -437,6 +444,40 @@
             return true
         }
         // console.log(validIPAddress("2001:0db8:85a3:00000:0:8A2E:0370:7334"))
+
+        /* 
+        前k个高频词汇
+        注意：如果是相同频率的单词，按照字典abc的顺序排序
+        */
+        function topKFrequent(params) {
+            const dic = {}
+            for (const i of words) {
+                if (dic[i]) {
+                    dic[i] += 1
+                }
+                else {
+                    dic[i] = 1
+                }
+            }
+
+            const list = Object.keys(dic).sort((a, b) => {
+                if (dic[a] === dic[b]) {
+                    return a.localeCompare(b) // 字母顺序
+                }
+                return dic[b] - dic[a]
+            })
+            return list.slice(0, k)
+        }
+
+        /* 
+        反转句子
+        hello word =》word hello
+        注意首尾空格和空元素
+         */
+        function reverseWords(s) {
+            const list = s.split(' ')
+            return list.filter((item) => item).reverse().join(' ')
+        };
     </script>
 </body>
 
