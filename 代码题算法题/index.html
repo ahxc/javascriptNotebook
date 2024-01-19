@@ -497,7 +497,52 @@
                 temp += a
             }
             return -1
-        }; 
+        };
+
+        /* 
+        最长公共子串
+        两端往中央靠拢暴力枚举
+        注意最优解可能在末尾，所以必须全部遍历完。
+        */
+        function commonSubStr(sub, main) {
+            if (sub.length > main.length) {
+                const temp = sub;
+                sub = main;
+                main = temp;
+            }
+            let length = 0;
+            for (let i = 0; i < sub.length; i++) {
+                let endIndex = sub.length;
+                while (i < endIndex) {
+                    const str = sub.slice(i, endIndex);
+                    if (main.includes(str)) {
+                        length = Math.max(length, str.length);
+                        break;
+                    } else {
+                        endIndex -= 1;
+                    }
+                }
+            }
+            console.log(length);
+        }
+
+        /* 
+        十进制的反码，
+        即转二进制后1取0,0取1，然后转为十进制
+        */
+        var bitwiseComplement = function (n) {
+            let N2 = n.toString(2)
+            let str = ''
+            for (let i = 0; i < N2.length; i++) {
+                if (N2[i] === '0') {
+                    str += '1'
+                }
+                else {
+                    str += '0'
+                }
+            }
+            return parseInt(str, 2)
+        };
     </script>
 </body>
 
