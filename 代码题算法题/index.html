@@ -543,6 +543,81 @@
             }
             return parseInt(str, 2)
         };
+
+        /* 
+        接雨水
+        初版，思路：计算左边和右边的最大短板超时，将每个单位视作一个木桶，能接多少水取决于他的短板。用最小短板-自身高度即可这个单位头顶有多少水
+        */
+        var trap = function (height) {
+            const list = [] // 每个单位的最小短板集合
+            let count = 0
+            for (let i = 0; i < height.length; i++) {
+                const left = Math.max(...height.slice(0, i), 0)
+                const right = Math.max(...height.slice(i + 1), 0)
+                list.push(left < right ? left : right)
+            }
+            for (let i = 0; i < height.length; i++) {
+                count += Math.max(list[i] - height[i], 0)
+            }
+
+            return count
+        }
+
+        /*
+        接雨水
+        超时改造版
+        用最大自增序列来分别计算左右短板，空间复杂多两个递增序列  1 1 2 0 3 2...=》1 1 2 2 3 3 ...
+        最大自增序列，即遇到新的最大值设为后续自增标准，以2为例，2的左最大短板是1是2无影响，装不了水。所以为2对齐后续。
+        右最大短板按相反方向同时来一次即可
+        */
+        var trapPlus = function (height) {
+            let count = 0
+
+            const maxLeft = []
+            const maxRight = []
+
+            // 最大递增序列左右两个方向
+            for (let i = 0; i < height.length; i++) {
+                maxLeft.push(Math.max(maxLeft[i - 1] || 0, height[i]))
+                maxRight.push(Math.max(maxRight[i - 1] || 0, height[height.length - 1 - i]))
+            }
+
+            for (let i = 0; i < height.length; i++) {
+                const min = Math.min(maxLeft[i], maxRight[height.length - 1 - i])
+                count += Math.max(min - height[i], 0)
+            }
+            return count
+        }
+
+        /*
+       接雨水
+       双指针版升级版
+       思路：如果单位的左短板小于又短板，那么他可以装最多左短板-自身高度的水，注意这时左指针需要右移，而右指针不变！
+       反之，单位的右短板小于左短板，那么他可以装最多右短板-自身高度的水，
+       如若相等，则无所谓左右，拿其中一个短板-自身高度的水
+       在移动双指针时，同步更新最大短板，注意不能遗漏指针合并时还一次计算
+       本质是最大递增虚列的左右合并。
+       */
+        var trap = function (height) {
+            let count = 0
+            let maxLeft = 0 // 最大短板
+            let maxRight = 0
+            let leftIndex = 0
+            let rightIndex = height.length - 1
+            while (leftIndex <= rightIndex) {
+                maxLeft = Math.max(maxLeft, height[leftIndex])
+                maxRight = Math.max(maxRight, height[rightIndex])
+                if (maxLeft < maxRight) {
+                    count += maxLeft - height[leftIndex]
+                    leftIndex += 1
+                }
+                else {
+                    count += maxRight - height[rightIndex]
+                    rightIndex -= 1
+                }
+            }
+            return count
+        }
     </script>
 </body>
 
