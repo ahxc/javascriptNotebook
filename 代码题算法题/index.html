@@ -41,7 +41,7 @@
 
         /* 
         使用 setTimeout 实现 setInterval，
-        注意：setTimeout执行完毕不使用变量保存会自动清空不需手动清空。setInterval也没有立即执行属性但会立即执行一次。。
+        注意：setTimeout执行完毕不使用变量保存会自动清空不需手动清空。setInterval也没有立即执行属性但会立即执行一次。
         */
         function mySetInterval(fn, time) {
             fn()
@@ -99,7 +99,6 @@
                     // 比较字母顺序，升序返回-1，降序返回1，相同字母返回0。
                     return codeA.localeCompare(codeB);
                 }
-
             });
         }
         const data = ["B3", "D2", "F1", "A9", "D12", "A2", "C1", "Z0", "B1"];
@@ -207,7 +206,10 @@
         }
         // console.log(addThousandSeparator('6666666.6666666666'))
 
-        // json扁平化
+        /* 
+        json扁平化
+        思路：数组扁平化一致，递归加融合
+         */
         let json = {
             name: 'John',
             age: 30,
@@ -226,7 +228,7 @@
             for (const key of Object.keys(obj)) {
                 const newPrefix = prefix ? prefix + '_' + key : key
                 if (typeof obj[key] === 'object' && obj !== null) {
-                    result = Object.assign(result, flattenJSON2(obj[key], newPrefix))
+                    result = Object.assign(result, flattenJSON(obj[key], newPrefix))
                 }
                 else {
                     result[newPrefix] = obj[key]
@@ -249,8 +251,11 @@
         }
         // console.log(curry(1)(2)(3))
 
-
-        // rgb转hex，三原色转十六进制颜色代码，如 255,255,255 => #ffffff
+        /* 
+        rgb转hex
+        思路：toString(16)和填充前缀0
+        三原色转十六进制颜色代码，如 255,255,255 => #ffffff
+        */
         function num2hex(n) {
             return n.toString(16).padStart(2, '0')
         }
@@ -352,6 +357,7 @@
         /* 
         空瓶换汽水，3个空瓶换一瓶汽水，喝完可以加入剩余空瓶继续换，
         剩到两个空瓶可以和老板借一个空瓶换汽水到时喝完还给老板。换句话说，剩两个空瓶后可换一瓶汽水。
+        思路：如果n>3循环减去2（减三个加一个）可以算喝了一瓶，剩两个空瓶再喝一瓶
         */
         function bottle(n) {
             s = 0
@@ -368,7 +374,7 @@
 
         /* 
         n阶台阶问题，注意每次只能爬1和2阶台阶，n阶只能从n-1或n-2跳过来
-        思路，所以n阶的跳法只能是n-1和n-2跳法的和，斐波那契数列去掉了0和1,0 1 1 2 3 5 8
+        思路，所以n阶的跳法只能是n-1和n-2跳法的和，斐波那契数列去掉了0和1。0 1 1 2 3 5 8
         */
         function climbStairs(n) {
             if (n <= 2) return n
@@ -390,9 +396,11 @@
 
         }
 
-
         /* 
         验证有效ip地址
+        思路：含 . ipv4 含:ipv6
+        对于ipv4：一组0~255，没有0前缀，将每组化作整型再转回字符串，看是否等于自身，即可去掉0前缀和非法字符
+        ipv6同理，0~ffff，a~f，注意ipv6可以有0前缀，所以转换十进制然后十六机制后的和自身都用0填充至4位即可。注意大小写，全部小写处理。
         */
         var validIPAddress = function (queryIP) {
             if (queryIP.includes('.')) {
@@ -447,6 +455,7 @@
 
         /* 
         前k个高频词汇
+        思路：用字典统计每个单词出现次数，然后根据次数排序即可，相同字数使用localeCompare字母单词排序即可。
         注意：如果是相同频率的单词，按照字典abc的顺序排序
         */
         function topKFrequent(params) {
@@ -481,11 +490,11 @@
 
         /* 
         重复子串
+        思路：如果A连续子串能得出B，必有AAAABAAA，那么其重复子串A的长度不会超过ABA的长度。
+        以此界限，暴力叠加A看包不包含B即可。
         重复子串A多少次能有B，注意A本身包含B算一次。没有B返回-1
         */
         function repeatedStringMatch(a, b) {
-            // 核心：如果A连续子串能得出B，必有AAAABAAA，那么其重复子串A的长度不会超过ABA的长度。
-            // 以此界限，暴力叠加A看包不包含B即可。
             const len = a.length * 2 + b.length
             let count = 1
             let temp = a
@@ -501,8 +510,8 @@
 
         /* 
         最长公共子串
-        两端往中央靠拢暴力枚举
-        注意最优解可能在末尾，所以必须全部遍历完。
+        遍历每个元素，末端往元素靠拢暴力枚举
+        注意：最优解可能在末尾，所以必须全部遍历完。
         */
         function commonSubStr(sub, main) {
             if (sub.length > main.length) {
@@ -527,8 +536,34 @@
         }
 
         /* 
+        最长公共子串 动态规划升级版
+        思路：利用二维数组，如果有匹配，则在左上角的基础上+1，左上角意味着有公共元素相交。形成一条递增对角线，
+        保存这个对角线的最大值。
+         */
+        function commonSubStr(str1, str2) {
+            // const zero = Array(str2.length + 1).fill(0); // 注意！不能这样写，因为fill都是同一个对象，会有深度影响，深拷贝也没用。
+            // 只能新增一个for循环
+            const sets = Array(str1.length + 1);
+            for (let i = 0; i < sets.length; i++) {
+                sets[i] = Array(str2.length + 1).fill(0)
+            }
+
+            let length = 0;
+            for (let str1Index = 1; str1Index <= str1.length; str1Index++) {
+                for (let str2Index = 1; str2Index <= str2.length; str2Index++) {
+                    if (str1[str1Index - 1] === str2[str2Index - 1]) {
+                        sets[str1Index][str2Index] =
+                            sets[str1Index - 1][str2Index - 1] + 1;
+                        length = Math.max(sets[str1Index][str2Index], length);
+                    }
+                }
+            }
+            console.log(length);
+        }
+
+        /* 
         十进制的反码，
-        即转二进制后1取0,0取1，然后转为十进制
+        思路：toString(2)，即转二进制后1取0,0取1，然后转为十进制
         */
         var bitwiseComplement = function (n) {
             let N2 = n.toString(2)
@@ -546,7 +581,7 @@
 
         /* 
         接雨水
-        初版，思路：计算左边和右边的最大短板超时，将每个单位视作一个木桶，能接多少水取决于他的短板。用最小短板-自身高度即可这个单位头顶有多少水
+        思路：计算左边和右边的最大短板超时，将每个单位视作一个木桶，能接多少水取决于他的短板。用最小短板-自身高度即可这个单位头顶有多少水
         */
         var trap = function (height) {
             const list = [] // 每个单位的最小短板集合
@@ -565,8 +600,8 @@
 
         /*
         接雨水
-        超时改造版
-        用最大自增序列来分别计算左右短板，空间复杂多两个递增序列  1 1 2 0 3 2...=》1 1 2 2 3 3 ...
+        Math.max超时改造版
+        用最大自增序列来分别计算左右短板替代max方法，空间复杂多两个递增序列  1 1 2 0 3 2...=》1 1 2 2 3 3 ...
         最大自增序列，即遇到新的最大值设为后续自增标准，以2为例，2的左最大短板是1是2无影响，装不了水。所以为2对齐后续。
         右最大短板按相反方向同时来一次即可
         */
@@ -618,6 +653,91 @@
             }
             return count
         }
+
+        /* 
+        1764.连接数组 groups（二维数组），nums（一维数组）
+        能否在nums中找到groups所有子数组
+        这些子数组顺序和groups子数组出现顺序一致，且不想交，满足true，反之false
+        思路：遍历groups，groups和nums都用连接符逗号转字符串，通过indexOf计算索引。有一个找不到等于-1则false
+        找到后利用slice切片切除之前所有部分，防止下一个找到后与上一个相交。
+        注意：如果找到了，那么这个子串（子数组）的左边只存在两种情况：1.开头就找到了，所以左边没有元素undefined，中间找到了，那么左边应该是连接符','，下次匹配这个连接符需要切掉
+        防止特殊情况：[[2,1]] [12,1]，这个找到后左边是1，应该是false
+        */
+        var canChoose = function (groups, nums) {
+            nums = nums.join(',')
+            for (const i of groups) {
+                const sub = i.join(',')
+                const index = nums.indexOf(sub)
+                if (index === -1 || nums[index - 1] && nums[index - 1] !== ',') {
+                    return false
+                }
+                nums = nums.slice(index + sub.length + 1)
+            }
+            return true
+        };
+
+        /*
+        找座位，【没有经过机试】
+        给定一组数据1000101001,1有人，0无人，在满足010，10,01的情况下，最多能坐多少人
+        遍历字符串，如果为0，满足左边：undefined或0的情况下，则坐人。
+        注意：计算过的位置要坐人改变状态，0000000000
+        */
+        function findPosition(n) {
+            let count = 0
+            n = n.split('')
+            for (let i = 0; i < n.length; i++) {
+                if (n[i] === '0') {
+                    const left = n[i - 1] === '0' || i === 0
+                    const right = n[i + 1] === '0' || i === n.length - 1
+                    if (left && right) {
+                        count += 1
+                        // 坐上人
+                        n.splice(i, 1, '1')
+                    }
+                }
+            }
+            return count
+        }
+        // console.log(findPosition('00100000001010'))
+
+        /*
+        最长瑕疵元音子串，暴力破解【没有经过机试】
+        以aeiou开始和结尾的字符串为元音字符串，如a，aa，aeiou，abo
+        瑕疵度flaw为元音字符串中有多少个非元音字母，a，aa瑕疵度为0，abo为1
+        找出满足指定瑕疵度的最大元音子串。返回他的长度
+        思路：和最长公共子串暴力解法类似，双指针遍历，末端往左指针靠拢，找到最长的且满足指定瑕疵即可。
+        注意：与最长公共子串相同，答案可能在末尾，所以需要遍历完去最大值，
+        */
+        function aeiou(str, n) {
+            const yuan = 'aeiou'
+            let count = 0
+            let length = 0
+            for (let startIndex = 0; startIndex < str.length; startIndex++) {
+                let endIndex = str.length - 1
+                while (startIndex <= endIndex) {
+                    const left = yuan.includes(str[startIndex])
+                    const right = yuan.includes(str[endIndex])
+                    const condition = n === computeFlaw(str.slice(startIndex, endIndex + 1))
+                    if (left && right && condition) {
+                        length = Math.max(str.slice(startIndex, endIndex + 1).length, length)
+                    }
+                    endIndex--
+                }
+            }
+            return length
+        }
+        // 计算瑕疵度
+        function computeFlaw(str) {
+            const yuan = 'aeiou'
+            let count = 0
+            for (let index = 0; index < str.length; index++) {
+                if (!yuan.includes(str[index])) {
+                    count += 1
+                }
+            }
+            return count
+        }
+        console.log(aeiou('aabeebuu', 1))
     </script>
 </body>
 
