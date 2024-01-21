@@ -786,6 +786,170 @@
             return dic
         }
         // console.log(takeWords('hello,world,cloud', 'welldonehohneyr'))
+
+        /* 
+        判断子序列
+        判断一个字符串是否是另一个字符串的子序列，不要求连续，但顺序要保持一致，如 ace   asdfcwere。
+        acb aewrbsdfec，则不行，因为b在c后面
+        思路：暴力遍历，判断s中每个字符是否存在于t，如果存在，更新t开始搜索的索引后移避免顺序错误。
+        这里可以用indexOf替代内层for循环。
+        */
+        var isSubsequence = function (s, t) {
+            if (s.length > t.length) return false
+            if (s.length === 0) return true
+            let start = 0 // 开始搜索的位置，包含。
+            for (let i = 0; i < s.length; i++) {
+                const index = t.indexOf(s[i], start)
+                if (index === -1) {
+                    return false
+                }
+                start = index + 1
+            }
+            return true
+        };
+
+        /*
+        找朋友，暴力遍历【没有经过机试】
+        同学i往右看，有比他高的(第一个)则是好朋友，记录好朋友的索引位置。返回
+        */
+        function findFriends(str) {
+            const list = str.split(',')
+            count = Array(list.length).fill(0)
+            for (let index = 0; index < list.length; index++) {
+                const element = parseInt(list[index]);
+                for (let indexf = index + 1; indexf < list.length; indexf++) {
+                    const frind = parseInt(list[indexf]);
+                    if (frind > element) {
+                        count[index] = indexf
+                        break
+                    }
+                }
+            }
+            return count
+        }
+        // console.log(findFriends('100,2,234,2123,23534,22,4432,543'))
+
+        /* 
+        电脑感染时间【未经过机试】
+        给定一组二维数组，每子数组表示 电脑2 到 电脑1 感染时间1，最后一行2表示电脑病毒位置
+        求病毒感染所有电脑所需的时间，感染同步进行，存在电脑不被感染即未连接网络，返回-1
+        4 // 电脑数
+        3 // 链接数
+        2 1 1
+        2 3 1
+        3 4 1
+        2
+        答案为2 因为2-3花费1 3-4 花费1
+        思路：1.要感染所有电脑，最少链接情况是一条直线，那么连接数应该等于电脑数-1 1-2-3-4
+        但可能存在环，即 1-2-3  1-3这时连接数不可靠
+        2.最长公共子串同样的道理，但横坐标和纵坐标相等，轴对称，如果动态规划左上角为0，意味着是存在独立链接。
+        3.如果左上角为1，但自身为0，意味着靠近电脑顺序但没有连接
+        */
+        // function computerVirus(n, l, list, m) {
+        //     if (l < n - 1) return -1
+        //     // 格式化初始数据
+        //     const net = list.split(',')
+        //     for (let index = 0; index < net.length; index++) {
+        //         net[index] = net[index].split(' ')
+        //     }
+        //     // 建立二维数组
+        //     const sets = Array(n).fill([])
+        //     for (let index = 0; index < sets.length; index++) {
+        //         sets[index] = Array(n).fill(0);
+        //     }
+        //     // 画规划，net从1开始
+        //     for (let index = 0; index < net.length; index++) {
+        //         const element = net[index];
+        //         const [a, b, t] = element
+        //         sets[a - 1][b - 1] = t
+        //         sets[b - 1][a - 1] = t // 轴对称
+        //     }
+        //     console.log(sets, net)
+        //     // 计算时间和 -1
+        //     const maxTime = 0
+        //     for (let zindex = 0; zindex < sets.length; zindex++) {
+        //         const element = sets[zindex];
+        //         let zero = 0 // 这一行全为0
+        //         // for (let xindex = 0; xindex < array.length; xindex++) {
+        //         //     if (zindex !== 0 && xindex !== 0) {
+        //         //         if (sets[zindex][xindex] > 0) {
+
+        //         //         }
+        //         //     }
+        //         //     else {
+
+        //         //     }
+        //         // }
+        //     }
+        //     return maxTime
+        // }
+        // computerVirus(4, 3, '2 1 1,2 3 1,3 4 1', 2)
+        function computerVirus(n, l, list, m) {
+            // 格式化初始数据
+            const net = list.split(',')
+            for (let index = 0; index < net.length; index++) {
+                net[index] = net[index].split(' ')
+            }
+            // 记录已感染的电脑，防止a感染b, b感染a 死循环。
+            const dic = {}
+            for (let index = 0; index < net.length; index++) {
+                const element = net[index];
+                const [a, b, t] = element
+                // 找到病毒源，递归感染。
+                if (a === m || b === m) {
+                    dic[a]
+                    virus(a, b, t)
+                    break
+                }
+            }
+        }
+        function virus(a, b, t) {
+
+        }
+        // computerVirus(4, 3, '2 1 1,2 3 1,3 4 1', 2)
+
+        /* 
+        密码输入检测 【未经过机试】
+        密码长度大于8，且必须包含1个大写字母，1个小写字母，1个数字，1个特殊字符
+        注意：要拿退格后的字符串测试
+        */
+        function passwordCheck(str) {
+            let password = []
+            for (let index = 0; index < str.length; index++) {
+                const element = str[index];
+                if (element === '<') {
+                    password.pop()
+                    continue
+                }
+                else {
+                    password.push(element)
+                }
+            }
+
+            // 除字母数字以外的特殊字符，最好不要自己指定，因为可能会漏。
+            const special = password.some((item) => {
+                return !/[a-zA-Z0-9]/.test(item)
+            })
+
+            password = password.join('')
+
+            // 数字
+            let num = false
+            if (/\d/.test(password)) {
+                num = true
+            }
+
+
+            // 大小写
+            const lower = password.toUpperCase() !== password // 有小写
+            const upper = password.toLowerCase() === password // 有大写
+
+            // 长度
+            const length = password.length >= 8
+
+            return `${password},${lower && upper && length && num && special}`
+        }
+        console.log(passwordCheck('asdS#F<<<1<dfsaw2#'))
     </script>
 </body>
 
