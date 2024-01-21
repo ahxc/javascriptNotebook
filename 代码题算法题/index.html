@@ -949,7 +949,37 @@
 
             return `${password},${lower && upper && length && num && special}`
         }
-        console.log(passwordCheck('asdS#F<<<1<dfsaw2#'))
+        // console.log(passwordCheck('asdS#F<<<1<dfsaw#'))
+
+        /*
+        最小字符串 
+        最小字符串意为 按字母顺序的字符串 如 abcde是最小字符串，
+        请只交换一对字母的位置 如 bcda acdb （排序后：abcd）变为最小的字符串。首字母排序次字母排序以此类推
+        思路：先给字符串排序，找到第一位必是最小，然后找到原始字符串位置并交换，如果是相同字母，往后移指针判断
+        注意：针队特殊用例如aaacdb aaabdc aaabcd，需要剔除掉重复的开头aaa，找到要交换位置的c。
+        针对已经排序好的，等特殊情况需要特殊处理。
+        */
+        function minCode(str) {
+            const newList = str.split('')
+            const oldList = str.split('')
+            newList.sort()
+
+            for (let index = 0; index < newList.length; index++) {
+                if (newList[index] === oldList[index]) {
+                    continue
+                }
+                // 旧串种要被替换的字母
+                const temp = oldList[index]
+
+                // 新最小字母索引在旧串中的原始位置
+                const sourceIndex = oldList.join('').indexOf(newList[index], index + 1)
+                oldList.splice(index, 1, newList[index])
+                oldList.splice(sourceIndex, 1, temp)
+                return oldList.join('')
+            }
+            return oldList.join('')
+        }
+        console.log(minCode('abcdef'))
     </script>
 </body>
 
