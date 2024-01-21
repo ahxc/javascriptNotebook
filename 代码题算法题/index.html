@@ -737,7 +737,55 @@
             }
             return count
         }
-        console.log(aeiou('aabeebuu', 1))
+        // console.log(aeiou('aabeebuu', 1))
+
+        /* 
+        掌握单词个数，暴力破解【没有经过机试】
+        n个单词组成的str，每个单词能否用char拆开组合，如 abc  abstract，abc可以组合，
+        char还包括?可以抵消一一个字母，万能字母。如abstra?t ，？抵消c
+        输出多少个单词可以这样掌握。
+        思路：可以统计每个单词的字母出现次数，和char对比。如果遇到单词字母次数大于>char字母次数，拿万能字母?抵消
+        每个单词匹配都是重新开始，不消耗次数，但每次匹配char的字母只能匹配一次，包括万能字符。
+        满足次数相等的计入掌握数
+        */
+        function takeWords(str, char) {
+            const list = str.split(',')
+            const dicChar = codeNums(char)
+            dicChar['question'] = dicChar['question'] || 0
+            let count = []
+            for (let index = 0; index < list.length; index++) {
+                const element = list[index];
+                const dicWord = codeNums(element)
+                let temp = dicChar['question'] // 记录初始问号数值下次匹配。
+                let flag = true
+                for (const i of Object.keys(dicWord)) {
+                    if (dicWord[i] > (dicChar[i] || 0) + temp) {
+                        flag = false
+                        break
+                    }
+                    temp = Math.max(temp - dicWord[i] + (dicChar[i] || 0), 0)
+                    console.log(dicWord[i], temp)
+                }
+                if (flag) {
+                    count.push(element)
+                }
+            }
+            return count
+        }
+        // 统计字母次数字典
+        function codeNums(code) {
+            const dic = {}
+            for (let index = 0; index < code.length; index++) {
+                const element = code[index];
+                if (element === '?') {
+                    dic["question"] = (dic["question"] || 0) + 1
+                    continue
+                }
+                dic[element] = dic[element] ? dic[element] + 1 : 1
+            }
+            return dic
+        }
+        // console.log(takeWords('hello,world,cloud', 'welldonehohneyr'))
     </script>
 </body>
 
