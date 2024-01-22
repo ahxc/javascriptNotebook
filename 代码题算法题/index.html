@@ -952,7 +952,7 @@
         // console.log(passwordCheck('asdS#F<<<1<dfsaw#'))
 
         /*
-        最小字符串 
+        最小字符串 【未经过机试】
         最小字符串意为 按字母顺序的字符串 如 abcde是最小字符串，
         请只交换一对字母的位置 如 bcda acdb （排序后：abcd）变为最小的字符串。首字母排序次字母排序以此类推
         思路：先给字符串排序，找到第一位必是最小，然后找到原始字符串位置并交换，如果是相同字母，往后移指针判断
@@ -979,7 +979,103 @@
             }
             return oldList.join('')
         }
-        console.log(minCode('abcdef'))
+        // console.log(minCode('aaaaaaaccccbbbbb'))
+
+        /*
+        查找接口成功率最优时间段【未经过机试】
+                     0 1 2   3 4 5 6
+        给定一组数组 [0,2,100,0,2,2,5] 每个数值表示单位时间内接口失败的次数，
+        给定一个容忍率minAverageLost，计算数组平均值小于minaveragelost的区间，比如2有
+        0-1,3-5，这些区间平均值小于平均值。返回这些区间
+        思路：1.建立一个list统计sum[i]前的总失败率，这样区间sum[j]到sum[i]的失败率等于 总sum[i]-总sum[j-1] 如 [0,2,102,102,104,106]
+        2.然后双端暴力遍历，计算存在多少个区间，每个区间是否满足平均值小于minaveragelost，或者判断区间总失败率是否大于minaveragelost*区间长度。
+        注意：1.注意题意，只计算区间，单个元素不计入返回。和单个元素也计入区间有区别。满足条件的，区间内的单个元素需要排除，区间外的单独输出。如
+        2 0,2,100,0,2,2,5,2,5 倒数第二个是可以单独作为区间输出
+        2.区间内存在多个子区间满足条件，取最大区间，如3-4 3-6，右端遍历到6满足条件可以直接跳出当层循环不用计算3-4
+        3-6 4-6左端遍历也应该取最大区间，可以设值一个变量 最大区间右索引，如果有该值，且左索引小于该值，则跳过当前循环，意味着找到了满足条件的最大区间。
+        */
+        function computeAverageLost(minAverageLost, str) {
+            const list = str.split(',')
+
+            const sum = Array(list.length).fill(0)
+            for (let index = 0; index < list.length; index++) {
+                sum[index] = parseInt(sum[index - 1] || 0) + parseInt(list[index]);
+            }
+
+            const count = []
+            let maxRightIndex = -1
+            for (let leftIndex = 0; leftIndex < list.length; leftIndex++) {
+                // 左边开始的缩减的子区间都可以不再计算。
+                if (maxRightIndex >= 0 && leftIndex <= maxRightIndex) {
+                    leftIndex = maxRightIndex
+                    continue
+                }
+                for (let rightIndex = list.length - 1; leftIndex <= rightIndex; rightIndex--) {
+                    let avarage = (sum[rightIndex] - (sum[leftIndex - 1] || 0)) / (rightIndex - leftIndex + 1)
+                    if (avarage <= minAverageLost) {
+                        count.push(`${leftIndex === rightIndex ? leftIndex + '' : leftIndex + '-' + rightIndex}`)
+                        maxRightIndex = rightIndex
+                        // 右边开始缩减的子区间都可以不用在计算。
+                        break
+                    }
+                }
+            }
+            return count.join(' ')
+        }
+        // console.log(computeAverageLost(2, '0,0,100,2,2,99,0,2'))
+
+        /*
+        分割平衡字符串
+        给定一个均衡字符串只包含两种字符xy，且xy个数相等 xyyxyxxxyy 可分割为 xy yx yx xxyy 4
+        请尽可能分割成多个连续子串，使得每个子串亦是均衡字符串，返回最大均衡字符串个数。
+        思路：建立一个平衡度0，一次遍历遇到x平衡度+1，遇到y-1抵消平衡度
+        平衡度为0表示达到了最小平衡，计入一次子串，类似括号匹配。
+        */
+        var balancedStringSplit = function (s) {
+            let count = 0
+            let blance = 0
+            for (let i = 0; i < s.length; i++) {
+                if (s[i] === 'L') {
+                    blance += 1
+                }
+                else {
+                    blance -= 1
+                }
+                if (blance === 0) {
+                    count += 1
+                }
+            }
+            return count
+        };
+
+        /*
+        单位时间内通过车辆最多颜色数量
+        每一秒通过一两车，[0,1,1,2]4秒，共3种车，0,1,2
+        给定一个时间n秒，计算n秒内出现颜色种类最多的车能有多少，
+        思路：暴力遍历，就是一个时间划窗[left,...,right]，从头划窗，窗内颜色种内最多。
+        加入【同向双指针】模拟划窗，即划窗右端为开始指针，紧跟着左端指针，右端划过一个元素，左端需要跟上。
+        如：3秒内，滑到1,1,1时，0被左指针指着，应该减1。能将时间复杂度o(length*(n+m))=>o(length*n)
+        */
+        function countColorCar(str, n) {
+            const list = str.split(' ')
+            let maxCount = 0
+            // 存储 0 1 2 车出现次数
+            const count = Array(3).fill(0)
+            let leftIndex = 0
+            for (let rightIndex = 0; rightIndex < list.length; rightIndex++) {
+                count[list[rightIndex]] += 1
+                // 划窗又划过来了一个元素，右指针减去左指针长度大于n，等于n因为刚好初始化划过第一个一个元素不会触发下面代码
+                while (rightIndex - leftIndex >= n) {
+                    // 对齐
+                    // 减去划窗略过的元素的次数
+                    count[list[leftIndex]] -= 1
+                    leftIndex += 1
+                }
+                maxCount = Math.max(maxCount, ...count)
+            }
+            return maxCount
+        }
+        // console.log(countColorCar('0 0 0 0 0', 0))
     </script>
 </body>
 
