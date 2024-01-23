@@ -1373,6 +1373,138 @@
             return month
         }
         // console.log(requirements(3, [3, 5, 3, 4]),)
+
+        /*
+        考古学家：力扣47题 全排列2【中等】
+        即求abc的排列，abc acb bac...
+        如果有相同元素 如 aab aba baa需要排除重复元素的再次出现，如不能出现aab aab
+        【思路】：和全排列1基本一致，不同的是，字符存在重复元素，需要剔除掉多个相同排列出现的重复现象。
+        1.增加剔除条件：先将字符排序，根据索引，前一个元素是优先遍历的，如果等于自身如aab，且前一个元素被标记为使用过，
+        那么这条路径是最先开始的路径 aab 可以加入结果，反之如果前一个元素没有被标记使用过，后面的路径用到了前面路径的相同元素，aab aab
+        增加剔除条件，前一个元素存在且等于当前元素，且前一个元素没有被标记使用，那么这条路径需要终止。
+        */
+        const permuteUnique = (nums) => {
+            const res = []
+            const used = []
+
+            nums.sort()
+
+            function permute(path) {
+                if (path.length === nums.length) {
+                    res.push(path.slice())
+                    return
+                }
+
+                for (let index = 0; index < nums.length; index++) {
+                    if (used[index]) {
+                        continue
+                    }
+                    // nums[index-1] && 错误，会多一些重复数据，因为nums[index-1]=0,0为假。用例：[0 0 0 1 9]
+                    if (index - 1 >= 0 && nums[index - 1] === nums[index] && !used[index - 1]) {
+                        continue
+                    }
+
+                    path.push(nums[index])
+                    used[index] = true
+                    permute(path)
+                    path.pop()
+                    used[index] = false
+                }
+            }
+
+            permute([])
+            return res
+        };
+
+
+        /*
+        全排列1【中等】
+        abc，无重复字母
+        【思路】：1.深度优先遍历dfs，遍历每一个元素，从第一个元素出发创建一条路径，把元素加入第一步，并标记为已经使用，
+        2.然后传入路径1，递归这个遍历，因为元素使用过会切换第二个元素，重复1加入元素标记已使用，直到结果满足输出要求a,b,c加入结果集。
+        3.等1到底遍历完每个元素，开始回溯逆过程，a b c = c b a，依次撤销c b a，并撤销使用过的标记，这么做为了避免深度影响第二条路径遍历。
+        */
+        var permute = function (nums) {
+            const res = []
+            // 根据nums索引号确定是否使用过
+            const used = []
+
+            function permutes(path) {
+                if (path.length === nums.length) {
+                    //避免深度影响
+                    res.push(path.slice())
+                    return
+                }
+                for (let index = 0; index < nums.length; index++) {
+                    const el = nums[index]
+                    if (used[index]) {
+                        continue
+                    }
+                    // 使用与标记
+                    path.push(el)
+                    used[index] = true
+                    permutes(path)
+                    // 回溯撤销
+                    path.pop()
+                    used[index] = false
+                }
+            }
+
+            permute([])
+            return res
+        };
+
+        /*
+        田忌赛马【未经过机试】
+        两组组数据a,b。请以田忌赛马的规则尽可能的排列a，使得a胜过b，返回a能胜多少次。
+        全排列2的变体，在全排列2基础上加了新增条件，
+        要加入结果数组，还需要这个排列能赢过b，也需要注意重复元素。
+        */
+        function tianjisaima(a, b) {
+            const res = []
+            const used = []
+            a.sort()
+            // 新增条件，元素是否大于b的元素，超过一半的元素大于即a赢，排除平局。
+            // 赢一次+1，输一次=1，大于0即a胜。
+            let win = 0
+
+            function permute(path) {
+                if (path.length === nums.length) {
+                    if (win > 0) {
+                        res.push(path.slice())
+                    }
+                    win = 0
+                    return
+                }
+
+                for (let index = 0; index < a.length; index++) {
+                    if (used[index]) {
+                        continue
+                    }
+
+                    if (index - 1 >= 0 && a[index - 1] === a[index] && !used[index - 1]) {
+                        continue
+                    }
+
+                    if (a[index] > b[index]) {
+                        win += 1
+                    }
+                    else {
+                        win = a[index] === b[index] ? win : win - 1
+                    }
+
+                    path.push(a[index])
+                    used[index] = true
+                    permute(path)
+                    path.pop()
+                    used[index] = false
+                }
+            }
+
+            permute([])
+            return res.length
+        }
+        console.log(tianjisaima([11, 8, 20], [10, 13, 7])) 
     </script>
 </body>
 
