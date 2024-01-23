@@ -1076,6 +1076,247 @@
             return maxCount
         }
         // console.log(countColorCar('0 0 0 0 0', 0))
+
+        /*
+        积分奖励【未通过机试】
+        有n个任务同时等待处理，处理一个任务花费时间1，同一时间只能处理一个任务，可获得积分奖励b，每个任务有时间限制a
+        给你一个固定实现m，如何在m内获得最大积分。
+        下面任务等候时限都是1，所以给你无论多少时间m，你都只能做最大积分的任务5，因为其他都会超时
+        4个任务
+        3秒时间
+        1 2：1秒超时，2积分奖励
+        1 3 
+        1 4 
+        1 5
+        思路：1.分数最高的最有优先级，所以按照分数由高到低排列，
+        2.时限最低的最有优先级，所以再按照由低到高排列
+        3.遇到时限大于0，且m还有剩余，加入最大积分，然后后面大于等于该时限的时限全部1，直到0不计入计算。
+        因为根据逆过程，你可以选择高时限的再选择低时限的。如 2 6,1 5。如果m为2，我可以选择6，再5，m用尽最大积分11，这是逆过程。
+        注意：3,4步做完不需要重新排序，因为最大的积分已经被取走，顺序也是排好的。
+        */
+        function earnScore(n, m, str) {
+            const list = str.split(',').map(item => {
+                const l = item.split(' ')
+                return [parseInt(l[0]), parseInt(l[1])]
+            })
+            list.sort((a, b) => {
+                const [timeA, scoreA] = a
+                const [timeB, scoreB] = b
+                if (scoreA === scoreB) {
+                    return timeA - timeB
+                }
+                return scoreB - scoreA
+            })
+            let maxScore = 0
+            let currentTime = m
+            for (let index = 0; index < list.length; index++) {
+                let score = list[index][1]
+                let time = list[index][0]
+                if (time > 0 && currentTime > 0) {
+                    maxScore += score
+                    currentTime -= 1
+                    for (let pindex = index + 1; pindex < list.length; pindex++) {
+                        if (list[pindex][0] >= time) {
+                            list[pindex][0] = Math.max(list[pindex][0] - 1, 0)
+                        }
+                    }
+                }
+                if (currentTime <= 0) {
+                    return maxScore
+                }
+            }
+            console.log(list)
+            return maxScore
+        }
+        // console.log(earnScore(4, 9, '1 2,1 3,1 4,3 5,3 5,3 8,4 6,4 9,5 5'))
+
+        /*
+        最富裕的小家庭【未经过机试】
+        一颗树上，父节点和所有直接子节点定义为一个小家庭，每个节点是个人资产，求解最富裕的小家庭。
+        4
+        100 200 300 500
+        1 3
+        1 2
+        2 4
+        最富裕小家庭700 2和4
+        思路：1.遍历子节点序列(右)构建一个**字典**，将父子节点同时加入字典，id：当前节点（id，资产，pid）。
+        2.然后根据字典构建成pid id的树，
+        3. 然后递归，算每一个小家庭的资产总和，取最大值即可。
+        注意：遍历的list可能不包含父节点，如上只能遍历出 3 2 4节点，父节点需要单独加入。
+        */
+        function countMaxWealth(n, str1, str2) {
+            const dic = {}
+
+            const wealths = str1.split(' ').map((item) => parseInt(item))
+            const nodes = str2.split(',').map(item => {
+                const l = item.split(' ')
+                return [parseInt(l[0]), parseInt(l[1])]
+            })
+
+            for (let index = 0; index < nodes.length; index++) {
+                const [pid, id] = nodes[index]
+                if (!dic[id]) {
+                    dic[id] = {
+                        id,
+                        pid,
+                        wealth: wealths[id - 1],
+                    }
+                    // 父节点一起加入，父节点可能还有父节点，但此时无法获取。
+                    if (!dic[pid]) {
+                        dic[pid] = {
+                            id: pid,
+                            pid: '',
+                            wealth: wealths[pid - 1]
+                        }
+                    }
+                }
+                else {
+                    // 加入父节点的父节点id
+                    if (!dic[id].pid) {
+                        dic[id].pid = pid
+                    }
+                }
+            }
+
+            // 树
+            const tree = []
+            for (const key of Object.keys(dic)) {
+                const pid = dic[key].pid
+                // 根节点
+                if (!pid) {
+                    tree.push(dic[key])
+                }
+                else {
+                    dic[pid].children = dic[pid].children ? [...dic[pid].children, dic[key]] : [dic[key]]
+                }
+            }
+
+
+            return countWealth(tree)
+        }
+
+        // 计算当前家庭财富
+        function countWealth(list) {
+            let maxWealth = 0
+            for (let index = 0; index < list.length; index++) {
+                const node = list[index];
+                if (node.children) {
+                    // 注意使用reduce一定要保持初始值和callback的返回值数据结构一致。
+                    let cw = node.children.reduce((pre, next) => {
+                        return {
+                            wealth: pre.wealth + next.wealth
+                        }
+                    }, { wealth: 0 })
+                    maxWealth = Math.max(node.wealth + cw.wealth, countWealth(node.children, maxWealth))
+                }
+            }
+            return maxWealth
+        }
+        // console.log(countMaxWealth(4, '100 200 300 500', '1 3,2 4,1 2'))
+
+        /*
+        孙悟空吃蟠桃
+        给定一组蟠桃树 3 11 6 7 8，孙悟空1个小时内可以占用一棵树，一小时后才能离开，求解守卫过来前，孙悟空每小时内最小吃蟠桃个数k，这个k能吃完所有蟠桃。
+        第二行守卫过来的时间 h 小时。不能吃完或其他问题返回k为 0
+        思路：1.如果桃树数量大于守卫过来前的小时数，绝对吃不完。反之一定能吃完，因为速度可以取单颗桃树的最大桃子数量
+        2.可以二分法，取最小速度low，最大速度桃子数量high，取他们中间值速度mid，如果这个速度mid经过计算每颗数时间总和能在守卫来之前吃完，说明速度可以更小，mid取代high
+        反之吃不完，得加速度，mid取代low，以此迭代，求出最后速度。
+        注意：守卫刚来，猴子刚吃完算一解，即time<=h。每颗树花费时间向上取整。
+        */
+        var minEatingSpeed = function (piles, h) {
+            let high = Math.max(...piles)
+            let low = 1
+            while (low < high) {
+                const mid = Math.floor((high - low) / 2) + low
+                const time = computeTime(piles, mid)
+                if (time <= h) {
+                    high = mid
+                }
+                else {
+                    low = mid + 1
+                }
+            }
+            return high
+        };
+
+        function computeTime(piles, speed) {
+            let time = 0
+            for (const i of piles) {
+                time += Math.ceil(i / speed)
+            }
+            return time
+        }
+
+        /*
+        密码解密【未经过机试】
+        给定一段密文s，他是经过字符转换而来
+        转换规则：a-i由1-9表示，j-z由10*-26*表示，所以密文最终为：234210*23423*
+        思路：1.可以按照栈的方式先进后出，遇到星号再取两个数字，遇到数字取当前数字即可。
+        2.或者判断当前索引的后两个索引位置是不是星号。
+        str.charCodeAt(index)，获取str指定索引位置的asc码。
+        */
+        function passtext(str) {
+            let count = ''
+            let index = 0
+            while (index < str.length) {
+                const element = str[index + 2];
+                if (element && element === '*') {
+                    count += num2code(parseInt(str.slice(index, index + 2)))
+                    index += 3
+                    continue
+                }
+                count += num2code(parseInt(str[index]))
+                index += 1
+            }
+            return count
+        }
+        // 输入1-26转小写字母，遇到星号事先抛弃，小写字母从97a开始，122z结束
+        function num2code(n) {
+            console.log(n, String.fromCharCode(96 + n))
+            return String.fromCharCode(96 + n)
+        }
+        // console.log(passtext('20*19*20*12345678926*'))
+
+        /*
+        找最小数字
+        给定一个数字m，求一个比m大的数字n，n的二进制1的个数等于m的二级制1的个数，返回这个最小n
+        思路：1.m的二进制中，找到最低位的一个子串 01 将其反转 10，那么这个二进制数1的个数一定等于m的1个数，且满足最小条件。
+        2.存在情况1000，做法是前面加一个0,01000 10000。也满足条件。
+        3.存在情况110=>1010，加0再反转这不是最小的，需要末尾的0截取插入反转后的0末尾 1001。获得最小。
+        4.用代码实现这个问题，就是去掉首位的1，和末尾的所有0，将所有0加到首位，首位再加10。
+        注意：该题暴力会超时。str可能为1
+        */
+        function mn2code(m) {
+            let str = m.toString(2)
+
+            let count = ''
+            for (let index = str.length - 1; index > 0; index--) {
+                let t = str.slice(index - 1, index + 1)
+                if (t && t === '01') {
+                    count = str.split('')
+                    count.splice(index - 1, 2, '10')
+                    return count.join('')
+                }
+            }
+
+            // 没找到01的情况
+            str = str.slice(1)
+
+            // 去掉末尾的0
+            let zero = ''
+            let main = ''
+            for (let index = str.length - 1; index > 0; index--) {
+                if (str[index] !== '0') {
+                    main = str.slice(0, index + 1)
+                    break
+                }
+                zero += '0'
+            }
+            return '10' + zero + main
+        }
+        // console.log(mn2code(parseInt(111000, 2)))
+
+
     </script>
 </body>
 
