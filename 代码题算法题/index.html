@@ -1278,7 +1278,7 @@
         // console.log(passtext('20*19*20*12345678926*'))
 
         /*
-        找最小数字
+        找最小数字【未经过机试】中等
         给定一个数字m，求一个比m大的数字n，n的二进制1的个数等于m的二级制1的个数，返回这个最小n
         思路：1.m的二进制中，找到最低位的一个子串 01 将其反转 10，那么这个二进制数1的个数一定等于m的1个数，且满足最小条件。
         2.存在情况1000，做法是前面加一个0,01000 10000。也满足条件。
@@ -1316,7 +1316,63 @@
         }
         // console.log(mn2code(parseInt(111000, 2)))
 
+        /*
+        运送货物【未经过机试】简单
+        货物a重量利润： wa pa
+        货物b重量利润： wb pb
+        货车承载： wa*n +wb*m=t。固定
+        求解货物最大利润，ab不能切割。
+        思路，按公式暴力枚举wa(1-i-wt)只需一次遍历，剩余重量用用wb填补，如果满足总重量等于t则计算价格并更新最大值。
+        途中如果wa*i>wt可以终止循环
+        */
 
+        /*
+        部门人力分配【未经过机试】
+        给定一组需求任务[3 5 3 4]，每个任务表示每个月需要多少人开发才能完。
+        最多只能两个任务并行开发，且需求量不能大于每月人力数量，即这个月的不能留到下一个月必须开发完。
+        求解M个月内完成所有需求开发的最小人力。上述m为3的话，答案为6，第一个月：3+3，5，4，三个月刚好开发完。
+        【思路】：满足单调性，需要的人越多越有可能指定时间完成任务，采用二分法，
+        对需求排序，取最后两个任务相加，或最后一个任务乘以2，这个是需要的最大人力，他满足任意两个任务拼接需求量不会超出人力。
+        取最后一个任务为最小人力，他满足每个任务不能超出人力。
+        */
+        function requirements(m, list) {
+            list.sort()
+            let left = list[list.length - 1]
+            let right = list[list.length - 1] * 2
+            while (left < right) {
+                let mid = Math.floor((right - left) / 2) + left
+                // 超时，需要加人力
+                if (compuRequirements(list, mid) > m) {
+                    left = mid + 1
+                }
+                else {
+                    right = mid
+                }
+            }
+            return right
+        }
+        // 计算这个人力完成所有需求需要几个月
+        // 这里使用双指针遍历，人力已经确定。不需要考虑最佳组合两个需求任务，直接判断首尾组合。
+        function compuRequirements(list, r) {
+            let month = 0
+            let left = 0
+            let right = list.length - 1
+            while (left <= right) {
+                // 最小和最大相加超过人力r，那么最大只能单独完成。
+                if (list[left] + list[right] > r) {
+                    month += 1
+                    right -= 1
+                }
+                // 否则就一起完成
+                else {
+                    month += 1
+                    left += 1
+                    right -= 1
+                }
+            }
+            return month
+        }
+        // console.log(requirements(3, [3, 5, 3, 4]),)
     </script>
 </body>
 
