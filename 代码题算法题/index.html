@@ -68,7 +68,7 @@
         /* 
         抚平嵌套数组
          */
-        function flat(arr, n = 0) {
+        function flat(arr = [], n = 0) {
             let list = []
             arr.forEach((el) => {
                 if (Array.isArray(el) && n > 0) {
@@ -205,6 +205,23 @@
             return numParts.join(".");
         }
         // console.log(addThousandSeparator('6666666.6666666666'))
+        function addThousandSeparator2(num) {
+            const numParts = String(num).split(".");
+            const str = numParts[0]
+            let res = ''
+            let count = 0
+            for (let index = str.length - 1; index >= 0; index--) {
+                let element = str[index];
+                res = element + res
+                count += 1
+                if (count === 3 && index > 0) {
+                    res = ',' + res
+                    count = 0
+                }
+            }
+            return res + '.' + numParts[1]
+        }
+        // console.log(addThousandSeparator2('6666666666.6666666666'))
 
         /* 
         json扁平化
@@ -262,9 +279,10 @@
         function rgb2hex(r, g, b) {
             return '#' + num2hex(r) + num2hex(g) + num2hex(b)
         }
-        // console.log(rgb2hex(255, 255, 255))
+        // console.log(rgb2hex(16, 16, 16), parseInt('ff', 16)) //ff === 255
 
         // 平方根 sqrt，返回向下取整的整数
+        // 思路二分法，两端靠拢
         function mySqrt(x) {
             // 整数x的平方根一定是在1到x的范围内，采用二分法
             let left = 1,
@@ -272,9 +290,9 @@
             while (left <= right) {
                 let mid = left + ((right - left) >> 1); // 右移一位相当于除以2取中间值，这样写防止溢出。
                 // 判断mid的平方是否小于或等于x，如果mid的平方小于x
-                if (mid <= x / mid) {
+                if (mid ** 2 <= x) {
                     // 判断(mid+1)的平方是否大于x，如果(mid+1)的平方大于x，那么mid就是x的平方根
-                    if (mid + 1 > x / (mid + 1)) {
+                    if ((mid + 1) ** 2 > x) {
                         return mid;
                     }
                     // 如果mid的平方小于x并且(mid+1)的平方小于x，那么x的平方根比mid大，接下来搜索从mid+1到x的范围
@@ -352,7 +370,7 @@
                 console.error(err);
             }
         }
-        // 耗时 500，pms1 pms2 是同步调用。
+        // 耗时 500，pms1 pms2 是同步调用后，在使用两个await干扰项。
 
         /* 
         空瓶换汽水，3个空瓶换一瓶汽水，喝完可以加入剩余空瓶继续换，
@@ -390,7 +408,7 @@
         // console.log(climbStairs(2))
 
         /* 
-        n阶台阶升级版，p，q是可以手动输入控制的，又有多少种解法，如3 1 2 输出3，p<=q=<n=<=100
+        n阶台阶升级版，p，q是可以手动输入控制的，又有多少种解法，
         */
         function climbStairs(n, p, q) {
 
@@ -455,7 +473,7 @@
 
         /* 
         前k个高频词汇
-        思路：用字典统计每个单词出现次数，然后根据次数排序即可，相同字数使用localeCompare字母单词排序即可。
+        思路：用字典统计每个单词出现次数，然后根据次数排序字典即可，相同字数使用localeCompare字母单词排序即可。
         注意：如果是相同频率的单词，按照字典abc的顺序排序
         */
         function topKFrequent(params) {
@@ -541,7 +559,7 @@
         保存这个对角线的最大值。
          */
         function commonSubStr(str1, str2) {
-            // const zero = Array(str2.length + 1).fill(0); // 注意！不能这样写，因为fill都是同一个对象，会有深度影响，深拷贝也没用。
+            // const zero = Array(str2.length + 1).fill([]); // 注意！不能这样写，因为fill都是同一个对象，会有深度影响，深拷贝也没用。
             // 只能新增一个for循环
             const sets = Array(str1.length + 1);
             for (let i = 0; i < sets.length; i++) {
@@ -581,7 +599,8 @@
 
         /* 
         接雨水
-        思路：计算左边和右边的最大短板超时，将每个单位视作一个木桶，能接多少水取决于他的短板。用最小短板-自身高度即可这个单位头顶有多少水
+        思路：将每个单位视作一个木桶，能接多少水取决于他的短板。用最小短板-自身高度即可这个单位头顶有多少水
+        计算左边和右边的最大短板超时
         */
         var trap = function (height) {
             const list = [] // 每个单位的最小短板集合
@@ -626,8 +645,8 @@
 
         /*
        接雨水
-       双指针版升级版
-       思路：如果单位的左短板小于又短板，那么他可以装最多左短板-自身高度的水，注意这时左指针需要右移，而右指针不变！
+       双指针版升级版，将最大递增子数列合并。
+       思路：如果单位的左短板小于右短板，那么他可以装最多左短板-自身高度的水，注意这时左指针需要右移，而右指针不变！
        反之，单位的右短板小于左短板，那么他可以装最多右短板-自身高度的水，
        如若相等，则无所谓左右，拿其中一个短板-自身高度的水
        在移动双指针时，同步更新最大短板，注意不能遗漏指针合并时还一次计算
@@ -661,7 +680,7 @@
         思路：遍历groups，groups和nums都用连接符逗号转字符串，通过indexOf计算索引。有一个找不到等于-1则false
         找到后利用slice切片切除之前所有部分，防止下一个找到后与上一个相交。
         注意：如果找到了，那么这个子串（子数组）的左边只存在两种情况：1.开头就找到了，所以左边没有元素undefined，中间找到了，那么左边应该是连接符','，下次匹配这个连接符需要切掉
-        防止特殊情况：[[2,1]] [12,1]，这个找到后左边是1，应该是false
+        防止特殊情况：[[2,1]] [12,1]，[2,1]，这个找到后左边是1，应该是false
         */
         var canChoose = function (groups, nums) {
             nums = nums.join(',')
@@ -1504,7 +1523,7 @@
             permute([])
             return res.length
         }
-        console.log(tianjisaima([11, 8, 20], [10, 13, 7]))
+        // console.log(tianjisaima([11, 8, 20], [10, 13, 7]))
 
         /*
         寿司转盘
@@ -1518,7 +1537,7 @@
         出租车计费，靠谱的车
         出租车司机打表有问题，遇到任意位置上的4就会跳到5。给出一个费用，求解实际费用。
         【思路】暴力破解超时，两个变量统计，一个正常打表一个不正常直到不正常的满足给出费用。返回正常费用。
-        
+          
         */
     </script>
 </body>
