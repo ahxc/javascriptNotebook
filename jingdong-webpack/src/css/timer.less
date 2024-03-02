@@ -1,0 +1,92 @@
+@keyframes tick6 {
+  0%       { margin-top: 0;}
+  16.66%   { margin-top: -30px; }
+  33.33%   { margin-top: -60px; }
+  50%      { margin-top: -90px; }
+  66.66%   { margin-top: -120px; }
+  83.33%   { margin-top: -150px; }
+  100%     { margin-top: -180px; }
+}
+
+@keyframes tick10 {
+  0%      { margin-top: 0; }
+  10%     { margin-top: -30px; }
+  20%     { margin-top: -60px; }
+  30%     { margin-top: -90px; }
+  40%     { margin-top: -120px; }
+  50%     { margin-top: -150px; }
+  60%     { margin-top: -180px; }
+  70%     { margin-top: -210px; }
+  80%     { margin-top: -240px; }
+  90%     { margin-top: -270px; }
+  100%    { margin-top: -300px; }
+}
+
+.ms-cal {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.interval {
+  width: 15px;
+  height: 30px;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  line-height: 30px;
+}
+
+.digit {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 30px;
+  width: 15px;
+  line-height: 30px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
+  background-color: black;
+}
+
+.digit div {
+  height: 100%;
+  width: 100%;
+}
+
+.digit-hour {
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+  background-color: black;
+}
+
+.hour-digit-one {
+  animation: tick3 0s step-end infinite;
+}
+
+.hour-digit-two {
+  animation: tick4 14400s step-end infinite;
+}
+
+.minutes-digit-one {
+  animation: tick6 3600s step-end infinite;
+}
+
+.minutes-digit-two {
+  animation: tick10 600s step-end infinite;
+}
+
+.seconds-digit-one {
+  animation: tick6 60s step-end infinite;
+}
+
+.seconds-digit-two {
+  animation: tick10 10s step-end infinite;
+}
