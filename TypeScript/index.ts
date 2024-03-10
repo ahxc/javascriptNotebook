@@ -87,7 +87,8 @@ function fun2(name: string): string {
 
 // 箭头函数同理
 const fun3 = (name: string): string => {
-    console.log('hello', name); return name;
+    console.log('hello', name); 
+    return name;
 };
 
 // 参数类型
