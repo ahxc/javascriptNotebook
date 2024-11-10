@@ -3,10 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>代码题算法题</title>
 </head>
 
@@ -37,13 +34,12 @@
         function symmetry(str = '') {
             return str === str.split('').reverse().join('');
         }
-        // print();
 
         /* 
         使用 setTimeout 实现 setInterval，
-        注意：setTimeout执行完毕不使用变量保存会自动清空不需手动清空。setInterval也没有立即执行属性但会立即执行一次。
+        setTimeout 执行完毕不使用变量保存会自动清空不需手动清空。setInterval 也没有立即执行属性但会立即执行一次。
         */
-        function mySetInterval(fn, time) {
+        function mySetInterval(fn, time = 1000) {
             fn()
             setTimeout(() => {
                 mySetInterval(fn, time)
@@ -55,6 +51,66 @@
         //     i += 1;
         //     console.log(i);
         // }, 1000);
+
+        /* 
+        冒泡排序
+        遍历 len-1 次，内部循环两两比较，前面大于后面则交换位置，直至大的元素沉到最后一位。
+        */
+        function bubbleSort(list = []) {
+            if (list.length <= 1) {
+                return list
+            }
+            for (let i = 0; i < list.length - 1; i++) {
+                for (let j = 0; j < list.length - i - 1; j++) {
+                    if (list[j] > list[j + 1]) {
+                        const temp = list[j]
+                        list[j] = list[j + 1]
+                        list[j + 1] = temp
+                    }
+                }
+            }
+            return list
+        }
+
+        /* 
+        快速排序
+        */
+        function quickSort(list = []) {
+            if (list.length <= 1) {
+                return list
+            }
+
+            const p = list[0]
+            let i = 0
+            let j = list.length - 1
+            while (i < j) {
+                while (i < j) {
+                    if (list[j] < p) {
+                        list[i] = list[j]
+                        i++
+                        break
+                    }
+                    else {
+                        j--
+                    }
+                }
+
+                while (i < j) {
+                    if (list[i] > p) {
+                        list[j] = list[i]
+                        j--
+                        break
+                    }
+                    else {
+                        i++
+                    }
+                }
+            }
+
+            return [...quickSort(list.slice(0, i)), p, ...quickSort(list.slice(i + 1))]
+        }
+        console.log(quickSort([1, 4, 2, 3, 5, 9, 6, 8, 7, 10]))
+
 
         /* 
         查找第K个最大元素
@@ -182,7 +238,7 @@
                     tree.push(i);
                 }
             }
-            return deepClone(tree);
+            return tree;
         }
 
         // 组件
