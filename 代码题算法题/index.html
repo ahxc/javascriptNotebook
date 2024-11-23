@@ -74,6 +74,7 @@
 
         /* 
         快速排序
+       设立数组一个中心数，通常第一个，然后挨个判断大于中心数的放右边，小于中心数的放左边。一次遍历后，再递归右边和左边。
         */
         function quickSort(list = []) {
             if (list.length <= 1) {
@@ -81,36 +82,42 @@
             }
 
             const p = list[0]
-            let i = 0
-            let j = list.length - 1
-            while (i < j) {
-                while (i < j) {
-                    if (list[j] < p) {
-                        list[i] = list[j]
-                        i++
-                        break
-                    }
-                    else {
-                        j--
-                    }
+            const left = []
+            const right = []
+            for (let index = 1; index < list.length; index++) {
+                if (list[index] > p) {
+                    right.push(list[index])
                 }
+                else {
+                    left.push(list[index])
+                };
+            }
 
-                while (i < j) {
-                    if (list[i] > p) {
+            return [...quickSort(left), p, ...quickSort(right)]
+        }
+        // console.log(quickSort([8, 2, 4, 3, 1, 8, 12, 1, 2]));
+
+        /* 
+        选择排序
+        选择排序是冒泡排序的变体，冒泡排序是相邻元素挨个比较并交换位置，把大的元素逐渐沉入尾部。
+        选择排序是遍历每个元素并比较，取最小值与首部元素交换位置。
+        */
+        function selectionSort(list = []) {
+            if (list.length <= 1) {
+                return list
+            }
+            for (let i = 0; i < list.length; i++) {
+                for (let j = i + 1; j < list.length; j++) {
+                    if (list[j] < list[i]) {
+                        let temp = list[j]
                         list[j] = list[i]
-                        j--
-                        break
-                    }
-                    else {
-                        i++
+                        list[i] = temp
                     }
                 }
             }
-
-            return [...quickSort(list.slice(0, i)), p, ...quickSort(list.slice(i + 1))]
+            return list
         }
-        console.log(quickSort([1, 4, 2, 3, 5, 9, 6, 8, 7, 10]))
-
+        // console.log(selectionSort([8, 2, 4, 3, 1, 8, 12, 1, 2]));
 
         /* 
         查找第K个最大元素
