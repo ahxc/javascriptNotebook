@@ -99,25 +99,50 @@
 
         /* 
         选择排序
-        选择排序是冒泡排序的变体，冒泡排序是相邻元素挨个比较并交换位置，把大的元素逐渐沉入尾部。
-        选择排序是遍历每个元素并比较，取最小值与首部元素交换位置。
+        选择排序是冒泡排序的变体，选择排序是遍历每个元素并比较，遍历完成找到最小值后与首部元素交换位置。
+        与冒泡区别，不会每次判断成功时都交换位置，会找个临时变量保存最小值的位置。遍历完成后再交换
         */
         function selectionSort(list = []) {
             if (list.length <= 1) {
                 return list
             }
             for (let i = 0; i < list.length; i++) {
+                let minIndex = i
                 for (let j = i + 1; j < list.length; j++) {
-                    if (list[j] < list[i]) {
-                        let temp = list[j]
-                        list[j] = list[i]
-                        list[i] = temp
+                    if (list[j] < list[minIndex]) {
+                        minIndex = j
                     }
+                }
+                if (minIndex !== i) {
+                    [list[i], list[minIndex]] = [list[minIndex], list[i]]
                 }
             }
             return list
         }
         // console.log(selectionSort([8, 2, 4, 3, 1, 8, 12, 1, 2]));
+
+        /* 
+        插入排序
+        插入排序区别在于每一个元素会与已经排好序的比较然后将更大的元素依次后移直到插入目标位置，
+        它不是与未排好序的比较
+        */
+        function insertionSort(list = []) {
+            if (list.length <= 1) {
+                return list
+            }
+            for (let i = 1; i < list.length; i++) {
+                let j = i - 1
+                let min = list[i]
+                while (j >= 0 && list[j] > min) {
+                    list[j + 1] = list[j]
+                    j -= 1
+                }
+                list[j + 1] = min
+            }
+
+            return list
+        }
+        // console.log(insertionSort([8, 2, 4, 3, 1, 8, 12, 1, 2]));
 
         /* 
         查找第K个最大元素
